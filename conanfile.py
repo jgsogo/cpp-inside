@@ -16,12 +16,12 @@ class CppInside(ConanFile):
         self.build_requires("protoc_installer/3.6.1@bincrafters/stable")
 
     def requirements(self):
-        self.require("protobuf/3.6.1@bincrafters/stable")
+        self.requires("protobuf/3.6.1@bincrafters/stable")
 
     def source(self):
         url = "https://github.com/hanickadot/compile-time-regular-expressions/archive/v{ctre_version}.tar.gz"
         tools.get(url.format(ctre_version=self.options.ctre_version))
-        shutil.move("ctre-{}".format(self.options.ctre_version), "src/ctre")
+        shutil.move("compile-time-regular-expressions-{}".format(self.options.ctre_version), "src/ctre")
 
     def _cmake(self):
         cmake = CMake(self)
