@@ -45,7 +45,7 @@ class CppInside(ConanFile):
             shutil.move("compile-time-regular-expressions-{}".format(self.options.ctre_version), ctre_folder)
             
         # Generate protobuf messages
-        message_folder = os.path.join(self.source_folder, "src", "messages")
+        message_folder = os.path.join(self.source_folder, "messages")
         messages = [os.path.join(message_folder, it) for it in os.listdir(message_folder) if it.endswith(".proto")]
         command = "protoc --proto_path={}".format(message_folder)
         command += " --cpp_out={}".format(os.path.join(self.source_folder, "src", "messages"))
