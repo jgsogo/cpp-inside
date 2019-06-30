@@ -37,6 +37,7 @@ class CppInside(ConanFile):
     def requirements(self):
         self.requires("protobuf/3.6.1@bincrafters/stable")
         self.requires("boost/1.70.0@conan/stable")
+        self.requires("spdlog/1.3.1@bincrafters/stable")
 
     def source(self):
         ctre_folder = os.path.join(self.source_folder, "library", "ctre")

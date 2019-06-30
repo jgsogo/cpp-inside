@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ctre_wrapper/ctre_wrapper_export.h"
-//#include <stdint.h>
 
 extern "C" {
     typedef void (*callback_t)(void* state, const void* data, const void* status);

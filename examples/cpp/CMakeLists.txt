@@ -2,6 +2,8 @@ cmake_minimum_required(VERSION 3.8.0)
 
 find_package(boost REQUIRED)
 
+set(CMAKE_CXX_STANDARD 11)
+
 add_executable(example_cpp main.cpp)
 target_link_libraries(example_cpp PRIVATE ctre_cpp boost::boost)
 target_include_directories(example_cpp
