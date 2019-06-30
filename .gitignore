@@ -34,3 +34,5 @@
 src/ctre
 _build/
 .vscode/
+src/messages/*.pb.h
+src/messages/*.pb.cc
