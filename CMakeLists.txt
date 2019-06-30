@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.8.0)
 project(cpp-inside VERSION 1.0 LANGUAGES C CXX)
 
+find_package(protobuf REQUIRED)
+
 add_subdirectory(library)
 
-option(BUILD_BINDINGS "Build bindings" OFF)
-option(BUILD_EXAMPLES "Build examples" OFF)
+option(BUILD_BINDINGS "Build bindings" ON)
+option(BUILD_EXAMPLES "Build examples" ON)
 
 if(BUILD_BINDINGS)
     add_subdirectory(bindings)

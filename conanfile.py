@@ -9,7 +9,7 @@ class CppInside(ConanFile):
     settings = "os", "arch", "compiler", "build_type"
     generators = "cmake_find_package", "cmake_paths"
     options = {"ctre_version": "ANY",
-               "cpp": [True, False],
+               #"cpp": [True, False],  # It is always generated
                "csharp": [True, False],
                "java": [True, False],
                "js": [True, False],
@@ -19,7 +19,7 @@ class CppInside(ConanFile):
                "ruby": [True, False],
                }
     default_options = {"ctre_version": "2.6.4",
-                       "cpp": True,
+                       #"cpp": True,
                        "csharp": True,
                        "java": True,
                        "js": True,
@@ -36,6 +36,7 @@ class CppInside(ConanFile):
 
     def requirements(self):
         self.requires("protobuf/3.6.1@bincrafters/stable")
+        self.requires("boost/1.70.0@conan/stable")
 
     def source(self):
         ctre_folder = os.path.join(self.source_folder, "library", "ctre")
@@ -49,9 +50,9 @@ class CppInside(ConanFile):
         messages = [os.path.join(message_folder, it) for it in os.listdir(message_folder) if it.endswith(".proto")]
         command = "protoc --proto_path={}".format(message_folder)
         command += " --cpp_out={}".format(os.path.join(self.source_folder, "library", "messages"))
-        for it in ["cpp", "csharp", "java", "js", "objc", "php", "python", "ruby"]:
+        for it in ["csharp", "java", "js", "objc", "php", "python", "ruby"]:
             if getattr(self.options, it):
-                binding_folder = os.path.join(self.source_folder, "bindings", it)
+                binding_folder = os.path.join(self.source_folder, "bindings", it, "messages")
                 os.makedirs(binding_folder, exist_ok=True)
                 command += " --{}_out={}".format(it, binding_folder)
         command += " {}".format(" ".join(messages))
