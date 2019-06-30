@@ -3,8 +3,8 @@ project(cpp-inside VERSION 1.0 LANGUAGES C CXX)
 
 add_subdirectory(src)
 
-option(BUILD_BINDINGS "Build bindings" ON)
-option(BUILD_EXAMPLES "Build examples" ON)
+option(BUILD_BINDINGS "Build bindings" OFF)
+option(BUILD_EXAMPLES "Build examples" OFF)
 
 if(BUILD_BINDINGS)
     add_subdirectory(bindings)

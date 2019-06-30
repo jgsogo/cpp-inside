@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package ctre;
+
+option java_package = "ctre.messages";
+option java_outer_classname = "MatchProto";
+
+
+message Match {
+  uint32 regex_id = 1;
+  string regex = 2;
+  bool match = 3;
+}

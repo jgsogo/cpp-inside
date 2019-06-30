@@ -33,3 +33,4 @@
 
 src/ctre
 _build/
+.vscode/
