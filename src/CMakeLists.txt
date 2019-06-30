@@ -6,5 +6,5 @@ find_package(protobuf REQUIRED)
 add_subdirectory(messages)
 
 
-add_library(ctre_wrapper )
+add_library(ctre_wrapper src/api_c.cpp)
 generate_export_header(ctre_wrapper)
