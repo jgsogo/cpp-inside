@@ -29,7 +29,7 @@ class CppInside(ConanFile):
                        "ruby": True,
                        }
 
-    exports_sources = "src/*"
+    exports_sources = "library/*"
 
     def build_requirements(self):
         self.build_requires("protoc_installer/3.6.1@bincrafters/stable")
@@ -38,7 +38,7 @@ class CppInside(ConanFile):
         self.requires("protobuf/3.6.1@bincrafters/stable")
 
     def source(self):
-        ctre_folder = os.path.join(self.source_folder, "src", "ctre")
+        ctre_folder = os.path.join(self.source_folder, "library", "ctre")
         if not os.path.exists(ctre_folder):
             url = "https://github.com/hanickadot/compile-time-regular-expressions/archive/v{ctre_version}.tar.gz"
             tools.get(url.format(ctre_version=self.options.ctre_version))
@@ -48,7 +48,7 @@ class CppInside(ConanFile):
         message_folder = os.path.join(self.source_folder, "messages")
         messages = [os.path.join(message_folder, it) for it in os.listdir(message_folder) if it.endswith(".proto")]
         command = "protoc --proto_path={}".format(message_folder)
-        command += " --cpp_out={}".format(os.path.join(self.source_folder, "src", "messages"))
+        command += " --cpp_out={}".format(os.path.join(self.source_folder, "library", "messages"))
         for it in ["cpp", "csharp", "java", "js", "objc", "php", "python", "ruby"]:
             if getattr(self.options, it):
                 binding_folder = os.path.join(self.source_folder, "bindings", it)

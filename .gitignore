@@ -31,8 +31,8 @@
 *.out
 *.app
 
-src/ctre
+library/ctre
 _build/
 .vscode/
-src/messages/*.pb.h
-src/messages/*.pb.cc
+library/messages/*.pb.h
+library/messages/*.pb.cc
