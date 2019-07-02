@@ -36,7 +36,8 @@ int main(int argc, char* argv[]) {
     try
     {
         ctre::cpp::ctre CTRE(path_to_ctre_wrapper);
-        for (auto it: {"2019/02/28", "2019/02/aa", "aaa"}) {
+        for (auto it: {"1", "3", "5", "7", "10"}) {
+        //for (auto it: {"2019/02/28", "2019/02/aa", "aaa"}) {
             auto m = CTRE.match(1, it);
             std::cout << it << ": " << m << std::endl;
         }
