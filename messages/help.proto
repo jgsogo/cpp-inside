@@ -1,0 +1,16 @@
+
+syntax = "proto3";
+
+package crnd;
+
+option java_package = "crnd.messages";
+option java_outer_classname = "HelpProto";
+
+// Contains help from the library
+message Help {
+    string name = 1;
+    string description = 2;
+
+    string version = 3;
+    repeated string models = 4;
+}

@@ -7,7 +7,7 @@ class CppInside(ConanFile):
     version = "1.0"
 
     settings = "os", "arch", "compiler", "build_type"
-    generators = "cmake_find_package", "cmake_paths"
+    generators = "cmake"
     options = {"ctre_version": "ANY",
                #"cpp": [True, False],  # It is always generated
                "csharp": [True, False],
@@ -40,12 +40,6 @@ class CppInside(ConanFile):
         self.requires("spdlog/1.3.1@bincrafters/stable")
 
     def source(self):
-        ctre_folder = os.path.join(self.source_folder, "library", "ctre")
-        if not os.path.exists(ctre_folder):
-            url = "https://github.com/hanickadot/compile-time-regular-expressions/archive/v{ctre_version}.tar.gz"
-            tools.get(url.format(ctre_version=self.options.ctre_version))
-            shutil.move("compile-time-regular-expressions-{}".format(self.options.ctre_version), ctre_folder)
-            
         # Generate protobuf messages
         message_folder = os.path.join(self.source_folder, "messages")
         messages = [os.path.join(message_folder, it) for it in os.listdir(message_folder) if it.endswith(".proto")]

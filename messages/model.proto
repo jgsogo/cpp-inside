@@ -1,0 +1,27 @@
+
+syntax = "proto3";
+
+package crnd;
+
+option java_package = "crnd.messages";
+option java_outer_classname = "ModelProto";
+
+// Defines the needed information for a random model
+message Model {
+    enum Name {
+        BERNOULLI = 0;
+        DISCRETE = 1;
+        UNIFORME = 2;
+        NORMAL = 3;
+        BINOMIAL = 4;
+        GEOMETRICAL = 5;
+        POISSON = 6;
+        CHI_SQUARE = 7;
+        STUDENT = 8;
+        EXPONENTIAL = 9;
+        BINOMIAL_NEGATIVE = 10;
+        LOGNORMAL = 11;
+    }
+    Name id = 1;
+    map<string, float> params = 2;
+}

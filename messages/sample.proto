@@ -1,0 +1,16 @@
+
+syntax = "proto3";
+
+package crnd;
+
+option java_package = "crnd.messages";
+option java_outer_classname = "SampleProto";
+
+import "model.proto";
+
+// Sample from a given model
+message Sample {
+    Model model = 1;
+    float seed = 2;
+    repeated float samples = 3;
+}

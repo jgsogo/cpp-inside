@@ -1,4 +1,6 @@
 
+#pragma once
+
 template <typename T>
 struct Serialized
 {

@@ -1,8 +1,8 @@
 syntax = "proto3";
 
-package ctre;
+package crnd;
 
-option java_package = "ctre.messages";
+option java_package = "crnd.messages";
 option java_outer_classname = "StatusProto";
 
 

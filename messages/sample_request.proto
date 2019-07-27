@@ -1,0 +1,16 @@
+
+syntax = "proto3";
+
+package crnd;
+
+option java_package = "crnd.messages";
+option java_outer_classname = "SampleRequestProto";
+
+import "model.proto";
+
+// Request for a sample from a given model
+message SampleRequest {
+    Model model = 1;
+    float seed = 2;
+    uint32 n_samples = 3;
+}
