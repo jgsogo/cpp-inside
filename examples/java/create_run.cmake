@@ -1,6 +1,8 @@
 
 message("Generate file '${OUTPUT_FILE}'")
-file(WRITE ${OUTPUT_FILE} "java -Djna.library.path=\"${CRND_FILE}\" -cp ${TARGET_FILE} crnd.App")
+get_filename_component(CRND_FILE_DIRNAME ${CRND_FILE} DIRECTORY)
+
+file(WRITE ${OUTPUT_FILE} "java -Djna.library.path=\"${CRND_FILE_DIRNAME}\" -cp ${TARGET_FILE} crnd.App")
 
 get_filename_component(OUTPUT_FILE_DIRECTORY ${OUTPUT_FILE} DIRECTORY)
 file(COPY ${OUTPUT_FILE}
