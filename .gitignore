@@ -39,3 +39,4 @@ library/messages/*.pb.cc
 .idea/
 cmake-build-debug/
 cmake-build-release/
+bindings/*/messages/
