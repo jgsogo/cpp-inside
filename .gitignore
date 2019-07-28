@@ -36,3 +36,6 @@ _build/
 .vscode/
 library/messages/*.pb.h
 library/messages/*.pb.cc
+.idea/
+cmake-build-debug/
+cmake-build-release/
