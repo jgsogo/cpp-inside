@@ -12,7 +12,7 @@ float get_param(const crnd::Model& model, const std::string& param_name) {
         return f->second;
     }
     else {
-        std::ostringstream ss; ss << "Parameter '" << param_name << "' not found for model '" << model.id() << "'";
+        std::ostringstream ss; ss << "Parameter '" << param_name << "' not found for model '" << crnd::Model_Name_Name(model.id()) << "'";
         throw std::runtime_error{ss.str()};
     }
 }

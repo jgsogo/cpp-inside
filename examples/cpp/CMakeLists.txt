@@ -9,7 +9,7 @@ target_include_directories(example_cpp
         $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>
 )
 
-add_custom_target(GenexDemo
+add_custom_target(example_cpp_sh
   COMMAND ${CMAKE_COMMAND}
   "-DCRND_FILE=\"$<TARGET_FILE:crnd>\""
   "-DEXAMPLE_CPP_FILE=\"$<TARGET_FILE:example_cpp>\""

@@ -32,7 +32,6 @@ class ProtoSerialized(ctypes.Structure):
         return ctypes.byref(self)
 
 
-
 class CRND:
     def __init__(self, path_to_library):
         self.dll = ctypes.cdll.LoadLibrary(path_to_library)
@@ -61,12 +60,15 @@ class CRND:
 
         sample_request_p = ProtoSerialized.build_from(sample_request)
         sample, status = self._call(self.dll.sample, sample_pb2.Sample, sample_request_p.as_ref())
-        print(sample)
-        return
+
+        if not status.ok:
+            raise Exception(status.error_message)
+
+        return sample.samples
 
     def help(self, output):
         help, status = self._call(self.dll.help, help_pb2.Help)
-        print(help)
+        output.write(str(help))
 
     def uniform(self, seed, samples):
         pass
@@ -87,6 +89,7 @@ if __name__ == '__main__':
 
     crnd = CRND(path_to_lib)
     print(crnd.dll)
-    crnd.help(None)
+    crnd.help(sys.stdout)
 
-    crnd.lognormal(seed=1234, samples=10, mean=2, stddev=0.2)
+    samples = crnd.lognormal(seed=1234, samples=10, mean=2, stddev=0.2)
+    print(samples)
