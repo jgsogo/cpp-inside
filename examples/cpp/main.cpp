@@ -9,7 +9,7 @@ namespace po = boost::program_options;
 
 void draw_histogram(const std::vector<float>& rolls, const std::string& title) {
     constexpr int nstars = 100;
-    constexpr int nclasses = 10;
+    constexpr int nclasses = 20;
 
     int p[nclasses+1]={};
     auto minmax = std::minmax_element(rolls.begin(), rolls.end());
@@ -24,9 +24,9 @@ void draw_histogram(const std::vector<float>& rolls, const std::string& title) {
 
     std::cout << title << std::endl;
 
-    for (int i=0; i<10; ++i) {
+    for (int i=0; i<nclasses; ++i) {
         std::cout << std::fixed << std::setw( 7 ) << std::setprecision( 6 )
-                  << std::setfill( '0' ) << i*step << ": ";
+                  << std::setfill( '0' ) << i*step+step/2.f << ": ";
         std::cout << std::string(p[i]*nstars/rolls.size(),'*') << std::endl;
     }
 }
