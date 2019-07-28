@@ -14,47 +14,44 @@ class ProtoSerialized(ctypes.Structure):
     _fields_ = [('data', ctypes.c_void_p),
                 ('size', ctypes.c_int),]
 
+    def parse_as(self, proto_class):
+        msg = (ctypes.c_char *self.size).from_address(self.data)
+        proto = proto_class()
+        proto.ParseFromString(msg)
+        return proto
 
-def parse_proto(contents, message):
-    msg = (ctypes.c_char *contents.size).from_address(contents.data)
-    message.ParseFromString(msg)
-    return message
+    @classmethod
+    def build_from(cls, proto):
+        instance = cls()
+        instance._as_str = proto.SerializeToString()  # Need to keep this in memory
+        instance.size = len(instance._as_str)
+        instance.data = ctypes.cast(instance._as_str, ctypes.c_void_p)
+        return instance
 
+    def as_ref(self):
+        return ctypes.byref(self)
 
-def get_callback(data, status):
-    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
-    def callback(_, data_in, status_in):
-        status = status_pb2.Status()
-        status.ParseFromString(status_in.contents.data)
-        if status.ok:
-            help = help_pb2.Help()
-            help.ParseFromString(data_in.contents.data)
-        else:
-            print("ERROR")
-
-    return callback
 
 
 class CRND:
     def __init__(self, path_to_library):
         self.dll = ctypes.cdll.LoadLibrary(path_to_library)
 
-    def _call(self, f, data, *input_args):
-        status = status_pb2.Status()
-
+    @staticmethod
+    def _call(f, data_proto_class, *input_args):
         @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
         def callback(_, data_in, status_in):
-            parse_proto(status_in.contents, status)
-            if status.ok:
-                parse_proto(data_in.contents, data)
+            callback.status = status_in.contents.parse_as(status_pb2.Status)
+            if callback.status.ok:
+                callback.data = data_in.contents.parse_as(data_proto_class)
 
         args = list(input_args) + [callback, ]
         f(None, *args)
 
-        if status.ok:
-            return data, status
+        if callback.status.ok:
+            return callback.data, callback.status
         else:
-            return None, status
+            return None, callback.status
 
     def _sample(self, seed, samples, model):
         sample_request = sample_request_pb2.SampleRequest()
@@ -62,19 +59,13 @@ class CRND:
         sample_request.n_samples = samples
         sample_request.model.CopyFrom(model)
 
-        message_str = sample_request.SerializeToString()
-        prt = ProtoSerialized()
-        prt.size = len(message_str)
-        prt.data = ctypes.cast( message_str, ctypes.c_void_p )
-
-        sample = sample_pb2.Sample()
-        sample, status = self._call(self.dll.sample, sample, ctypes.byref(prt))
+        sample_request_p = ProtoSerialized.build_from(sample_request)
+        sample, status = self._call(self.dll.sample, sample_pb2.Sample, sample_request_p.as_ref())
         print(sample)
         return
 
     def help(self, output):
-        help = help_pb2.Help()
-        help, status = self._call(self.dll.help, help)
+        help, status = self._call(self.dll.help, help_pb2.Help)
         print(help)
 
     def uniform(self, seed, samples):
