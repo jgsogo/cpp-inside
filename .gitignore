@@ -41,5 +41,5 @@ cmake-build-debug/
 cmake-build-release/
 bindings/*/messages/
 __pycache__/
-bindings/java/src/main/java/crnd/messages/
+bindings/java/crnd/messages/
 

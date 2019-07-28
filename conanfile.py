@@ -47,7 +47,7 @@ class CppInside(ConanFile):
         for it in ["csharp", "java", "js", "objc", "php", "python", "ruby"]:
             if getattr(self.options, it):
                 if it == 'java':
-                    binding_folder = os.path.join(self.source_folder, "bindings", 'java', 'src', 'main', 'java')
+                    binding_folder = os.path.join(self.source_folder, "bindings", 'java')
                 else:
                     binding_folder = os.path.join(self.source_folder, "bindings", it, "messages")
                 os.makedirs(binding_folder, exist_ok=True)
