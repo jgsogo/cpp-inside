@@ -103,5 +103,13 @@ namespace crnd { namespace cpp {
         (*model.mutable_params())["stddev"] = stddev;
         return _impl->sample(seed, samples, model);
     }
+
+    std::vector<float> crnd::lognormal(float seed, int samples, float mean, float stddev) {
+        ::crnd::Model model;
+        model.set_id(::crnd::Model_Name_LOGNORMAL);
+        (*model.mutable_params())["mean"] = mean;
+        (*model.mutable_params())["stddev"] = stddev;
+        return _impl->sample(seed, samples, model);
+    }
 }}
 

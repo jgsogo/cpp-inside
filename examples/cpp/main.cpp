@@ -8,7 +8,7 @@ namespace po = boost::program_options;
 
 
 void draw_histogram(const std::vector<float>& rolls, const std::string& title) {
-    constexpr int nstars = 100;
+    constexpr int nstars = 300;
     constexpr int nclasses = 20;
 
     int p[nclasses+1]={};
@@ -25,8 +25,8 @@ void draw_histogram(const std::vector<float>& rolls, const std::string& title) {
     std::cout << title << std::endl;
 
     for (int i=0; i<nclasses; ++i) {
-        std::cout << std::fixed << std::setw( 7 ) << std::setprecision( 6 )
-                  << std::setfill( '0' ) << i*step+step/2.f << ": ";
+        std::cout << std::fixed << std::setw( 9 ) << std::setprecision( 6 )
+                  << std::setfill( '0' ) << min+i*step+step/2.f << ": ";
         std::cout << std::string(p[i]*nstars/rolls.size(),'*') << std::endl;
     }
 }
@@ -77,7 +77,11 @@ int main(int argc, char* argv[]) {
         std::cout << std::endl;
 
         std::cout << "NORMAL\n";
-        draw_histogram(CRND.normal(seed, samples, 5, 0.2), "normal");
+        draw_histogram(CRND.normal(seed, samples, 3, 0.2), "normal(3, 2)");
+        std::cout << std::endl;
+
+        std::cout << "LOGNORMAL\n";
+        draw_histogram(CRND.lognormal(seed, samples, 3, 0.2), "lognormal(3, 2)");
         std::cout << std::endl;
 
     }

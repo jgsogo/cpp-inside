@@ -42,6 +42,12 @@ auto get_random_generator(const crnd::Model& model) -> std::function<T (URNG&)> 
             std::geometric_distribution d{p};
             return d;
         }
+        case crnd::Model_Name_LOGNORMAL: {
+            auto m = get_param(model, "mean");
+            auto s = get_param(model, "stddev");
+            std::lognormal_distribution d{m, s};
+            return d;
+        }
         case crnd::Model_Name_DISCRETE:
         default:
             throw std::runtime_error{"Model '{}' not recognized"};
