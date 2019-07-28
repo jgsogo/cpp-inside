@@ -82,14 +82,3 @@ class CRND:
         model.params["mean"] = mean
         model.params["stddev"] = stddev
         return self._sample(seed, samples, model)
-
-
-if __name__ == '__main__':
-    path_to_lib = r'/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib/libcrnd.dylib'
-
-    crnd = CRND(path_to_lib)
-    print(crnd.dll)
-    crnd.help(sys.stdout)
-
-    samples = crnd.lognormal(seed=1234, samples=10, mean=2, stddev=0.2)
-    print(samples)
