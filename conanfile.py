@@ -2,14 +2,14 @@ import shutil
 import os
 from conans import ConanFile, tools, CMake
 
+
 class CppInside(ConanFile):
     name = "cpp-inside"
     version = "1.0"
 
     settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
-    options = {"ctre_version": "ANY",
-               #"cpp": [True, False],  # It is always generated
+    options = {#"cpp": [True, False],  # It is always generated
                "csharp": [True, False],
                "java": [True, False],
                "js": [True, False],
@@ -18,8 +18,7 @@ class CppInside(ConanFile):
                "python": [True, False],
                "ruby": [True, False],
                }
-    default_options = {"ctre_version": "2.6.4",
-                       #"cpp": True,
+    default_options = {#"cpp": True,
                        "csharp": True,
                        "java": True,
                        "js": True,
