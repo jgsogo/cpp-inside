@@ -27,7 +27,9 @@ auto get_random_generator(const crnd::Model& model) -> std::function<T (URNG&)> 
             return std::uniform_real_distribution<T>{};
         }
         case crnd::Model_Name_NORMAL: {
-            return std::normal_distribution<T>{};
+            auto mean = get_param(model, "mean");
+            auto stddev = get_param(model, "stddev");
+            return std::normal_distribution<T>{mean, stddev};
         }
         case crnd::Model_Name_BINOMIAL: {
             auto n = get_param(model, "n");

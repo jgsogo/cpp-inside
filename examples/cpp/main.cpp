@@ -1,9 +1,36 @@
 
 #include <iostream>
+#include <iomanip>
 #include <boost/program_options.hpp>
 #include "bindings/cpp/crnd_cpp.h"
 
 namespace po = boost::program_options;
+
+
+void draw_histogram(const std::vector<float>& rolls, const std::string& title) {
+    constexpr int nstars = 100;
+    constexpr int nclasses = 10;
+
+    int p[nclasses+1]={};
+    auto minmax = std::minmax_element(rolls.begin(), rolls.end());
+    auto min = *minmax.first;
+    auto max = *minmax.second;
+
+    auto step = (max-min)/float(nclasses);
+
+    for (auto& elem: rolls) {
+        ++p[int((elem-min)/step)];
+    }
+
+    std::cout << title << std::endl;
+
+    for (int i=0; i<10; ++i) {
+        std::cout << std::fixed << std::setw( 7 ) << std::setprecision( 6 )
+                  << std::setfill( '0' ) << i*step << ": ";
+        std::cout << std::string(p[i]*nstars/rolls.size(),'*') << std::endl;
+    }
+}
+
 
 int main(int argc, char* argv[]) {
     std::string path_to_crnd;
@@ -35,16 +62,24 @@ int main(int argc, char* argv[]) {
     std::cout << " - lib: " << path_to_crnd << std::endl;
     try
     {
+        float seed = 12345;
+        int samples = 100000;
         crnd::cpp::crnd CRND(path_to_crnd);
-        /*
-        for (auto it: {"1", "3", "5", "7", "10", "12", "17", "58237", "58238"}) {
-        //for (auto it: {"2019/02/28", "2019/02/aa", "aaa"}) {
-            auto m = CTRE.match(1, it);
-            std::cout << it << ": " << m << std::endl;
-        }
-        */
-        auto m = CRND.bernoulli(1234, 10, 0.5);
-        std::cout << m.at(0) << std::endl;
+
+        CRND.help(std::cout);
+
+        //std::cout << "BERNOULLI\n";
+        //draw_histogram(CRND.bernoulli(seed, samples, 0.5), "bernoulli(0.5)");
+        //std::cout << std::endl;
+
+        std::cout << "UNIFORM\n";
+        draw_histogram(CRND.uniform(seed, samples), "uniform");
+        std::cout << std::endl;
+
+        std::cout << "NORMAL\n";
+        draw_histogram(CRND.normal(seed, samples, 5, 0.2), "normal");
+        std::cout << std::endl;
+
     }
     catch(std::exception &e)
     {

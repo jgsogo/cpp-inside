@@ -33,6 +33,26 @@ namespace crnd { namespace cpp {
         typedef void(*callback_t)(void*, const void*, const void*);
 
         Impl() {}
+        std::vector<float> sample(float seed, int samples, const ::crnd::Model& model) {
+            ::crnd::Sample sample_message;
+            std::unique_ptr<::crnd::Status> status = std::make_unique<::crnd::Status>();
+            auto callback = response_callback(sample_message, *status);
+            auto wrapper = make_wrapper(callback);
+
+            ::crnd::SampleRequest request;
+            request.set_seed(seed);
+            request.set_n_samples(samples);
+            request.mutable_model()->CopyFrom(model);
+
+            sample_fn(wrapper.second, Serialized<::crnd::SampleRequest>(request), wrapper.first);
+
+            // TODO: Handle status
+            if (!status->ok()) {
+                throw std::runtime_error{status->error_message()};
+            }
+            std::vector<float> ret{sample_message.samples().begin(), sample_message.samples().end()};
+            return ret;
+        }
 
         std::string _path;
         boost::function<void(void* state, callback_t)> help_fn;
@@ -57,27 +77,31 @@ namespace crnd { namespace cpp {
         _impl->help_fn(wrapper.second, wrapper.first);
 
         // TODO: Handle status
-
+        if (!status->ok()) {
+            throw std::runtime_error{status->error_message()};
+        }
+        os << help_message.DebugString() << "\n";
     }
 
     std::vector<float> crnd::bernoulli(float seed, int samples, float p) {
-        ::crnd::Sample sample_message;
-        std::unique_ptr<::crnd::Status> status = std::make_unique<::crnd::Status>();
-        auto callback = response_callback(sample_message, *status);
-        auto wrapper = make_wrapper(callback);
-
-        ::crnd::SampleRequest request;
-        request.set_seed(seed);
-        request.set_n_samples(samples);
-        auto model = request.mutable_model();
-        model->set_id(::crnd::Model_Name_BERNOULLI);
-        (*model->mutable_params())["p"] = p;
-
-        _impl->sample_fn(wrapper.second, Serialized<::crnd::SampleRequest>(request), wrapper.first);
-
-        // TODO: Handle status
-        return std::vector<float>{};
+        ::crnd::Model model;
+        model.set_id(::crnd::Model_Name_BERNOULLI);
+        (*model.mutable_params())["p"] = p;
+        return _impl->sample(seed, samples, model);
     }
 
+    std::vector<float> crnd::uniform(float seed, int samples) {
+        ::crnd::Model model;
+        model.set_id(::crnd::Model_Name_UNIFORME);
+        return _impl->sample(seed, samples, model);
+    }
+
+    std::vector<float> crnd::normal(float seed, int samples, float mean, float stddev) {
+        ::crnd::Model model;
+        model.set_id(::crnd::Model_Name_NORMAL);
+        (*model.mutable_params())["mean"] = mean;
+        (*model.mutable_params())["stddev"] = stddev;
+        return _impl->sample(seed, samples, model);
+    }
 }}
 
