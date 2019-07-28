@@ -10,9 +10,9 @@ option(BUILD_BINDINGS "Build bindings" ON)
 option(BUILD_EXAMPLES "Build examples" ON)
 
 if(BUILD_BINDINGS)
-    #add_subdirectory(bindings)
+    add_subdirectory(bindings)
 endif()
 
 if (BUILD_EXAMPLES)
-    #add_subdirectory(examples)
+    add_subdirectory(examples)
 endif()

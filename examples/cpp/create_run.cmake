@@ -1,6 +1,6 @@
 
 message("Generate file '${OUTPUT_FILE}'")
-file(WRITE ${OUTPUT_FILE} "${EXAMPLE_CPP_FILE} --ctre_wrapper=${CTRE_WRAPPER_FILE}")
+file(WRITE ${OUTPUT_FILE} "${EXAMPLE_CPP_FILE} --crnd=${CRND_FILE}")
 
 get_filename_component(OUTPUT_FILE_DIRECTORY ${OUTPUT_FILE} DIRECTORY)
 file(COPY ${OUTPUT_FILE}
