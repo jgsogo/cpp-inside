@@ -2,6 +2,7 @@
 #pragma once
 
 #include <random>
+#include <sstream>
 #include "messages/model.pb.h"
 
 
@@ -11,7 +12,8 @@ float get_param(const crnd::Model& model, const std::string& param_name) {
         return f->second;
     }
     else {
-        throw std::runtime_error{"Parameter '{}' not found for model '{}'"};
+        std::ostringstream ss; ss << "Parameter '" << param_name << "' not found for model '" << model.id() << "'";
+        throw std::runtime_error{ss.str()};
     }
 }
 

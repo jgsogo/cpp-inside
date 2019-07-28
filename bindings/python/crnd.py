@@ -1,11 +1,24 @@
 
 import ctypes
+import sys
+import os
+
+
+me = os.path.abspath(os.path.dirname(__file__))
+sys.path.append(os.path.join(me, 'messages'))
+
 from messages import status_pb2, help_pb2, sample_request_pb2, sample_pb2, model_pb2
 
 
 class ProtoSerialized(ctypes.Structure):
-    _fields_ = [('data', ctypes.c_char_p),
+    _fields_ = [('data', ctypes.c_void_p),
                 ('size', ctypes.c_int),]
+
+
+def parse_proto(contents, message):
+    msg = (ctypes.c_char *contents.size).from_address(contents.data)
+    message.ParseFromString(msg)
+    return message
 
 
 def get_callback(data, status):
@@ -31,11 +44,11 @@ class CRND:
 
         @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
         def callback(_, data_in, status_in):
-            status.ParseFromString(status_in.contents.data)
+            parse_proto(status_in.contents, status)
             if status.ok:
-                data.ParseFromString(data_in.contents.data)
+                parse_proto(data_in.contents, data)
 
-        args = list(input_args) + [callback,]
+        args = list(input_args) + [callback, ]
         f(None, *args)
 
         if status.ok:
@@ -47,10 +60,17 @@ class CRND:
         sample_request = sample_request_pb2.SampleRequest()
         sample_request.seed = seed
         sample_request.n_samples = samples
-        sample_request.model = model
+        sample_request.model.CopyFrom(model)
+
+        message_str = sample_request.SerializeToString()
+        prt = ProtoSerialized()
+        prt.size = len(message_str)
+        prt.data = ctypes.cast( message_str, ctypes.c_void_p )
 
         sample = sample_pb2.Sample()
-        sample, status = self._call(self.dll.sample, sample, sample_request)
+        sample, status = self._call(self.dll.sample, sample, ctypes.byref(prt))
+        print(sample)
+        return
 
     def help(self, output):
         help = help_pb2.Help()
