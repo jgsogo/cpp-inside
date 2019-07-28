@@ -7,7 +7,7 @@
 	<version>1.0-SNAPSHOT</version>
 	<properties>
 		<src.bindings>@SOURCE_BINDINGS_DIR@/src/main/java</src.bindings>
-		<src.example>@CMAKE_CURRENT_BINARY_DIR@/src/main/java</src.example>
+		<src.example>@SOURCE_DIR@/src/main/java</src.example>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<jna.version>4.5.0</jna.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
