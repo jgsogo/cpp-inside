@@ -1,8 +1,10 @@
 cmake_minimum_required(VERSION 3.8.0)
 
+get_target_property(CRND_LIBRARY bindings_rust LOCATION)
+message(">>>>> CRND_LIBRARY: ${CRND_LIBRARY}")
 
 add_custom_target(exmaple_rust
-  COMMAND rustc ${CMAKE_CURRENT_SOURCE_DIR}/main.rs
+  COMMAND rustc ${CMAKE_CURRENT_SOURCE_DIR}/main.rs --extern crnd=${CRND_LIBRARY}
   COMMENT "Compile Rust executable")
 
 add_custom_command(TARGET exmaple_rust

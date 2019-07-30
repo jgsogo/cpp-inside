@@ -1,6 +1,6 @@
-fn main() {
-    // The statements here will be executed when the compiled binary is called
+extern crate crnd;
 
-    // Print text to the console
+fn main() {
     println!("Hello World!");
+    println!("from the library: {}", crnd::crnd::hello());
 }
