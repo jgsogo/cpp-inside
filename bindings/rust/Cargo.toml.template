@@ -1,0 +1,12 @@
+[package]
+name = "crnd"
+version = "0.1.0"
+authors = ["Javier G. Sogo <jgsogo@gmail.com>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[lib]
+path = "@CMAKE_CURRENT_SOURCE_DIR@/src/lib.rs"
