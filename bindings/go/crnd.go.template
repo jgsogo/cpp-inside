@@ -1,16 +1,31 @@
 package crnd
 
+// Read for callbacck: https://eli.thegreenplace.net/2019/passing-callbacks-and-pointers-to-cgo/
 
 /*
 #cgo CFLAGS: -I@CURRENT_SOURCE_DIR@/../../library/crnd/include -I@CMAKE_CURRENT_BINARY_DIR@/../../library
 #cgo LDFLAGS: -L@CRND_LIBRARY_PATH@ -lcrnd
 
 #include <api_c.h>
+#include <stdint.h>
+#include <stdio.h>
 
-void cb_proxy(void *v, void *v2, void *v3);
+typedef struct Serializeddd {
+    void* data;
+    int64_t size;
+}Serialized;
+void cb_proxy(void* v, Serialized v2, Serialized v3);
 
-static void _fn_help(void *state, void *callback) {
-      help(state, (callback_t)cb_proxy);
+static void cb_wrapper(void* v, const void* v2, const void* v3) {
+    Serialized* vvv = (Serialized*)v2;
+    printf(">>>>>>> %d\n",   vvv->size);
+    printf(">>>>>>> %s\n",   vvv->data);
+
+    cb_proxy(v, *(Serialized*)v2, *(Serialized*)v3);
+}
+
+static void _fn_help(void *callback) {
+      help(callback, cb_wrapper);
 }
 
 */
@@ -26,20 +41,59 @@ import (
 )
 
 type Callback struct {
-    Func     func(unsafe.Pointer, unsafe.Pointer, unsafe.Pointer)
+    Func     func(unsafe.Pointer, C.Serialized, C.Serialized)
     UserData string
 }
 
+//type Serialized struct {
+//    data unsafe.Pointer
+//    size int64
+//}
 
 type WrapperCRND struct {
     DllPath   string
 }
 
-func callback_help(v unsafe.Pointer, v2 unsafe.Pointer, v3 unsafe.Pointer) {
+func callback_help(v unsafe.Pointer, v2 C.Serialized, v3 C.Serialized) {
+    fmt.Printf("[go] > callback_help\n")
+
+    fmt.Printf("v3.size %p -\n", int(v3.size))
+
+    status := &messages.Status{}
+    data_in := *(*[]byte)(v3.data)
+    if err := proto.Unmarshal(data_in, status); err != nil {
+            log.Fatalln("Failed to parse status:", err)
+    } else {
+        fmt.Printf("----\n")
+        fmt.Printf(proto.MarshalTextString(status));
+
+        fmt.Printf("v2.size %p -\n", int(v2.size))
+        //fmt.Printf(*(*string)(v2.data))
+        fmt.Printf("----\n")
+
+        //s := make([]byte, v2.size+1)
+        mySlice := (*[1 << 30]byte)(v2.data)[:int(v2.size):int(v2.size)]
+        //arr := C.GoBytes(unsafe.Pointer(&v2.data), v2.size)
+
+        //copy(s, *(*[]byte)(v2.data))
+
+
+        help := &messages.Help{}
+        //help_in := *(*[]byte)(v2.data)
+        if err := proto.Unmarshal(mySlice, help); err != nil {
+                log.Fatalln("Failed to parse help:", err)
+        } else {
+            fmt.Printf("----\n")
+            fmt.Printf(proto.MarshalTextString(help));
+        }
+
+
+    }
+    fmt.Printf("[go] < callback_help\n")
 }
 
 //export cb_proxy
-func cb_proxy(v unsafe.Pointer, v1 unsafe.Pointer, v2 unsafe.Pointer) {
+func cb_proxy(v unsafe.Pointer, v1 C.Serialized, v2 C.Serialized) {
     cb := pointer.Restore(v).(*Callback)
     cb.Func(v, v1, v2)
 }
@@ -47,7 +101,7 @@ func cb_proxy(v unsafe.Pointer, v1 unsafe.Pointer, v2 unsafe.Pointer) {
 
 func (e WrapperCRND) Help() {
     // https://dev.to/mattn/call-go-function-from-c-function-1n3
-    C._fn_help(nil, pointer.Save(&Callback{
+    C._fn_help(pointer.Save(&Callback{
                          Func:     callback_help,
                          UserData: "callback_help",
                      }))

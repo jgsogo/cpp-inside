@@ -17,3 +17,5 @@ add_custom_command(TARGET exmaple_go
         "-DEXECUTABLE_GO=\"${CMAKE_CURRENT_BINARY_DIR}/main\""
         "-DOUTPUT_FILE=${CMAKE_CURRENT_BINARY_DIR}/run.sh"
         -P ${CMAKE_CURRENT_SOURCE_DIR}/create_run.cmake)
+
+add_dependencies(exmaple_go bindings_go)
