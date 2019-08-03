@@ -4,10 +4,20 @@ package main
 import (
     "fmt"
     crnd "@CRND_GO_LIBRARY_PATH_REL@"
+    "flag"
 )
 
 
 func main() {
-    fmt.Println("hello world")
-    fmt.Println(crnd.Hello())
+    crnd_library := flag.String("crnd", "foo", "Path to C library")
+    flag.Parse()
+
+    fmt.Println("crnd library:", *crnd_library)
+    wrapper := crnd.WrapperCRND {
+       DllPath: "path/to/dll",
+    }
+    wrapper.Help()
+
+    //fmt.Println("hello world")
+    //fmt.Println(crnd.Hello())
 }

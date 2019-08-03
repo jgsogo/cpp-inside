@@ -1,0 +1,83 @@
+package crnd
+
+
+/*
+#cgo CFLAGS: -I@CURRENT_SOURCE_DIR@/../../library/crnd/include -I@CMAKE_CURRENT_BINARY_DIR@/../../library
+#cgo LDFLAGS: -L@CRND_LIBRARY_PATH@ -lcrnd
+
+#include <api_c.h>
+
+void cb_proxy(void *v, void *v2, void *v3);
+
+static void _fn_help(void *state, void *callback) {
+      help(state, (callback_t)cb_proxy);
+}
+
+*/
+import "C"
+
+import (
+    "fmt"
+    "log"
+    "unsafe"
+    "github.com/mattn/go-pointer"
+    messages "./messages"
+    proto "github.com/golang/protobuf/proto"
+)
+
+type Callback struct {
+    Func     func(unsafe.Pointer, unsafe.Pointer, unsafe.Pointer)
+    UserData string
+}
+
+
+type WrapperCRND struct {
+    DllPath   string
+}
+
+func callback_help(v unsafe.Pointer, v2 unsafe.Pointer, v3 unsafe.Pointer) {
+}
+
+//export cb_proxy
+func cb_proxy(v unsafe.Pointer, v1 unsafe.Pointer, v2 unsafe.Pointer) {
+    cb := pointer.Restore(v).(*Callback)
+    cb.Func(v, v1, v2)
+}
+
+
+func (e WrapperCRND) Help() {
+    // https://dev.to/mattn/call-go-function-from-c-function-1n3
+    C._fn_help(nil, pointer.Save(&Callback{
+                         Func:     callback_help,
+                         UserData: "callback_help",
+                     }))
+
+    //handle := C.dlopen(C.CString(e.DllPath), C.RTLD_LAZY)
+    //helpFn := C.dlsym(handle, C.CString("helpp"))
+    //fmt.Printf("helpFn is at %p\n", helpFn)
+
+    fmt.Printf("...")
+}
+
+
+
+func Hello() string {
+    crnd := WrapperCRND {
+        DllPath: "path/to/dll",
+    }
+    crnd.Help()
+
+    p := &messages.Help{
+        Name:    "name",
+        }
+
+    data, err := proto.Marshal(p)
+    if err != nil {
+      log.Fatal("marshaling error: ", err)
+    }
+
+    fmt.Println(data)
+    return proto.MarshalTextString(p)
+    //return "Hello, world, from library!"
+}
+

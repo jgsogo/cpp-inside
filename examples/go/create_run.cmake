@@ -1,6 +1,7 @@
 
 message("Generate file '${OUTPUT_FILE}'")
-file(WRITE ${OUTPUT_FILE} "${EXECUTABLE_GO} --crnd=${CRND_LIBRARY}")
+get_filename_component(CRND_LIBRARY_DIRECTORY ${CRND_LIBRARY} DIRECTORY)
+file(WRITE ${OUTPUT_FILE} "pushd ${CRND_LIBRARY_DIRECTORY}; ${EXECUTABLE_GO} --crnd=${CRND_LIBRARY}; popd")
 
 get_filename_component(OUTPUT_FILE_DIRECTORY ${OUTPUT_FILE} DIRECTORY)
 file(COPY ${OUTPUT_FILE}
