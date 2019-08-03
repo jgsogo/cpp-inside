@@ -1,0 +1,13 @@
+
+package main
+
+import (
+    "fmt"
+    crnd "@CRND_GO_LIBRARY_PATH_REL@"
+)
+
+
+func main() {
+    fmt.Println("hello world")
+    fmt.Println(crnd.Hello())
+}
