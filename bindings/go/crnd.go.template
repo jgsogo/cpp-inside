@@ -38,7 +38,7 @@ import (
 )
 
 type Callback struct {
-    Func     func(unsafe.Pointer, C.Serialized, C.Serialized)
+    Func     func(C.Serialized, C.Serialized)
     UserData unsafe.Pointer
 }
 
@@ -46,7 +46,7 @@ type WrapperCRND struct {
     DllPath   string
 }
 
-func callback_help(v unsafe.Pointer, help_in C.Serialized, status_in C.Serialized) {
+func callback_help(help_in C.Serialized, status_in C.Serialized) {
     fmt.Printf("[go] > callback_help\n")
 
     status := &messages.Status{}
@@ -68,9 +68,9 @@ func callback_help(v unsafe.Pointer, help_in C.Serialized, status_in C.Serialize
 }
 
 //export cb_proxy
-func cb_proxy(v unsafe.Pointer, v1 C.Serialized, v2 C.Serialized) {
-    cb := pointer.Restore(v).(*Callback)
-    cb.Func(v, v1, v2)
+func cb_proxy(state unsafe.Pointer, data C.Serialized, status C.Serialized) {
+    cb := pointer.Restore(state).(*Callback)
+    cb.Func(data, status)
 }
 
 
