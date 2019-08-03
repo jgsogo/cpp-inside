@@ -38,45 +38,49 @@ import (
 )
 
 type Callback struct {
-    Func     func(C.Serialized, C.Serialized)
+    Func     func(C.Serialized) interface{}
     UserData unsafe.Pointer
+    Data     interface{}
+    Status   messages.Status
 }
 
 type WrapperCRND struct {
     DllPath   string
 }
 
-func callback_help(help_in C.Serialized, status_in C.Serialized) {
+func callback_help(help_in C.Serialized) interface{} {
     fmt.Printf("[go] > callback_help\n")
-
-    status := &messages.Status{}
-    status_in_data := (*[1 << 30]byte)(status_in.data)[:int(status_in.size):int(status_in.size)]
-    if err := proto.Unmarshal(status_in_data, status); err != nil {
-            log.Fatalln("Failed to parse status:", err)
-    } else {
-        //fmt.Printf(proto.MarshalTextString(status));
-
-        help := &messages.Help{}
-        help_in_data := (*[1 << 30]byte)(help_in.data)[:int(help_in.size):int(help_in.size)]
-        if err := proto.Unmarshal(help_in_data, help); err != nil {
-            log.Fatalln("Failed to parse help:", err)
-        } else {
-            fmt.Printf(proto.MarshalTextString(help));
-        }
+    help := &messages.Help{}
+    help_in_data := (*[1 << 30]byte)(help_in.data)[:int(help_in.size):int(help_in.size)]
+    if err := proto.Unmarshal(help_in_data, help); err != nil {
+        log.Fatalln("Failed to parse help:", err)
     }
     fmt.Printf("[go] < callback_help\n")
+    return help
 }
 
 //export cb_proxy
-func cb_proxy(state unsafe.Pointer, data C.Serialized, status C.Serialized) {
+func cb_proxy(state unsafe.Pointer, data_in C.Serialized, status_in C.Serialized) {
     cb := pointer.Restore(state).(*Callback)
-    cb.Func(data, status)
+
+    status_in_data := (*[1 << 30]byte)(status_in.data)[:int(status_in.size):int(status_in.size)]
+    if err := proto.Unmarshal(status_in_data, &cb.Status); err != nil {
+        log.Fatalln("Failed to parse status:", err)
+    } else {
+        cb.Data = cb.Func(data_in)
+    }
 }
 
 
 func (e WrapperCRND) Help() {
-    C._fn_help(pointer.Save(&Callback{
-                         Func:     callback_help,
-                         UserData: pointer.Save(&e),
-                     }))
+    fmt.Printf("[go] > WrapperCRND.Help()\n")
+    cb := &Callback{
+                                   Func:     callback_help,
+                                   UserData: pointer.Save(&e),
+                               }
+    C._fn_help(pointer.Save(cb))
+    fmt.Printf(proto.MarshalTextString(&cb.Status));
+    help_message := cb.Data.(*messages.Help)
+    fmt.Printf(proto.MarshalTextString(help_message));
+    fmt.Printf("[go] < WrapperCRND.Help()\n")
 }
