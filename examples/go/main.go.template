@@ -18,6 +18,8 @@ func main() {
     }
     wrapper.Help()
 
+    wrapper.Lognormal(1234, 10000, 2, 20)
+
     //fmt.Println("hello world")
     //fmt.Println(crnd.Hello())
 }
