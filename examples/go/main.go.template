@@ -16,7 +16,7 @@ func main() {
     wrapper := crnd.WrapperCRND {
        DllPath: "path/to/dll",
     }
-    wrapper.Help()
+    //wrapper.Help()
 
     wrapper.Lognormal(1234, 10000, 2, 20)
 
