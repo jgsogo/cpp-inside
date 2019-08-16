@@ -16,7 +16,8 @@ class CppInside(ConanFile):
                "objc": [True, False],
                "php": [True, False],
                "python": [True, False],
-               "ruby": [True, False],
+                "ruby": [True, False],
+                "go": [True, False],
                }
     default_options = {#"cpp": True,
                        "csharp": True,
@@ -26,6 +27,7 @@ class CppInside(ConanFile):
                        "php": True,
                        "python": True,
                        "ruby": True,
+                       "go": True,
                        }
 
     exports_sources = "library/*"
@@ -39,12 +41,20 @@ class CppInside(ConanFile):
         self.requires("spdlog/1.3.1@bincrafters/stable")
 
     def source(self):
+        env = {}
+        if self.options.go:
+            self.run("go get github.com/golang/protobuf/protoc-gen-go")
+            self.run("go get github.com/golang/protobuf/proto")
+            #with tools.chdir(os.path.join(self.source_folder, "messages")):
+            #    self.run("protoc --go_out={} *.proto".format(os.path.join(self.source_folder, "bindings", "go", "messages")))
+            env["PATH"] = [os.path.expanduser("~/go/bin")]
+
         # Generate protobuf messages
         message_folder = os.path.join(self.source_folder, "messages")
         messages = [os.path.join(message_folder, it) for it in os.listdir(message_folder) if it.endswith(".proto")]
         command = "protoc --proto_path={}".format(message_folder)
         command += " --cpp_out={}".format(os.path.join(self.source_folder, "library", "messages"))
-        for it in ["csharp", "java", "js", "objc", "php", "python", "ruby"]:
+        for it in ["csharp", "java", "js", "objc", "php", "python", "ruby", "go"]:
             if getattr(self.options, it):
                 if it == 'java':
                     binding_folder = os.path.join(self.source_folder, "bindings", 'java')
@@ -53,7 +63,8 @@ class CppInside(ConanFile):
                 os.makedirs(binding_folder, exist_ok=True)
                 command += " --{}_out={}".format(it, binding_folder)
         command += " {}".format(" ".join(messages))
-        self.run(command)
+        with tools.environment_append(env):
+            self.run(command)
 
     def _cmake(self):
         cmake = CMake(self)

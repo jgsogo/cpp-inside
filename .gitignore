@@ -42,4 +42,4 @@ cmake-build-release/
 bindings/*/messages/
 __pycache__/
 bindings/java/crnd/messages/
-
+bindings/go/crnd.go
