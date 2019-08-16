@@ -1,0 +1,146 @@
+package crnd
+
+// Read for callback:
+//      https://eli.thegreenplace.net/2019/passing-callbacks-and-pointers-to-cgo/
+//      https://dev.to/mattn/call-go-function-from-c-function-1n3
+
+/*
+#cgo CFLAGS: -I@CURRENT_SOURCE_DIR@/../../library/crnd/include -I@CMAKE_CURRENT_BINARY_DIR@/../../library
+#cgo LDFLAGS: -L@CRND_LIBRARY_PATH@ -lcrnd
+
+#include <api_c.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+
+typedef struct SerializedStruct {
+    void* data;
+    int64_t size;
+} Serialized;
+void cb_proxy(void* v, Serialized v2, Serialized v3);
+
+static void cb_wrapper(void* v, const void* v2, const void* v3) {
+    cb_proxy(v, *(Serialized*)v2, *(Serialized*)v3);
+}
+
+static void _fn_help(void *callback) {
+    help(callback, cb_wrapper);
+}
+
+static void _fn_sample(void *callback, Serialized* sample_request) {
+    sample(callback, (void*)sample_request, cb_wrapper);
+}
+
+
+*/
+import "C"
+
+import (
+    "fmt"
+    "log"
+    "unsafe"
+    "github.com/mattn/go-pointer"
+    messages "./messages"
+    proto "github.com/golang/protobuf/proto"
+)
+
+type Callback struct {
+    Func     func(C.Serialized) interface{}
+    UserData unsafe.Pointer
+    Data     interface{}
+    Status   messages.Status
+}
+
+type WrapperCRND struct {
+    DllPath   string
+}
+
+func callback_help(help_in C.Serialized) interface{} {
+    fmt.Printf("[go] > callback_help\n")
+    help := &messages.Help{}
+    help_in_data := (*[1 << 30]byte)(help_in.data)[:int(help_in.size):int(help_in.size)]
+    if err := proto.Unmarshal(help_in_data, help); err != nil {
+        log.Fatalln("Failed to parse help:", err)
+    }
+    fmt.Printf("[go] < callback_help\n")
+    return help
+}
+
+func callback_sample(sample_in C.Serialized) interface{} {
+    fmt.Printf("[go] > callback_sample\n")
+    sample := &messages.Sample{}
+    sample_in_data := (*[1 << 30]byte)(sample_in.data)[:int(sample_in.size):int(sample_in.size)]
+        if err := proto.Unmarshal(sample_in_data, sample); err != nil {
+            log.Fatalln("Failed to parse sample:", err)
+        }
+    fmt.Printf("[go] < callback_sample\n")
+    return sample
+}
+
+//export cb_proxy
+func cb_proxy(state unsafe.Pointer, data_in C.Serialized, status_in C.Serialized) {
+    cb := pointer.Restore(state).(*Callback)
+
+    status_in_data := (*[1 << 30]byte)(status_in.data)[:int(status_in.size):int(status_in.size)]
+    if err := proto.Unmarshal(status_in_data, &cb.Status); err != nil {
+        log.Fatalln("Failed to parse status:", err)
+    } else {
+        cb.Data = cb.Func(data_in)
+    }
+}
+
+
+func (e WrapperCRND) Help() {
+    fmt.Printf("[go] > WrapperCRND.Help()\n")
+    cb := &Callback{
+        Func:     callback_help,
+        UserData: pointer.Save(&e),
+    }
+    C._fn_help(pointer.Save(cb));
+    fmt.Printf(proto.MarshalTextString(&cb.Status));
+    help_message := cb.Data.(*messages.Help);
+    fmt.Printf(proto.MarshalTextString(help_message));
+    fmt.Printf("[go] < WrapperCRND.Help()\n");
+}
+
+func (crnd WrapperCRND) Lognormal(seed float32, samples uint32, mean float32, stddev float32) []float32 {
+    fmt.Printf("[go] > WrapperCRND.Lognormal()\n")
+
+    sample_request := &messages.SampleRequest {
+        Seed:       seed,
+        NSamples:   samples,
+        Model:      &messages.Model {
+                        Id:     messages.Model_LOGNORMAL,
+                        Params: map[string]float32 {
+                                    "mean": mean,
+                                    "stddev": stddev,
+                        },
+        },
+    }
+
+    data, err := proto.Marshal(sample_request)
+    if err != nil {
+        log.Fatal("marshaling error: ", err)
+    }
+
+    p := C.malloc(C.size_t(len(data)))
+    //defer C.free(p)
+    cBuf := (*[1 << 30]byte)(p)
+    copy(cBuf[:], data)
+
+    sample_request_serialized := &C.Serialized {
+        data: p,
+        size: C.int64_t(len(data)),
+    }
+
+    cb := &Callback {
+        Func: callback_sample,
+        UserData: pointer.Save(&crnd),
+    }
+    C._fn_sample(pointer.Save(cb), sample_request_serialized)
+    fmt.Printf(proto.MarshalTextString(&cb.Status));
+    sample_message := cb.Data.(*messages.Sample);
+    //fmt.Printf(proto.MarshalTextString(sample_message));
+    fmt.Printf("[go] < WrapperCRND.Lognormal()\n");
+    return sample_message.Samples;
+}
