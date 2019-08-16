@@ -10,11 +10,8 @@ package crnd
 
 #include <api_c.h>
 #include <stdint.h>
-#include <stdio.h>
-#include <inttypes.h>
 #include <stdlib.h>
 
-typedef unsigned char UBYTE;
 
 typedef struct SerializedStruct {
     void* data;
@@ -31,9 +28,6 @@ static void _fn_help(void *callback) {
 }
 
 static void _fn_sample(void *callback, Serialized* sample_request) {
-    printf("*************\n");
-    printf("%" PRId64 "\n", sample_request->size);
-
     sample(callback, (void*)sample_request, cb_wrapper);
 }
 
@@ -87,13 +81,10 @@ func callback_sample(sample_in C.Serialized) interface{} {
 func cb_proxy(state unsafe.Pointer, data_in C.Serialized, status_in C.Serialized) {
     cb := pointer.Restore(state).(*Callback)
 
-    samplereq := &messages.SampleRequest{}
-
     status_in_data := (*[1 << 30]byte)(status_in.data)[:int(status_in.size):int(status_in.size)]
-    if err := proto.Unmarshal(status_in_data, samplereq); err != nil {
+    if err := proto.Unmarshal(status_in_data, &cb.Status); err != nil {
         log.Fatalln("Failed to parse status:", err)
     } else {
-        fmt.Printf(proto.MarshalTextString(samplereq));
         cb.Data = cb.Func(data_in)
     }
 }
@@ -126,57 +117,21 @@ func (crnd WrapperCRND) Lognormal(seed float32, samples uint32, mean float32, st
                         },
         },
     }
-    //fmt.Printf(proto.MarshalTextString(sample_request));
 
     data, err := proto.Marshal(sample_request)
     if err != nil {
         log.Fatal("marshaling error: ", err)
     }
 
-    fmt.Printf("1!!!!!!!!!!!!!!!!!\n");
-    //samplereq1 := &messages.SampleRequest{}
-    //proto.Unmarshal(data, samplereq1)
-    //fmt.Printf(proto.MarshalTextString(samplereq1));
-
     p := C.malloc(C.size_t(len(data)))
-    defer C.free(p)
+    //defer C.free(p)
     cBuf := (*[1 << 30]byte)(p)
     copy(cBuf[:], data)
 
-    //buf := new(bytes.Buffer) //create my buffer
-    //binary.Write(buf, binary.LittleEndian, data)
-    //b := buf.Bytes()
-
-    fmt.Printf("2!!!!!!!!!!!!!!!!!\n");
     sample_request_serialized := &C.Serialized {
-        //data: pointer.Save(&data[1]),
-        //data: &data[0],
-        //data: unsafe.Pointer(&b[0]),
         data: p,
         size: C.int64_t(len(data)),
     }
-    fmt.Printf("%d -- %d\n", len(data), sample_request_serialized.size);
-    fmt.Printf("%p -- %p -- %p\n", data, &data[0], sample_request_serialized.data);
-    fmt.Printf("3!!!!!!!!!!!!!!!!!\n");
-
-    //status_in_data := (*[1 << 30]byte)(pointer.Restore(sample_request_serialized.data))[:40:40]
-    //status_in_data := (*[1 << 30]byte)(unsafe.Pointer(sample_request_serialized.data))[:40:40]
-    //status_in_data := C.GoBytes(unsafe.Pointer(sample_request_serialized.data), 40)
-    //status_in_data := (*[1 << 30]byte)(sample_request_serialized.data)[:int(sample_request_serialized.size):int(sample_request_serialized.size)]
-
-    //fmt.Printf("--->> %p -- %p -- %p\n", status_in_data, &status_in_data, pointer.Restore(sample_request_serialized.data));
-    //fmt.Printf(string(status_in_data))
-    //fmt.Printf("%d -- %d\n", len(status_in_data), sample_request_serialized.size);
-    fmt.Printf("4!!!!!!!!!!!!!!!!!\n");
-
-    //samplereq := &messages.SampleRequest{}
-    //if err := proto.Unmarshal(status_in_data, samplereq); err != nil {
-    //    log.Fatalln("unmarshaling error: ", err)
-    //} else {
-    //    fmt.Printf("5********************");
-    //    fmt.Printf(proto.MarshalTextString(samplereq));
-    //}
-
 
     cb := &Callback {
         Func: callback_sample,
@@ -185,7 +140,7 @@ func (crnd WrapperCRND) Lognormal(seed float32, samples uint32, mean float32, st
     C._fn_sample(pointer.Save(cb), sample_request_serialized)
     fmt.Printf(proto.MarshalTextString(&cb.Status));
     sample_message := cb.Data.(*messages.Sample);
-    fmt.Printf(proto.MarshalTextString(sample_message));
+    //fmt.Printf(proto.MarshalTextString(sample_message));
     fmt.Printf("[go] < WrapperCRND.Lognormal()\n");
     return sample_message;
 }
