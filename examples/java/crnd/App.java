@@ -21,6 +21,7 @@ import crnd.messages.SampleProto.Sample;
 import crnd.messages.SampleRequestProto.SampleRequest;
 import crnd.messages.StatusProto.Status;
 
+
 public class App
 {
     public static void main( String[] args )
@@ -38,7 +39,11 @@ public class App
         System.out.println("-------------------------------------");
         System.out.println("[Java] Call sampling");
         SampleRequest req = SampleRequest.newBuilder()
-            .setModel(Model.newBuilder().build())
+            .setModel(Model.newBuilder()
+                    .setId(Model.Name.LOGNORMAL)
+                    .putParams("mean", 0.2f)
+                    .putParams("stddev", 3f)
+                    .build())
             .setSeed(12345)
             .setNSamples(100000)
             .build();
