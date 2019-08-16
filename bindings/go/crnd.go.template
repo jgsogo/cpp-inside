@@ -103,7 +103,7 @@ func (e WrapperCRND) Help() {
     fmt.Printf("[go] < WrapperCRND.Help()\n");
 }
 
-func (crnd WrapperCRND) Lognormal(seed float32, samples uint32, mean float32, stddev float32) *messages.Sample {
+func (crnd WrapperCRND) Lognormal(seed float32, samples uint32, mean float32, stddev float32) []float32 {
     fmt.Printf("[go] > WrapperCRND.Lognormal()\n")
 
     sample_request := &messages.SampleRequest {
@@ -142,5 +142,5 @@ func (crnd WrapperCRND) Lognormal(seed float32, samples uint32, mean float32, st
     sample_message := cb.Data.(*messages.Sample);
     //fmt.Printf(proto.MarshalTextString(sample_message));
     fmt.Printf("[go] < WrapperCRND.Lognormal()\n");
-    return sample_message;
+    return sample_message.Samples;
 }

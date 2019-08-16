@@ -5,6 +5,7 @@ import (
     "fmt"
     crnd "@CRND_GO_LIBRARY_PATH_REL@"
     "flag"
+    "strings"
 )
 
 
@@ -18,8 +19,45 @@ func main() {
     }
     wrapper.Help()
 
-    wrapper.Lognormal(12345, 100000, 3, 0.2)
+    var samples []float32;
+    samples = wrapper.Lognormal(12345, 100000, 3, 0.2)
+    draw_histogram(samples, "lognormal(3, 0.2)")
 
-    //fmt.Println("hello world")
-    //fmt.Println(crnd.Hello())
+}
+
+
+func draw_histogram(rolls []float32, title string) {
+    const nstars int = 300
+    const nclasses int = 20
+
+    var p [nclasses + 1]int
+
+    min_value, max_value := MinMax(rolls)
+    step := (max_value-min_value)/float32(nclasses)
+
+    for _, elem := range rolls {
+        idx := int((elem-min_value)/step)
+        p[idx] += 1
+    }
+
+    fmt.Println(title)
+    for i, value := range p {
+        stars := value*nstars/len(rolls)
+        axis_value := min_value + float32(i)*step + step/2.0
+        fmt.Printf("%2.6f: %v\n", axis_value, strings.Repeat("*", stars))
+    }
+}
+
+func MinMax(array []float32) (float32, float32) {
+    var max float32 = array[0]
+    var min float32 = array[0]
+    for _, value := range array {
+        if max < value {
+            max = value
+        }
+        if min > value {
+            min = value
+        }
+    }
+    return min, max
 }
