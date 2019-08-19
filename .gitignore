@@ -43,3 +43,4 @@ bindings/*/messages/
 __pycache__/
 bindings/java/crnd/messages/
 bindings/go/crnd.go
+bindings/rust/src/protos/*.rs

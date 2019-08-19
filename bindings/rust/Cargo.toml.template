@@ -5,10 +5,10 @@ authors = ["Javier G. Sogo <jgsogo@gmail.com>"]
 edition = "2018"
 
 [dependencies]
-protobuf = "2.4.2"
+protobuf = "2.8.0"
 
 [build-dependencies]
-protobuf-codegen-pure = "2.4.2"
+protobuf-codegen-pure = "2.8.0"
 
 [lib]
 path = "@CMAKE_CURRENT_SOURCE_DIR@/src/lib.rs"
