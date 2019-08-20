@@ -6,6 +6,7 @@ edition = "2018"
 
 [dependencies]
 crnd = { path = "../../bindings/rust" }
+libloading = "0.5.2"
 
 [[bin]]
 name = "example_rust"
