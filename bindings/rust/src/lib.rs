@@ -3,8 +3,13 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-include!("bindings.rs");
+//include!("bindings.rs");
 extern crate libloading;
+
+
+type callback_t = ::std::option::Option< unsafe extern "C" fn (state: *mut ::std::os::raw::c_void,
+                                                               data: *const ::std::os::raw::c_void,
+                                                               status: *const ::std::os::raw::c_void)>;
 
 /* From bindings.rs
 pub type callback_t = ::std::option::Option< unsafe extern "C" fn (state: *mut ::std::os::raw::c_void,
@@ -33,13 +38,17 @@ extern "C" fn help_handler(state: *mut ::std::os::raw::c_void,
     closure(data as *const ::std::os::raw::c_void, status as *const ::std::os::raw::c_void)
 }
 
-pub fn help_with_callback<F>(mut callback: F)
+pub fn help_with_callback<F>(instance: crnd, mut callback: F)
     where F: FnMut(*const ::std::os::raw::c_void, *const ::std::os::raw::c_void)
 {
     // reason for double indirection is described below
     let mut cb: &mut FnMut(*const ::std::os::raw::c_void, *const ::std::os::raw::c_void) = &mut callback;
     let cb = &mut cb;
-    unsafe { help(cb as *mut _ as *mut ::std::os::raw::c_void, Some(help_handler)) }
+
+    type HelpFunc = fn(*mut ::std::os::raw::c_void, callback_t);
+    let func: Symbol<HelpFunc> = unsafe {instance.lib.get(b"help").unwrap()};
+
+    unsafe { func(cb as *mut _ as *mut ::std::os::raw::c_void, Some(help_handler)) }
 }
 
 
@@ -59,7 +68,7 @@ impl crnd {
         let mut help_message = Help::new();
 
         // Use a callback with closure to populate help_message
-        help_with_callback(|data, status| {
+        help_with_callback(self, |data, status| {
             help_message.set_name("inner".to_string());
         });
 
