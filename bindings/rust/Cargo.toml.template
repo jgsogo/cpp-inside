@@ -10,7 +10,6 @@ libloading = "0.5.2"
 
 [build-dependencies]
 protobuf-codegen-pure = "2.8.0"
-bindgen = "0.50"
 
 [lib]
 path = "@CMAKE_CURRENT_SOURCE_DIR@/src/lib.rs"
