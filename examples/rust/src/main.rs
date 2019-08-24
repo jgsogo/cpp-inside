@@ -12,7 +12,10 @@ fn main() {
     };
     //instance.lib = Library::new(library_path).unwrap();
 
-    println!("Hello World!");
-    println!("from the library: {}", crnd::crnd::hello());
-    println!("from the library | help: {}", instance.help());
+    println!("This is RUST!");
+    let help_msg = instance.help();
+    println!("help: {:#?}", help_msg);
+
+    let lognormal = instance.lognormal(1.0, 2, 3.0, 4.0);
+
 }
