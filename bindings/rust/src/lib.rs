@@ -3,9 +3,14 @@
 #![allow(non_camel_case_types)]
 #![allow(non_snake_case)]
 
-//include!("bindings.rs");
 extern crate libloading;
 
+pub mod protos;
+
+use protobuf::*;
+use protos::help::Help;
+use std::mem;
+use libloading::{Library, Symbol};
 
 type callback_t = ::std::option::Option< unsafe extern "C" fn (state: *mut ::std::os::raw::c_void,
                                                                data: *const ::std::os::raw::c_void,
@@ -15,26 +20,6 @@ struct Serialized {
     data: *mut u8,
     size: u32,
 }
-
-/* From bindings.rs
-pub type callback_t = ::std::option::Option< unsafe extern "C" fn (state: *mut ::std::os::raw::c_void,
-                                                                   data: *const ::std::os::raw::c_void,
-                                                                   status: *const ::std::os::raw::c_void)>;
-
-extern "C" {
-    pub fn help(state: *mut ::std::os::raw::c_void, help_callback: callback_t);
-}
-
-*/
-
-
-pub mod protos;
-
-use protobuf::*;
-use protos::help::Help;
-use std::mem;
-use libloading::{Library, Symbol};
-
 
 extern "C" fn help_handler(state: *mut ::std::os::raw::c_void,
                            data: *const ::std::os::raw::c_void,
@@ -77,17 +62,9 @@ impl crnd {
             println!("[rust] > help_with_callback");
             let serialized: &mut Serialized = unsafe { &mut *(data as *mut Serialized) };
             let array: &[u8] = unsafe { std::slice::from_raw_parts(serialized.data, serialized.size as usize) };
-
-            //let slice = unsafe { slice::from_raw_parts(serialized.data, serialized.size) };
-
-            println!("[rust]    serialized.data.size: {}", serialized.size);
             help_message = parse_from_bytes::<Help>(array).unwrap();
-            //help_message.set_name("inner".to_string());
             println!("[rust] < help_with_callback");
         });
-
-        //help_message.set_name("name".to_string());
-
         let mut contents = String::new();
         help_message.write_to_writer(unsafe {contents.as_mut_vec()});
         contents
