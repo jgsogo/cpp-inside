@@ -10,7 +10,7 @@ pub mod protos;
 use protobuf::*;
 use protos::help::Help;
 use protos::sample::Sample;
-use protos::status::Status;
+//use protos::status::Status;
 use protos::sample_request::SampleRequest;
 use protos::model::Model;
 use std::mem;
@@ -43,7 +43,7 @@ pub fn help_with_callback<F>(instance: &crnd, mut callback: F)
     type HelpFunc = fn(*mut ::std::os::raw::c_void, callback_t);
     let func: Symbol<HelpFunc> = unsafe {instance.lib.get(b"help").unwrap()};
 
-    unsafe { func(cb as *mut _ as *mut ::std::os::raw::c_void, Some(help_handler)) }
+    func(cb as *mut _ as *mut ::std::os::raw::c_void, Some(help_handler));
     println!("[rust] < help_with_callback");
 }
 
@@ -66,7 +66,7 @@ pub fn sample_with_callback<F>(instance: &crnd, sample_request: SampleRequest, m
     };
     let serialized_ptr: *mut ::std::os::raw::c_void = &mut serialized as *mut _ as *mut ::std::os::raw::c_void;
 
-    unsafe { func(cb as *mut _ as *mut ::std::os::raw::c_void, serialized_ptr, Some(help_handler)) }
+    func(cb as *mut _ as *mut ::std::os::raw::c_void, serialized_ptr, Some(help_handler));
     println!("[rust] > sample_with_callback");
 }
 
@@ -87,7 +87,7 @@ impl crnd {
         let mut help_message = Help::new();
 
         // Use a callback with closure to populate help_message
-        help_with_callback(self, |data, status| {
+        help_with_callback(self, |data, _status| {
             println!("[rust] > callback");
             let serialized: &mut Serialized = unsafe { &mut *(data as *mut Serialized) };
             let array: &[u8] = unsafe { std::slice::from_raw_parts(serialized.data, serialized.size as usize) };
@@ -95,7 +95,7 @@ impl crnd {
             println!("[rust] < callback");
         });
         let mut contents = String::new();
-        help_message.write_to_writer(unsafe {contents.as_mut_vec()});
+        let _ = help_message.write_to_writer(unsafe {contents.as_mut_vec()});
         contents
     }
 
@@ -114,7 +114,7 @@ impl crnd {
         let mut sample = Sample::new();
 
         // Use a callback with closure to populate help_message
-        sample_with_callback(self, sample_request, |data, status| {
+        sample_with_callback(self, sample_request, |data, _status| {
             println!("[rust] > callback");
             let serialized: &mut Serialized = unsafe { &mut *(data as *mut Serialized) };
             let array: &[u8] = unsafe { std::slice::from_raw_parts(serialized.data, serialized.size as usize) };

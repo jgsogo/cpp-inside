@@ -2,7 +2,7 @@ extern crate crnd;
 extern crate libloading;
 
 use std::env;
-use libloading::{Library, Symbol};
+use libloading::Library;
 
 fn main() {
     let library_path = env::args().nth(1).expect("USAGE: loading <LIB>");
@@ -17,5 +17,7 @@ fn main() {
     println!("help: {:#?}", help_msg);
 
     let lognormal = instance.lognormal(1.0, 2, 3.0, 4.0);
-
+    for item in lognormal.samples {
+        println!("it: {}", item);
+    }
 }
