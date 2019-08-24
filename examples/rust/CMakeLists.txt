@@ -7,7 +7,7 @@ message(">>>>> CRND_LIBRARY: ${CRND_LIBRARY}")
 #  COMMAND rustc ${CMAKE_CURRENT_SOURCE_DIR}/main.rs --extern crnd=${CRND_LIBRARY}
 #  COMMENT "Compile Rust executable")
 
-configure_file(Cargo.toml.template ${CMAKE_CURRENT_BINARY_DIR}/Cargo.toml @ONLY)
+configure_file(Cargo.template.toml ${CMAKE_CURRENT_BINARY_DIR}/Cargo.toml @ONLY)
 
 add_custom_target(exmaple_rust
         COMMAND cargo build --manifest-path ${CMAKE_CURRENT_BINARY_DIR}/Cargo.toml
