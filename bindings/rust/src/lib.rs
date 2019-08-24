@@ -11,6 +11,11 @@ type callback_t = ::std::option::Option< unsafe extern "C" fn (state: *mut ::std
                                                                data: *const ::std::os::raw::c_void,
                                                                status: *const ::std::os::raw::c_void)>;
 
+struct Serialized {
+    data: *mut u8,
+    size: u32,
+}
+
 /* From bindings.rs
 pub type callback_t = ::std::option::Option< unsafe extern "C" fn (state: *mut ::std::os::raw::c_void,
                                                                    data: *const ::std::os::raw::c_void,
@@ -69,7 +74,16 @@ impl crnd {
 
         // Use a callback with closure to populate help_message
         help_with_callback(self, |data, status| {
-            help_message.set_name("inner".to_string());
+            println!("[rust] > help_with_callback");
+            let serialized: &mut Serialized = unsafe { &mut *(data as *mut Serialized) };
+            let array: &[u8] = unsafe { std::slice::from_raw_parts(serialized.data, serialized.size as usize) };
+
+            //let slice = unsafe { slice::from_raw_parts(serialized.data, serialized.size) };
+
+            println!("[rust]    serialized.data.size: {}", serialized.size);
+            help_message = parse_from_bytes::<Help>(array).unwrap();
+            //help_message.set_name("inner".to_string());
+            println!("[rust] < help_with_callback");
         });
 
         //help_message.set_name("name".to_string());
