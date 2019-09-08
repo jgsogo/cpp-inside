@@ -45,3 +45,7 @@ bindings/java/crnd/messages/
 bindings/go/crnd.go
 bindings/rust/src/protos/*.rs
 bindings/rust/src/bindings.rs
+*.js
+*.wasm
+conaninfo.txt
+conanmanifest.txt
