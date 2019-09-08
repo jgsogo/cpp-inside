@@ -26,8 +26,22 @@ target_compile_definitions(crnd PRIVATE SPDLOG_ACTIVE_LEVEL=0)
 #define SPDLOG_LEVEL_OFF 6
 
 if (${EMSCRIPTEN})
+    message("CMAKE_C_COMPILER: ${CMAKE_C_COMPILER}")
+    message("CMAKE_CPP_COMPILER: ${CMAKE_CPP_COMPILER}")
+
+    set(EXPORTED_FUNCTIONS
+	  _help 
+	  _sample
+	)
+
+    # process exported functions
+    set(EXPORTED_FUNCTIONS_STR "")
+    list(JOIN EXPORTED_FUNCTIONS "," EXPORTED_FUNCTIONS_STR)
+
+    set(CMAKE_CXX_FLAGS "-s EXPORTED_FUNCTIONS=\"[${EXPORTED_FUNCTIONS_STR}]\" -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"ccall\", \"cwrap\", \"addFunction\", \"removeFunction\"]' -s RESERVED_FUNCTION_POINTERS=10")
+
     set_target_properties(crnd PROPERTIES
-            SUFFIX ".html"
+            SUFFIX ".js"
             LINK_FLAGS "--emrun")
 
     install(FILES

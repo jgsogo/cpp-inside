@@ -1,0 +1,39 @@
+<html>
+<body>
+<script type="text/javascript" src="libcrnd.js"></script>
+
+<script type="text/javascript">
+console.info("CRND JS wrapper");
+
+function help_callback(v1, v2, v3){
+    alert("Called from C")
+	//alert(Pointer_stringify(text));
+}
+
+function functionExists(f) {
+	return f && typeof f === "function";
+}
+/*
+function help_message(state, data, status) {
+    console.log('this was invoked by C, written in JS');
+}
+*/
+Module.onRuntimeInitialized = function() {
+    console.info("Checking functions exist");
+    assert(functionExists(Module._help));
+    assert(functionExists(Module._sample));
+
+    // Call the help
+    var pointer = addFunction(help_callback);
+    var call = Module.cwrap('help', 'void', ['pointer', 'pointer']);
+    call(null, pointer);
+    removeFunction(pointer);
+
+    //var help = Module._help(null, help_message);
+    //console.info(help);
+}
+
+</script>
+
+</body>
+</html>

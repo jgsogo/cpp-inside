@@ -1,3 +1,4 @@
+rm -fr _build
 mkdir _build
 
 pushd _build
@@ -6,6 +7,3 @@ conan source ../../conanfile.py --install-folder=. --source-folder=../../
 conan build ../../conanfile.py
 conan package ../../conanfile.py --package-folder=../
 popd
-
-source _build/activate.sh
-emrun ./bin/libcrnd.html
