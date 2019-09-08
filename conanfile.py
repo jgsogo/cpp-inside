@@ -9,7 +9,7 @@ class CppInside(ConanFile):
 
     settings = "os", "arch", "compiler", "build_type"
     generators = "cmake"
-    options = {#"cpp": [True, False],  # It is always generated
+    options = {"cpp": [True, False],  # It is always generated
                "csharp": [True, False],
                "java": [True, False],
                "js": [True, False],
@@ -19,7 +19,7 @@ class CppInside(ConanFile):
                 "ruby": [True, False],
                 "go": [True, False],
                }
-    default_options = {#"cpp": True,
+    default_options = {"cpp": True,
                        "csharp": True,
                        "java": True,
                        "js": True,
@@ -37,7 +37,7 @@ class CppInside(ConanFile):
 
     def requirements(self):
         self.requires("protobuf/3.6.1@bincrafters/stable")
-        self.requires("boost/1.70.0@conan/stable")
+        #self.requires("boost/1.70.0@conan/stable")
         self.requires("spdlog/1.3.1@bincrafters/stable")
 
     def source(self):
@@ -68,6 +68,11 @@ class CppInside(ConanFile):
 
     def _cmake(self):
         cmake = CMake(self)
+        for it in ["cpp", "csharp", "java", "js", "objc", "php", "python", "ruby", "go"]:
+            cmake.definitions["bindings_{}".format(it).upper()] = bool(getattr(self.options, it))
+            cmake.definitions["example_{}".format(it).upper()] = bool(getattr(self.options, it))
+
+        cmake.definitions["EMSCRIPTEN"] = bool(self.settings.os == "Emscripten")
         cmake.configure()
         return cmake
 

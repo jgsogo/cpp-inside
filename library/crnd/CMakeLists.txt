@@ -24,3 +24,15 @@ target_compile_definitions(crnd PRIVATE SPDLOG_ACTIVE_LEVEL=0)
 #define SPDLOG_LEVEL_ERROR 4
 #define SPDLOG_LEVEL_CRITICAL 5
 #define SPDLOG_LEVEL_OFF 6
+
+if (${EMSCRIPTEN})
+    set_target_properties(crnd PROPERTIES
+            SUFFIX ".html"
+            LINK_FLAGS "--emrun")
+
+    install(FILES
+            ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrnd.js
+            ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/libcrnd.wasm
+            DESTINATION bin)
+endif()
+
