@@ -68,16 +68,10 @@ function draw_histogram(rolls, title) {
     var p = [].fill.call({ length: nclasses+1 }, 0);
     var max = Math.max.apply(null, rolls);
     var min = Math.min.apply(null, rolls);
-
-    console.log("max: " + max);
-    console.log("min: " + min);
-
     var step = (max-min)/nclasses;
-    console.log("step: " + step);
 
     rolls.forEach(function (elem, index) {
         idx = Math.round((elem-min)/step);
-        //console.log(idx);
         p[idx] += 1;
     });
 
