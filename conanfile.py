@@ -61,7 +61,11 @@ class CppInside(ConanFile):
                 else:
                     binding_folder = os.path.join(self.source_folder, "bindings", it, "messages")
                 os.makedirs(binding_folder, exist_ok=True)
-                command += " --{}_out={}".format(it, binding_folder)
+
+                if it == 'js':
+                    command += " --js_out=import_style=commonjs,binary:{}".format(binding_folder)
+                else:
+                    command += " --{}_out={}".format(it, binding_folder)
         command += " {}".format(" ".join(messages))
         with tools.environment_append(env):
             self.run(command)

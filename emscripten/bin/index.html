@@ -1,12 +1,16 @@
 <html>
 <body>
 <script type="text/javascript" src="libcrnd.js"></script>
+<script type="text/javascript" src="bundle.js"></script>
 
 <script type="text/javascript">
 console.info("CRND JS wrapper");
 
+
 function help_callback(state, data, status) {
     alert("Called from C")
+    var help_message = new crnd.help_pb.Help();
+    var message2 = crnd.help_pb.Help.deserializeBinary(data);
 	//alert(Pointer_stringify(text));
 }
 

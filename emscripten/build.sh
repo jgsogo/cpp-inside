@@ -7,3 +7,5 @@ conan source ../../conanfile.py --install-folder=. --source-folder=../../
 conan build ../../conanfile.py
 conan package ../../conanfile.py --package-folder=../
 popd
+
+browserify main.js --standalone crnd -o bin/bundle.js
