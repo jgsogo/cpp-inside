@@ -15,7 +15,14 @@ extern "C" {
         auto status = help(help_message);
 
         SPDLOG_TRACE("C::help::before callback");
-        help_callback(state, Serialized<crnd::Help>(help_message), Serialized<crnd::Status>(*status));
+        //help_callback(state, Serialized<crnd::Help>(help_message), Serialized<crnd::Status>(*status));
+        std::string data;
+        help_message.SerializeToString(&data);
+
+        std::string status_str;
+        status->SerializeToString(&status_str);
+
+        help_callback(state, (void*)data.c_str(), (void*)status_str.c_str());
         SPDLOG_TRACE("C::help::after callback");
         SPDLOG_DEBUG("< C::help");
     }

@@ -38,7 +38,7 @@ if (${EMSCRIPTEN})
     set(EXPORTED_FUNCTIONS_STR "")
     list(JOIN EXPORTED_FUNCTIONS "," EXPORTED_FUNCTIONS_STR)
 
-    set(CMAKE_CXX_FLAGS "-s EXPORTED_FUNCTIONS=\"[${EXPORTED_FUNCTIONS_STR}]\" -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"ccall\", \"cwrap\", \"addFunction\", \"removeFunction\"]' -s RESERVED_FUNCTION_POINTERS=10")
+    set(CMAKE_CXX_FLAGS "-s EXPORTED_FUNCTIONS=\"[${EXPORTED_FUNCTIONS_STR}]\" -s EXTRA_EXPORTED_RUNTIME_METHODS='[\"ccall\", \"cwrap\", \"addFunction\", \"removeFunction\", \"UTF8ToString\", \"stringToUTF8\"]' -s RESERVED_FUNCTION_POINTERS=10")
 
     set_target_properties(crnd PROPERTIES
             SUFFIX ".js"

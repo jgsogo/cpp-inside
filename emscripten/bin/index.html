@@ -9,19 +9,42 @@ console.info("CRND JS wrapper");
 
 function help_callback(state, data, status) {
     alert("Called from C")
-    var help_message = new crnd.help_pb.Help();
-    var message2 = crnd.help_pb.Help.deserializeBinary(data);
-	//alert(Pointer_stringify(text));
+    alert("data >" + typeof(data) + "<");
+    alert("Array.from(data) >" + Array.from(data) + "<");
+    alert("UTF8ToString(data) >" + UTF8ToString(data) + "<");
+    alert("stringToUTF8(data) >" + stringToUTF8(data) + "<");
+    alert("stringToUTF8(UTF8ToString(data)) >" + stringToUTF8(UTF8ToString(data)) + "<");
+    
+    //var help_message = new crnd.help_pb.Help();
+    //var bytes = Array.prototype.slice.call(data, 0)
+
+    //var message1 = crnd.help_pb.Help.deserializeBinary(new Uint8Array(data));
+    //alert(">" + message1.getName() + "<");
+    var message1 = crnd.help_pb.Help.deserializeBinary(stringToUTF8(data));
+    alert("message1.getName: >" + message1.getName() + "<");
+    alert("message1.getDescription: >" + message1.getDescription() + "<");
+
+    var message2 = crnd.help_pb.Help.deserializeBinary(Array.from(data));
+    alert("message2.getName: >" + message2.getName() + "<");
+    alert("message2.getDescription: >" + message2.getDescription() + "<");
+
+    message2.setDescription("desc");
+    message2.setName("name");
+    var bb = message2.serializeBinary();
+    alert("bb >" + bb + "<");
+    var message3 = crnd.help_pb.Help.deserializeBinary(Array.from(bb));
+    alert("message3.getName: >" + message3.getName() + "<");
+    alert("message3.getDescription: >" + message3.getDescription() + "<");
+    alert("UTF8ToString(data): >" + UTF8ToString(bb) + "<");
+
+    //var message3 = crnd.help_pb.Help.deserializeBinary(bytes);
+    //alert(">" + message3.getName() + "<");
 }
 
 function functionExists(f) {
 	return f && typeof f === "function";
 }
-/*
-function help_message(state, data, status) {
-    console.log('this was invoked by C, written in JS');
-}
-*/
+
 Module.onRuntimeInitialized = function() {
     console.info("Checking functions exist");
     assert(functionExists(Module._help));
