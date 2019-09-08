@@ -1,5 +1,5 @@
 <html>
-<body>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script> 
 <script type="text/javascript" src="libcrnd.js"></script>
 <script type="text/javascript" src="bundle.js"></script>
 
@@ -19,7 +19,7 @@ function help_callback(state, data, status) {
 function sample_callback(state, data, status) {
     console.log("> js::sample_callback")
     var message = crnd.parse_sample(data);
-
+    draw_histogram(message.getSamplesList(), "LOGNORMAL (3, 0.2)");
     console.log("< js::sample_callback")
 }
 
@@ -61,7 +61,50 @@ Module.onRuntimeInitialized = function() {
     removeFunction(pointer);
 }
 
+function draw_histogram(rolls, title) {
+    var nstars = 300;
+    var nclasses = 20;
+
+    var p = [].fill.call({ length: nclasses+1 }, 0);
+    var max = Math.max.apply(null, rolls);
+    var min = Math.min.apply(null, rolls);
+
+    console.log("max: " + max);
+    console.log("min: " + min);
+
+    var step = (max-min)/nclasses;
+    console.log("step: " + step);
+
+    rolls.forEach(function (elem, index) {
+        idx = Math.round((elem-min)/step);
+        //console.log(idx);
+        p[idx] += 1;
+    });
+
+    var h3 = $('<h3></h3>').text(title);
+    $("#histogram").append(h3);
+
+    var table = $('<table></table>')
+
+    console.log(title);
+    for (var i = 0; i < nclasses; i++) {
+        var axis_x = (min+i*step+step/2).toFixed(6).padStart(9, "0");
+        var npstars = Math.round(p[i]*nstars/rolls.length);
+        
+        console.log(axis_x + ": " + "*".repeat(npstars));
+        table.append("<tr><td>" + axis_x + "</td><td>" + "*".repeat(npstars) + "</td></tr>");
+    }
+    $("#histogram").append(table);
+}
+
 </script>
+
+
+<body>
+
+<div id="histogram">
+    
+</div>
 
 </body>
 </html>
