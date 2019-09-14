@@ -149,12 +149,24 @@
 							</blockquote> 
 						</div>	
 						<div class="right">
-							<h4>Winner:</h4>
+							<h4 onclick="draft_one('jgsogo', '1172911485204467713');">Winner:</h4>
 							<div id="choosen"></div>
-							<input id="sample" type="button" value="Draft" onclick="draft_one('jgsogo', '1172911485204467713');" />
 						</div>
 					</section>
 
+					<section>
+						<div class="left">
+							<blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
+								<p lang="en" dir="ltr">First draft of my slides for <a href="https://twitter.com/CodemoMadrid?ref_src=twsrc%5Etfw">@CodemoMadrid</a>. I&#39;m planning to run a server and call to it from the actual slides in order to execute a DLL I&#39;ll have compiled live 🤯. Afraid of the demo effect? <br>🗓️ 24/09/2019 <a href="https://t.co/oZ5H8NQd2Z">pic.twitter.com/oZ5H8NQd2Z</a></p>&mdash; jgsogo (@jgsogo) <a href="https://twitter.com/jgsogo/status/1172911485204467713?ref_src=twsrc%5Etfw">September 14, 2019</a>
+							</blockquote> 
+						</div>	
+						<div class="right">
+							<h4 onclick="draft_one_seed('jgsogo', '1172911485204467713');">Winner:</h4>
+							<p><small>Seed: <input id="seed" style="font-size:1em;" type="text" name="fname" placeholder="seed" maxlength="4" size="4"></small></p>
+							<div id="choosen-seed"></div>
+						</div>
+					</section>
+	
 					<section>
 						<h4>List of winners</h4>
 						<div>
@@ -251,6 +263,7 @@
 		<script src="js/custom.js"></script>
 		<script src="js/text-animation.js"></script>
 		<script src="js/twitter.js"></script>
+		<script src="js/seedrandom.js"></script>
 
 		<!-- Social buttons -->
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
