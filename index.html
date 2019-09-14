@@ -82,10 +82,16 @@
 					</aside>
 				</section>
 
-				<section data-slide-type="author" data-background-color="#414141">
+				<!-- ABOUT ME -->
+				<section class="my-title text-animation" data-slide-type="author" data-background-color="#414141">
 					<h3>About me</h3>
-					<img data-src="img/me.png" class="avatar"/>
-					<p>Software engineer, <span class="green"><b>JFrog</b>&trade;</span></p>
+					<img data-src="images/me.png" class="avatar"/>
+					<p>Javier G. Sogo</p>
+					<p>
+						Software | 
+						<span class="blue"><b>Conan.io</b></span> |
+						<span class="green"><b>JFrog</b>&trade;</span>
+					</p>
 					<p>
 						<small>
 							<img data-src="img/github-logo.svg" class="brand-icon"/>jgsogo
@@ -96,6 +102,32 @@
 					<div class="text-animation-wrapper">
 						<p class="text-animation"></p>
 					</div>
+				</section>
+
+				<!-- RUN EVERYWHERE -->
+				<section>
+					<section class="my-title">
+						<img class="is-transparent" data-src="images/reduce-reuse-recycle.png"/>
+						<p class="fragment fade-in-then-semi-out"><span class="bold">Reduce</span> your software</p>
+						<p class="fragment"><span class="bold">Reuse</span> your binaries</p>
+						<p class="fragment"><span class="bold">Recycle</span> your sources</p>
+						<aside class="notes" data-markdown>
+							### Bienvenida
+							### Build == Compilar
+	
+							Qué significa eso de Build
+						</aside>	
+					</section>
+
+					<section>
+						<h1>Reuse your binaries</h1>
+					</section>
+						<section>
+								<h1 class="bold">Reuse  everywhere</h1>
+								<p>Rendering is what a browser does to display contents of a webpage.</p>
+								<p class="spacer"/>
+								<p>Rendered webpage's source HTML is our target.</p>
+							</section>
 				</section>
 
 				<section>Números aleatorios</section>
@@ -122,6 +154,21 @@
 
 				<!-- EXPERIMENTO / PROPUESTA -->
 				<section><h1>EXPERIMENTO / PROPUESTA</h1></section>
+				<!--
+				<section data-background-iframe="http://ghv.artzub.com/#repo=cpp-inside&user=jgsogo" data-background-interactive>
+					<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 5px; font-size: 20px; text-align: left;">
+						<h2><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h2>
+						<p>Reusing C++ library from Java, Python, Rust, Go, C++, Javascript,...</p>
+					</div>
+				</section>
+				-->
+				<section data-background-video="video/cpp_inside.mp4" data-background-video-muted>
+					<h1>Show me the code!</h1>
+					<div style="box-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 5px 25px rgba(0,0,0,0.5)">
+						<h3 class="small-caps"><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h3>
+					</div>
+				</section>
+				
 				<section>Algoritmo en un leguaje - nativo- C, C++, Rust, Go</section>
 				<section>Wrappear a ootros lenguajes</section>
 				<section>Intercambio de datos: swig,... protobuf</section>
@@ -172,13 +219,20 @@
 			Reveal.addEventListener( 'ready', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
-				}, 1000);				
+				}, 100);				
 			});
 
-			// Show and hide the footer
 			Reveal.addEventListener( 'slidechanged', function( event ) {
-				footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
+				setTimeout(function () {
+					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
+				}, 100);
+				
+				// Start text-animation
+				if (event.currentSlide.classList.contains("text-animation")) {
+					setTimeout(render, timeout);
+				}
 			});
+
 		</script>
 	</body>
 </html>

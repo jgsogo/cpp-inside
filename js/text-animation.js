@@ -8,8 +8,8 @@ const skills = [
   "Jenkins",
   "C#",
   "Java",
-  "♥"
-].map(s => `${s}.`);
+  "💚"
+].map(s => s + "  ");
 const delay = 2;
 const step = 1;
 const tail = 5;
@@ -56,7 +56,7 @@ function getRandomColoredString(n) {
   return fragment;
 }
 
-const $ = {
+const text_animation_data = {
   text: "",
   prefixP: -tail,
   skillI: 0,
@@ -67,50 +67,49 @@ const $ = {
 };
 
 function render() {
-  const skill = skills[$.skillI];
+  const skill = skills[text_animation_data.skillI];
 
-  if ($.step) {
-    $.step--;
+  if (text_animation_data.step) {
+    text_animation_data.step--;
   } else {
-    $.step = step;
-    if ($.prefixP < prefix.length) {
-      if ($.prefixP >= 0) {
-        $.text += prefix[$.prefixP];
+    text_animation_data.step = step;
+    if (text_animation_data.prefixP < prefix.length) {
+      if (text_animation_data.prefixP >= 0) {
+        text_animation_data.text += prefix[text_animation_data.prefixP];
       }
-      $.prefixP++;
+      text_animation_data.prefixP++;
     } else {
-      if ($.direction === "forward") {
-        if ($.skillP < skill.length) {
-          $.text += skill[$.skillP];
-          $.skillP++;
+      if (text_animation_data.direction === "forward") {
+        if (text_animation_data.skillP < skill.length) {
+          text_animation_data.text += skill[text_animation_data.skillP];
+          text_animation_data.skillP++;
         } else {
-          if ($.delay) {
-            $.delay--;
+          if (text_animation_data.delay) {
+            text_animation_data.delay--;
           } else {
-            $.direction = "backward";
-            $.delay = delay;
+            text_animation_data.direction = "backward";
+            text_animation_data.delay = delay;
           }
         }
       } else {
-        if ($.skillP > 0) {
-          $.text = $.text.slice(0, -1);
-          $.skillP--;
+        if (text_animation_data.skillP > 0) {
+          text_animation_data.text = text_animation_data.text.slice(0, -1);
+          text_animation_data.skillP--;
         } else {
-          $.skillI = ($.skillI + 1) % skills.length;
-          $.direction = "forward";
+          text_animation_data.skillI = (text_animation_data.skillI + 1) % skills.length;
+          text_animation_data.direction = "forward";
         }
       }
     }
   }
 
-  p.textContent = $.text;
+  p.textContent = text_animation_data.text;
   p.appendChild(
     getRandomColoredString(
-      $.prefixP < prefix.length
-        ? Math.min(tail, tail + $.prefixP)
-        : Math.min(tail, skill.length - $.skillP)
+      text_animation_data.prefixP < prefix.length
+        ? Math.min(tail, tail + text_animation_data.prefixP)
+        : Math.min(tail, skill.length - text_animation_data.skillP)
     )
   );
   setTimeout(render, timeout);
 }
-setTimeout(render, 100);
