@@ -1,4 +1,6 @@
 const sass = require('node-sass');
+var Twitter = require('twitter');
+
 
 module.exports = grunt => {
 
@@ -8,6 +10,15 @@ module.exports = grunt => {
 	let root = grunt.option('root') || '.';
 
 	if (!Array.isArray(root)) root = [root];
+
+	let json = grunt.file.readJSON("secret.json");
+	var client = new Twitter({
+		consumer_key: json.consumer_key,
+		consumer_secret: json.consumer_secret,
+		access_token_key: json.access_token_key,
+		access_token_secret: json.access_token_secret
+	});
+
 
 	// Project configuration
 	grunt.initConfig({
@@ -107,7 +118,34 @@ module.exports = grunt => {
 					base: root,
 					livereload: true,
 					open: true,
-					useAvailablePort: true
+					useAvailablePort: true,
+					middleware: function(connect, options, middlewares) {
+						// inject a custom middleware into the array of default middlewares
+						middlewares.unshift(function(req, res, next) {
+							var parsed = require('url').parse(req.url, true);
+
+							if (parsed.pathname == '/twitter/retweeters') {
+								var params = {'id': parsed.query.id}
+								client.get('statuses/retweeters/ids', params, function(error, data, response) {
+									if(error) throw error;
+									res.write(JSON.stringify(data, null, 4));
+									res.end();
+								});
+							}
+							else if (parsed.pathname == '/twitter/user') {
+								var params = {'user_id': parsed.query.id}
+								client.get('users/show', params, function(error, data, response) {
+									if(error) throw error;
+									res.write(JSON.stringify(data, null, 4));
+									res.end();
+								});
+							}
+							else {
+								next();
+							}
+						});
+						return middlewares;
+					  }
 				}
 			}
 		},

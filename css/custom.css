@@ -35,6 +35,19 @@ img.img-inline {
     text-align: left;
 }
 
+.left {
+    margin: 0px;
+    width: 40%;
+    position: absolute;
+    left: 1%;
+}
+
+.right {
+    width: 40%;
+    position: absolute;
+    right: 1%;
+}
+
 /** Speaker title slide */
 div.speaker-conference img {
     border: 0px;
