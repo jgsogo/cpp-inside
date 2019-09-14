@@ -1,4 +1,76 @@
 
+div.logo-ribbon img {
+    width: 100px;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    background: rgba(0, 0,0,0);
+}
+
+img.img-inline {
+    height: 1.3em;
+}
+
+.left {
+    left:-8.33%;
+    /*text-align: left;*/
+    float: left;
+    width:50%;
+    z-index:-10;
+}
+  
+.right {
+    left:31.25%;
+    top: 75px;
+    float: right;
+    text-align: right;
+    z-index:-10;
+    width:50%;
+}
+
+.reveal img.avatar {
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    border: 0;
+}
+
+
+/** Speaker title slide */
+div.speaker-conference img {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    background: rgba(0, 0,0,0);
+}
+
+div.speaker-conference {
+    font-size: 0.6em;
+    line-height: 80%;
+}
+
+div.speaker-conference p {
+    margin: 0;
+}
+
+div.speaker {
+    margin: 0px;
+    width: 40%;
+    position: absolute;
+    left: 1%;
+    text-align: left;
+}
+
+div.conference {
+    width: 40%;
+    position: absolute;
+    right: 1%;
+    text-align: right;
+}
+
+
+
+/** Header and footer */
 div.my-header {
     font-size: 0.6em;
     top: 1%;
@@ -8,12 +80,6 @@ div.my-header {
     z-index: 30;
     width: 98%;
     /*height: 5%;*/
-}
-
-.my-header .right {
-    position: absolute;
-    right: 1%;
-    text-align: rigth;  
 }
 
 div.my-foot {
@@ -32,21 +98,42 @@ div.my-foot {
 }
 
 .my-foot img {
-    height: 21px;
     padding-left: 5px;
     padding-right: 5px;
 }
 
 .my-foot span {
-    height: 21px;
+    height: 1em;
     padding-left: 5px;
     padding-right: 5px;
 }
 
-div.logo-ribbon img {
-    width: 100px;
-    border: 0px;
-    padding: 0px;
-    margin: 0px;
-    background: rgba(0, 0,0,0);
+/** Little things */
+.reveal img.brand-icon {
+    background: none;
+    margin: 0 0.3em 0 0.3em;
+    width: 45px;
+    height: 45px;
+    border: 0 none;
+    box-shadow: none;
+    vertical-align: middle;
 }
+.reveal div.text-animation-wrapper {
+    float: left;
+    margin-left: 42%;
+    text-align: center;
+}
+  
+.reveal p.text-animation {
+    display: inline-block;
+    font-size: 0.5em;
+}
+
+.red {
+    color: #ED3A32 !important;
+    }
+
+.green {
+    color: #3AED32 !important;
+}
+            
