@@ -9,9 +9,13 @@
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
 		<link rel="stylesheet" href="css/theme/black.css">
+		
+		<link href="fontawesome/css/all.css" rel="stylesheet">
 
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<link rel="stylesheet" href="css/custom.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -24,19 +28,109 @@
 	</head>
 	<body>
 		<div class="reveal">
+			<div class="my-header" style="display: none;">
+				<div class="right">
+					<a href="https://twitter.com/jgsogo?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">
+						Follow @jgsogo
+					</a>
+					<!-- Place this tag where you want the button to render. -->
+					<a class="github-button" href="https://github.com/jgsogo/cpp-inside/subscription" data-icon="octicon-eye" aria-label="Watch jgsogo/cpp-inside on GitHub">
+						 Watch jgsogo/cpp-inside
+					</a>
+				</div>
+			</div>
+
+			<div class="my-foot" style="display: none;">
+					<a href="https://twitter.com/jgsogo?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">
+						Follow @jgsogo
+					</a>
+					<!-- Place this tag where you want the button to render. -->
+					<a class="github-button" href="https://github.com/jgsogo/cpp-inside/subscription" data-icon="octicon-eye" aria-label="Watch jgsogo/cpp-inside on GitHub">
+						 jgsogo/cpp-inside
+					</a>
+
+
+				<a href="https://twitter.com/intent/tweet?text=Hello%20world">
+					<i class="fab fa-twitter"></i>  @jgsogo
+				</a>
+				&nbsp;&nbsp;
+				<i class="fas fa-envelope-open"></i> jgsogo@gmail.com
+			</div>
+
 			<div class="slides">
-				<section>Slide 1</section>
-				<section>Slide 2</section>
+				<!-- INTRO -->
+				<section class="my-title">
+					<h1 class="lol">C++ Inside</h1>
+					<h1><small>Build once, run everywhere</small></h1>
+					<div class="logo-ribbon">
+						<img data-src="img/go-logo.png">
+						<img data-src="img/rust-logo.png">		
+						<img data-src="img/python-logo.png">		
+						<img data-src="img/java-logo.png">		
+					</div>
+				</section>
+
+				<section>Números aleatorios</section>
+				<section>Simulación</section>
+				<section>Tiempo performance</section>
+				<section>Reproducibilidad</section>
+
+				<section>
+					Varios lenguajes programación
+					<section>empresas grandes - tecnologías</section>
+					<section>no siempre se pueden microservicios</section>
+					<section>domain knowledge: equiipo que programa en X</section>
+				</section>
+
+				<!-- PROBLEMA -->
+				<section><h1>PROBLEMA</h1></section>
+				<section>Migrar código entre lenguajes</section>
+				<section>
+					Paper números alleatorios
+					<section>Operaciones con registros</section>
+					<section>Representación coma flotante</section>
+				</section>
+				<section>No duplicar código: Dropbox</section>
+
+				<!-- EXPERIMENTO / PROPUESTA -->
+				<section><h1>EXPERIMENTO / PROPUESTA</h1></section>
+				<section>Algoritmo en un leguaje - nativo- C, C++, Rust, Go</section>
+				<section>Wrappear a ootros lenguajes</section>
+				<section>Intercambio de datos: swig,... protobuf</section>
+
+				<!-- EJEMPLOS -->
+				<section><h1>EJEMPLOS</h1></section>
+
+				<!-- WHAT's NEXT -->
+				<section><h1>WHAT's NEXT</h1></section>
+				<section>Gestionar paquetes</section>
+				<section>Montar CI / DevOps</section>
+				<section>Documentar / Blog</section>
+
+				<!-- CONCLUSIONES -->
+				<section><h1>CONCLUSIONES</h1></section>
+				<section>Solución alternativa a microservicios o server/app</section>
+				<section>Solidez, más simple, más rápido, menos testing, unicidad</section>
+				<section>C++! -> Conan, Madrid C++ User Group</section>
+
 			</div>
 		</div>
 
 		<script src="js/reveal.js"></script>
+		<script src="js/jquery-3.4.1.min.js"></script>
+
+		<!-- Social buttons -->
+		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
 
 		<script>
 			// More info about config & dependencies:
 			// - https://github.com/hakimel/reveal.js#configuration
 			// - https://github.com/hakimel/reveal.js#dependencies
 			Reveal.initialize({
+				history: true,
+				slideNumber: true,
+				previewLinks: true,
 				dependencies: [
 					{ src: 'plugin/markdown/marked.js' },
 					{ src: 'plugin/markdown/markdown.js' },
@@ -44,6 +138,18 @@
 					{ src: 'plugin/highlight/highlight.js', async: true }
 				]
 			});
+
+			// Show and hide the footer
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				if (event.currentSlide.classList.contains("my-title")) {
+					$(".my-foot").hide();
+					$(".my-header").hide();
+				}
+				else {
+					$(".my-foot").show();
+					$(".my-header").show();
+				}
+			})
 		</script>
 	</body>
 </html>

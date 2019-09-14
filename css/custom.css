@@ -1,0 +1,39 @@
+
+div.my-header {
+    font-size: 0.6em;
+    top: 1%;
+    display: block;
+    position: absolute;
+    left: 1%;
+    z-index: 30;
+    width: 98%;
+    /*height: 5%;*/
+}
+
+.my-header .right {
+    position: absolute;
+    right: 1%;
+    text-align: rigth;  
+}
+
+div.my-foot {
+    opacity: 0.5;
+    font-size: 0.6em;
+    bottom: 1%;
+    display: block;
+    position: absolute;
+    left: 1%;
+    z-index: 30;
+    width: 90%;
+    height: 5%;
+    text-align: left;
+}
+
+
+div.logo-ribbon img {
+    width: 100px;
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+    background: rgba(0, 0,0,0);
+}
