@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>reveal.js</title>
+		<title>C++ Inside: Build once, run everywhere</title>
 
 		<link rel="stylesheet" href="css/reset.css">
 		<link rel="stylesheet" href="css/reveal.css">
@@ -28,33 +28,21 @@
 	</head>
 	<body>
 		<div class="reveal">
-			<div class="my-header" style="display: none;">
-				<div class="right">
-					<a href="https://twitter.com/jgsogo?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">
-						Follow @jgsogo
-					</a>
-					<!-- Place this tag where you want the button to render. -->
-					<a class="github-button" href="https://github.com/jgsogo/cpp-inside/subscription" data-icon="octicon-eye" aria-label="Watch jgsogo/cpp-inside on GitHub">
-						 Watch jgsogo/cpp-inside
-					</a>
-				</div>
+			<div class="my-header">
 			</div>
 
-			<div class="my-foot" style="display: none;">
-					<a href="https://twitter.com/jgsogo?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">
-						Follow @jgsogo
-					</a>
-					<!-- Place this tag where you want the button to render. -->
-					<a class="github-button" href="https://github.com/jgsogo/cpp-inside/subscription" data-icon="octicon-eye" aria-label="Watch jgsogo/cpp-inside on GitHub">
-						 jgsogo/cpp-inside
-					</a>
-
-
-				<a href="https://twitter.com/intent/tweet?text=Hello%20world">
-					<i class="fab fa-twitter"></i>  @jgsogo
+			<div class="my-foot">
+				<a class="github-button" href="https://github.com/jgsogo/cpp-inside/subscription" data-icon="octicon-eye" aria-label="Watch jgsogo/cpp-inside on GitHub">
+					jgsogo/cpp-inside
 				</a>
-				&nbsp;&nbsp;
-				<i class="fas fa-envelope-open"></i> jgsogo@gmail.com
+				<a class="twitter-share-button" rel="me" href="https://twitter.com/intent/tweet">
+					<link rel="me" href="https://twitter.com/jgsogo">
+					Tweet @jgsogo
+				</a>
+				<img src="img/by-nc-sa.png">
+				Javier G. Sogo | Senior software developer |
+				<img src="img/jfrog-logo.png"> JFrog LTD |
+				<img src="img/conan-logo.png"> Conan C/C++ Package Manager
 			</div>
 
 			<div class="slides">
@@ -62,12 +50,11 @@
 				<section class="my-title">
 					<h1 class="lol">C++ Inside</h1>
 					<h1><small>Build once, run everywhere</small></h1>
-					<div class="logo-ribbon">
-						<img data-src="img/go-logo.png">
-						<img data-src="img/rust-logo.png">		
-						<img data-src="img/python-logo.png">		
-						<img data-src="img/java-logo.png">		
-					</div>
+
+					<aside class="notes">
+						Bienvenida. Gra
+						Qué significa eso de Build
+					</aside>
 				</section>
 
 				<section>Números aleatorios</section>
@@ -118,6 +105,7 @@
 
 		<script src="js/reveal.js"></script>
 		<script src="js/jquery-3.4.1.min.js"></script>
+		<script src="js/custom.js"></script>
 
 		<!-- Social buttons -->
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -139,17 +127,16 @@
 				]
 			});
 
+			Reveal.addEventListener( 'ready', function( event ) {
+				setTimeout(function () {
+					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
+				}, 1000);				
+			});
+
 			// Show and hide the footer
 			Reveal.addEventListener( 'slidechanged', function( event ) {
-				if (event.currentSlide.classList.contains("my-title")) {
-					$(".my-foot").hide();
-					$(".my-header").hide();
-				}
-				else {
-					$(".my-foot").show();
-					$(".my-header").show();
-				}
-			})
+				footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
+			});
 		</script>
 	</body>
 </html>
