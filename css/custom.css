@@ -18,6 +18,23 @@ img.img-inline {
     background: rgba(0, 0,0,0);
 }
 
+.box-shadow {
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.box {
+    position: absolute;
+    width: 40%;
+    right: 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 5px;
+    font-size: 20px;
+    text-align: left;
+}
+
 /** Speaker title slide */
 div.speaker-conference img {
     border: 0px;

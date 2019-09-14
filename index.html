@@ -47,7 +47,7 @@
 
 			<div class="slides">
 				<!-- INTRO -->
-				<section class="my-title">
+				<section class="no-footer">
 					<h1 class="lol">C++ Inside</h1>
 					<h1><small>Build once, run everywhere</small></h1>
 					
@@ -83,7 +83,7 @@
 				</section>
 
 				<!-- ABOUT ME -->
-				<section class="my-title text-animation" data-slide-type="author" data-background-color="#414141">
+				<section class="no-footer text-animation" data-slide-type="author" data-background-color="#414141">
 					<h3>About me</h3>
 					<img data-src="images/me.png" class="avatar"/>
 					<p>Javier G. Sogo</p>
@@ -104,9 +104,52 @@
 					</div>
 				</section>
 
-				<!-- RUN EVERYWHERE -->
+				<!-- BUSINESS LOGIC ONCE -->
 				<section>
-					<section class="my-title">
+					<section class="no-footer">
+						<h1>BUSINESS LOGIC</h1>
+					</section>
+
+					<section>
+						<h2>One source of truth</h2>
+						<p>Same algorithm</p>
+						<p>Same bugs</p>
+						<p>Better maintenance</p>
+					</section>
+
+					<section>
+						<h2>Not always possible</h2>
+						<p>Different programming languages</p>
+						<p>Domain knowledge</p>
+					</section>
+
+					<section>
+						<h2>Big proglems, big solutions</h2>
+						<p>Cross-platform languages</p>
+						<p>Microservices</p>
+					</section>
+	
+					<section data-background="images/monolith.jpg">
+						<!-- Image source: https://goodhoodstore.com/mens/news/style-legacy-2001-a-space-odyssey-->
+						<div class="credit black">Photo: https://goodhoodstore.com</div>
+						<h2 class="box-shadow" >Regret the monolith</h2>
+					</section>
+				</section>
+
+				<section>
+					<section class="no-footer">
+						<h1>Example:</h1>
+						<h2>Random number generator</h2>
+					</section>
+
+					<section>
+						<input id="clickMe" type="button" value="clickme" onclick="get_followers('jgsogo');" />
+					</section>
+				</section>
+
+				<!-- REUSE YOUR BINARIES -->
+				<section>
+					<section class="no-footer">
 						<img class="is-transparent" data-src="images/reduce-reuse-recycle.png"/>
 						<p class="fragment fade-in-then-semi-out"><span class="bold">Reduce</span> your software</p>
 						<p class="fragment"><span class="bold">Reuse</span> your binaries</p>
@@ -119,15 +162,9 @@
 						</aside>	
 					</section>
 
-					<section>
-						<h1>Reuse your binaries</h1>
-					</section>
-						<section>
-								<h1 class="bold">Reuse  everywhere</h1>
-								<p>Rendering is what a browser does to display contents of a webpage.</p>
-								<p class="spacer"/>
-								<p>Rendered webpage's source HTML is our target.</p>
-							</section>
+
+
+
 				</section>
 
 				<section>Números aleatorios</section>
@@ -162,7 +199,7 @@
 					</div>
 				</section>
 				-->
-				<section data-background-video="video/cpp_inside.mp4" data-background-video-muted>
+				<section class="no-footer" data-background-video="video/cpp_inside.mp4" data-background-video-muted>
 					<h1>Show me the code!</h1>
 					<div style="box-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 5px 25px rgba(0,0,0,0.5)">
 						<h3 class="small-caps"><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h3>
@@ -188,6 +225,8 @@
 				<section>Solidez, más simple, más rápido, menos testing, unicidad</section>
 				<section>C++! -> Conan, Madrid C++ User Group</section>
 
+				<section class="no-footer" data-background="images/the-end.gif" data-background-size="contain" data-background-color="#000000">
+				</section>
 			</div>
 		</div>
 
@@ -195,6 +234,7 @@
 		<script src="js/jquery-3.4.1.min.js"></script>
 		<script src="js/custom.js"></script>
 		<script src="js/text-animation.js"></script>
+		<script src="js/twitter.js"></script>
 
 		<!-- Social buttons -->
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
