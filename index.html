@@ -124,7 +124,7 @@
 					</section>
 
 					<section>
-						<h2>Big proglems, big solutions</h2>
+						<h2>Big problems, big solutions</h2>
 						<p>Cross-platform languages</p>
 						<p>Microservices</p>
 					</section>
@@ -132,17 +132,18 @@
 					<section data-background="images/monolith.jpg">
 						<!-- Image source: https://goodhoodstore.com/mens/news/style-legacy-2001-a-space-odyssey-->
 						<div class="credit black">Photo: https://goodhoodstore.com</div>
-						<h2 class="box-shadow" >Regret the monolith</h2>
+						<h2 class="box-shadow" >Miss the monolith</h2>
 					</section>
 				</section>
 
+				<!-- EXAMPLE: Random numbers -->
 				<section>
 					<section class="no-footer">
 						<h1>Example:</h1>
 						<h2>Random number generator</h2>
 					</section>
 
-					<section>
+					<section data-background="images/dice.png" data-background-repeat="contain"  data-background-size="300px">
 						<div class="left">
 							<blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
 								<p lang="en" dir="ltr">First draft of my slides for <a href="https://twitter.com/CodemoMadrid?ref_src=twsrc%5Etfw">@CodemoMadrid</a>. I&#39;m planning to run a server and call to it from the actual slides in order to execute a DLL I&#39;ll have compiled live 🤯. Afraid of the demo effect? <br>🗓️ 24/09/2019 <a href="https://t.co/oZ5H8NQd2Z">pic.twitter.com/oZ5H8NQd2Z</a></p>&mdash; jgsogo (@jgsogo) <a href="https://twitter.com/jgsogo/status/1172911485204467713?ref_src=twsrc%5Etfw">September 14, 2019</a>
@@ -155,7 +156,7 @@
 						</div>
 					</section>
 
-					<section>
+					<section data-background="images/dice.png" data-background-repeat="contain"  data-background-size="300px">
 						<div class="left">
 							<blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
 								<p lang="en" dir="ltr">First draft of my slides for <a href="https://twitter.com/CodemoMadrid?ref_src=twsrc%5Etfw">@CodemoMadrid</a>. I&#39;m planning to run a server and call to it from the actual slides in order to execute a DLL I&#39;ll have compiled live 🤯. Afraid of the demo effect? <br>🗓️ 24/09/2019 <a href="https://t.co/oZ5H8NQd2Z">pic.twitter.com/oZ5H8NQd2Z</a></p>&mdash; jgsogo (@jgsogo) <a href="https://twitter.com/jgsogo/status/1172911485204467713?ref_src=twsrc%5Etfw">September 14, 2019</a>
@@ -171,7 +172,7 @@
 						</div>
 					</section>
 	
-					<section>
+					<section data-background="images/dice.png" data-background-repeat="contain"  data-background-size="300px">
 						<h4>List of winners</h4>
 						<div>
 							<ul id="all-choosen"></ul>
@@ -187,108 +188,112 @@
 							<span class="fragment">, reproducibility</span>
 							<span class="fragment">, performance</span>
 						</p>
+
+						<aside class="notes" data-markdown>
+							Cuando hablamos de AI-Simulación hablamos de Montecarlo
+						</aside>
 					</section>
 
-					<section>
+					<section data-background="images/neural.png" data-background-repeat="repeat"  data-background-size="1300px">
 						<h2>Models are not easy</h2>
+						<aside class="notes" data-markdown>
+							Sencillo o no, la lógica se puede copiar/pegar de un lenguaje a otro. Será más o
+							menos mantenible, pero se puede reproducir. Es la definición de algoritmo.
+						</aside>
 					</section>
 
-					<section>
+					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
 						<h2>Neither random generators</h2>
+						<aside class="notes" data-markdown>
+							La realidad la codifico en una distribución de probabilidad con ciertos parámetros
+							Generar números aleatorios que satisfagan esos parámetros
+							Distribuciones conjuntas de probabilidad: cópulas
+						</aside>
 					</section>
-						<!--
-					<section>
-						<h2>AI: Simulation and modelling</h2>
-						<blockquote cite="http://www.worldwildlife.org/who/index.html">
-						For 50 years, WWF has been protecting the future of nature. The world's leading conservation organization, 
-						WWF works in 100 countries.
-						</blockquote>
-					</section>
-					-->
 
-					<section>
-						<h2>Random generators</h2>
+					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+						<h2>Neither random generators</h2>
+						<p>Algorithm implementation</p>
+						<p>Floting point representation</p>
+						<p>...reproducibility across different languages, compilers, runtimes...</p>
+						<aside class="notes" data-markdown>
+							Is the algorithm portable? ¿El lenguaje de destino puede hacer ciertas cosas?
+							> Problemas de coma flotante
+							> Crea tu propio algoritmo, ¿es realmente aleatorio?
 
+							Link: https://stackoverflow.com/questions/24550963/stl-random-distributions-and-portability/24554535#24554535
+						</aside>
 					</section>
+
 				</section>
 
-				<!-- REUSE YOUR BINARIES -->
+				<!-- THE BIG PROBLEM -->
 				<section>
 					<section class="no-footer">
-						<img class="is-transparent" data-src="images/reduce-reuse-recycle.png"/>
-						<p class="fragment fade-in-then-semi-out"><span class="bold">Reduce</span> your software</p>
-						<p class="fragment"><span class="bold">Reuse</span> your binaries</p>
-						<p class="fragment"><span class="bold">Recycle</span> your sources</p>
-						<aside class="notes" data-markdown>
-							### Bienvenida
-							### Build == Compilar
-	
-							Qué significa eso de Build
-						</aside>	
+						<h1>Challenge</h1>
+						<h2>Reproduce business logic among languages</h2>
+						Love the monolith
 					</section>
 
+					<section>
+						<h2>Love the monolith</h2>
+						<p>Recycle/reuse the algorithm</p>
+						<p>Reuse the random number generator</p>
+					</section>
 
-
-
+					<section>
+						<h2>(Only) solution</h2>
+						<p>Reuse the same binary</p>
+					</section>
 				</section>
 
-				<section>Números aleatorios</section>
-				<section>Simulación</section>
-				<section>Tiempo performance</section>
-				<section>Reproducibilidad</section>
-
-				<section>
-					Varios lenguajes programación
-					<section>empresas grandes - tecnologías</section>
-					<section>no siempre se pueden microservicios</section>
-					<section>domain knowledge: equiipo que programa en X</section>
-				</section>
-
-				<!-- PROBLEMA -->
-				<section><h1>PROBLEMA</h1></section>
-				<section>Migrar código entre lenguajes</section>
-				<section>
-					Paper números alleatorios
-					<section>Operaciones con registros</section>
-					<section>Representación coma flotante</section>
-				</section>
-				<section>No duplicar código: Dropbox</section>
 
 				<!-- EXPERIMENTO / PROPUESTA -->
-				<section><h1>EXPERIMENTO / PROPUESTA</h1></section>
-				<!--
-				<section data-background-iframe="http://ghv.artzub.com/#repo=cpp-inside&user=jgsogo" data-background-interactive>
-					<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 5px; font-size: 20px; text-align: left;">
-						<h2><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h2>
-						<p>Reusing C++ library from Java, Python, Rust, Go, C++, Javascript,...</p>
-					</div>
-				</section>
-				-->
-				<section class="no-footer" data-background-video="video/cpp_inside.mp4" data-background-video-muted>
-					<h1>Show me the code!</h1>
-					<div style="box-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 5px 25px rgba(0,0,0,0.5)">
-						<h3 class="small-caps"><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h3>
-					</div>
-				</section>
-				
-				<section>Algoritmo en un leguaje - nativo- C, C++, Rust, Go</section>
-				<section>Wrappear a ootros lenguajes</section>
-				<section>Intercambio de datos: swig,... protobuf</section>
+				<section>
+					<section class="no-footer">
+						<h1>EXPERIMENTO / PROPUESTA</h1>
+					</section>
+					<!--
+					<section data-background-iframe="http://ghv.artzub.com/#repo=cpp-inside&user=jgsogo" data-background-interactive>
+						<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 5px; font-size: 20px; text-align: left;">
+							<h2><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h2>
+							<p>Reusing C++ library from Java, Python, Rust, Go, C++, Javascript,...</p>
+						</div>
+					</section>
+					-->
+					<section class="no-footerr" data-background-video="video/cpp_inside.mp4" data-background-video-muted>
+						<h1>Show me the code!</h1>
+						<div style="box-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 5px 25px rgba(0,0,0,0.5)">
+							<h3 class="small-caps"><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h3>
+						</div>
+					</section>
 
-				<!-- EJEMPLOS -->
-				<section><h1>EJEMPLOS</h1></section>
+					<section>Algoritmo en un leguaje - nativo- C, C++, Rust, Go</section>
+					<section>Wrappear a ootros lenguajes</section>
+					<section>Intercambio de datos: swig,... protobuf</section>
+	
+				</section>
+
 
 				<!-- WHAT's NEXT -->
-				<section><h1>WHAT's NEXT</h1></section>
-				<section>Gestionar paquetes</section>
-				<section>Montar CI / DevOps</section>
-				<section>Documentar / Blog</section>
+				<section>
+					<section class="no-footer">
+						<h1>WHAT's NEXT</h1>
+					</section>
+					<section>Gestionar paquetes</section>
+					<section>Montar CI / DevOps</section>
+					<section>Documentar / Blog</section>
+				</section>
 
 				<!-- CONCLUSIONES -->
-				<section><h1>CONCLUSIONES</h1></section>
-				<section>Solución alternativa a microservicios o server/app</section>
-				<section>Solidez, más simple, más rápido, menos testing, unicidad</section>
-				<section>C++! -> Conan, Madrid C++ User Group</section>
+				<section>
+					<section class="no-footer">
+						<h1>CONCLUSIONES</h1>
+					</section>
+					<section>Solución alternativa a microservicios o server/app</section>
+					<section>Solidez, más simple, más rápido, menos testing, unicidad</section>
+					<section>C++! -> Conan, Madrid C++ User Group</section>
+				</section>
 
 				<section class="no-footer" data-background="images/the-end.gif" data-background-size="contain" data-background-color="#000000">
 				</section>
