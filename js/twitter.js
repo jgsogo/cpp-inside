@@ -51,7 +51,9 @@ function draft_one(username, tweet_id) {
     $("#choosen").empty();
     get_retweeters(tweet_id, function(user_ids){
         console.log("User IDs:" + user_ids);
-        var user_id = user_ids[Math.floor(Math.random() * user_ids.length)];
+        var random_result = Math.random();
+        $("#random-result").empty().append(random_result);
+        var user_id = user_ids[Math.floor(random_result * user_ids.length)];
         get_user(user_id, function(data) {
             $("#choosen").append($('<img src="' + data.profile_image_url_https + '" class="avatar"/>'));
             $("#choosen").append($('<p>' + data.name + '</p>'));
@@ -69,7 +71,9 @@ function draft_one_seed(username, tweet_id) {
         
         var seed = $("#seed").val();
         if (seed) { Math.seedrandom(seed); } else { Math.seedrandom();}
-        var idx = Math.floor(Math.random() * user_ids.length);        
+        var random_result = Math.random();
+        $("#random-result-seed").empty().append(random_result);
+        var idx = Math.floor(random_result * user_ids.length);        
         get_user(user_ids[idx], function(data) {
             $("#choosen-seed").append($('<img src="' + data.profile_image_url_https + '" class="avatar"/>'));
             $("#choosen-seed").append($('<p>' + data.name + '</p>'));

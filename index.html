@@ -151,7 +151,10 @@
 						</div>	
 						<div class="right">
 							<h4>Random:</h4>
-							<i class="fas fa-dice" onclick="draft_one('jgsogo', '1172911485204467713');"></i>
+							<small>
+								<i class="fas fa-dice" onclick="draft_one('jgsogo', '1172911485204467713');"></i>
+								<span id="random-result"></span>
+							</small>
 							<div id="choosen"></div>
 						</div>
 					</section>
@@ -164,9 +167,10 @@
 						</div>	
 						<div class="right">
 							<h4>Pseudo-random:</h4>
-							<i class="fas fa-dice" onclick="draft_one_seed('jgsogo', '1172911485204467713');"></i>
 							<small>
 								<input id="seed" style="font-size:1em;" type="text" name="fname" placeholder="seed" maxlength="4" size="4">
+								<i class="fas fa-dice" onclick="draft_one_seed('jgsogo', '1172911485204467713');"></i>
+								<span id="random-result-seed"></span>
 							</small>
 							<div id="choosen-seed"></div>
 						</div>
@@ -220,6 +224,7 @@
 							Is the algorithm portable? ¿El lenguaje de destino puede hacer ciertas cosas?
 							> Problemas de coma flotante
 							> Crea tu propio algoritmo, ¿es realmente aleatorio?
+							> Vale para criptografía? Análisis espectral
 
 							Link: https://stackoverflow.com/questions/24550963/stl-random-distributions-and-portability/24554535#24554535
 						</aside>
