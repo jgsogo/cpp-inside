@@ -13,6 +13,19 @@ gource --file-idle-time 0\
     --font-size 22 \
     --output-ppm-stream - \
     --output-framerate 30 \
+    --file-filter docs/fontawesome \
+    --file-filter docs/lib \
+    --file-filter docs/plugin \
+    --file-filter docs/test \
+    --file-filter docs/css/theme \
+    --file-filter docs/css/print \
+    --file-filter doc/fontawesome \
+    --file-filter doc/lib \
+    --file-filter doc/plugin \
+    --file-filter doc/test \
+    --file-filter doc/css/theme \
+    --file-filter doc/css/print \
+    --filename-time 100 \
     | avconv -y -r 30 -f image2pipe -vcodec ppm -i - -b 65536K movie.mp4
-ffmpeg -i movie.mp4 -vcodec libx264 -acodec aac output.mp4
+ffmpeg -i movie.mp4 -vcodec libx264 -acodec aac video/cpp_inside.mp4
 rm movie.mp4
