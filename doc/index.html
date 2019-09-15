@@ -1,0 +1,371 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>C++ Inside: Build once, run everywhere</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+		
+		<link href="fontawesome/css/all.css" rel="stylesheet">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="my-header">
+			</div>
+
+			<div class="my-foot">
+				<a class="github-button" href="https://github.com/jgsogo/cpp-inside/subscription" data-icon="octicon-eye" aria-label="Watch jgsogo/cpp-inside on GitHub">
+					jgsogo/cpp-inside
+				</a>
+				<a class="twitter-share-button" rel="me" href="https://twitter.com/intent/tweet">
+					<link rel="me" href="https://twitter.com/jgsogo">
+					Tweet @jgsogo
+				</a>
+				<img class="img-inline" src="img/by-nc-sa.png">
+				Javier G. Sogo | Senior software developer |
+				<img class="img-inline" src="img/jfrog-logo.png"> JFrog LTD |
+				<img class="img-inline" src="img/conan-logo.png"> Conan C/C++ Package Manager
+			</div>
+
+			<div class="slides">
+				<!-- INTRO -->
+				<section class="no-footer">
+					<h1 class="lol">C++ Inside</h1>
+					<h1><small>Build once, run everywhere</small></h1>
+					
+					<div class="speaker-conference">
+						<img style="width: 50%;" data-src="img/codemotion-logo.png">
+						<div class="conference">
+							<hr/>
+							<p>24-25 septiembre de 2019</p>	
+							<p>Madrid, España</p>
+							<img class="img-inline" src="img/by-nc-sa.png">
+						</div>
+						<div class="middle"></div>
+						<div class="speaker">
+							<hr/>
+							<p>Javier García Sogo</p>
+							<p>
+									C++/Python/DevOps... engineer
+							</p>
+							<p>
+								<i class="fab fa-twitter"></i>
+								<i class="fab fa-github"></i>
+								&nbsp; @jgsogo
+							</p>
+						</div>
+					</div>
+
+					<aside class="notes" data-markdown>
+						### Bienvenida
+						### Build == Compilar
+
+						Qué significa eso de Build
+					</aside>
+				</section>
+
+				<!-- ABOUT ME -->
+				<section class="no-footer text-animation" data-slide-type="author" data-background-color="#414141">
+					<h3>About me</h3>
+					<img data-src="images/me.png" class="avatar"/>
+					<p>Javier G. Sogo</p>
+					<p>
+						Software | 
+						<span class="blue"><b>Conan.io</b></span> |
+						<span class="green"><b>JFrog</b>&trade;</span>
+					</p>
+					<p>
+						<small>
+							<img data-src="img/github-logo.svg" class="brand-icon"/>jgsogo
+								&nbsp;&nbsp;&nbsp;&nbsp; 
+							<img data-src="img/twitter-logo.svg" class="brand-icon"/>@jgsogo
+						</small>
+					</p>
+					<div class="text-animation-wrapper">
+						<p class="text-animation"></p>
+					</div>
+				</section>
+
+				<!-- BUSINESS LOGIC ONCE -->
+				<section>
+					<section class="no-footer">
+						<h1>BUSINESS LOGIC</h1>
+					</section>
+
+					<section>
+						<h2>One source of truth</h2>
+						<p>Same algorithm</p>
+						<p>Same bugs</p>
+						<p>Better maintenance</p>
+					</section>
+
+					<section>
+						<h2>Not always possible</h2>
+						<p>Different programming languages</p>
+						<p>Domain knowledge</p>
+					</section>
+
+					<section>
+						<h2>Big problems, big solutions</h2>
+						<p>Cross-platform languages</p>
+						<p>Microservices</p>
+					</section>
+	
+					<section>
+						<h2>Simple get complex</h2>
+						<p>Simple applications that turns into full architectures</p>
+
+						<aside class="notes" data-markdown>
+							Aplicaciones simples que se convierten en arquitecturas complejas
+							mezclando frameworks, tiempos de despliegue, problema de versiones
+							y actualizaciones,...
+						</aside>
+					</section>
+
+					<section data-background="images/monolith.jpg">
+						<!-- Image source: https://goodhoodstore.com/mens/news/style-legacy-2001-a-space-odyssey-->
+						<div class="credit black">Photo: https://goodhoodstore.com</div>
+						<h2 class="box-shadow" >Miss the monolith</h2>
+					</section>
+				</section>
+
+				<!-- EXAMPLE: Random numbers -->
+				<section>
+					<section class="no-footer">
+						<h1>Example:</h1>
+						<h2>Random number generator</h2>
+					</section>
+
+					<section data-background="images/dice.png" data-background-repeat="contain"  data-background-size="300px">
+						<div class="left">
+							<blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
+								<p lang="en" dir="ltr">First draft of my slides for <a href="https://twitter.com/CodemoMadrid?ref_src=twsrc%5Etfw">@CodemoMadrid</a>. I&#39;m planning to run a server and call to it from the actual slides in order to execute a DLL I&#39;ll have compiled live 🤯. Afraid of the demo effect? <br>🗓️ 24/09/2019 <a href="https://t.co/oZ5H8NQd2Z">pic.twitter.com/oZ5H8NQd2Z</a></p>&mdash; jgsogo (@jgsogo) <a href="https://twitter.com/jgsogo/status/1172911485204467713?ref_src=twsrc%5Etfw">September 14, 2019</a>
+							</blockquote> 
+						</div>	
+						<div class="right">
+							<h4>Random:</h4>
+							<small>
+								<i class="fas fa-dice" onclick="draft_one('jgsogo', '1172911485204467713');"></i>
+								<span id="random-result"></span>
+							</small>
+							<div id="choosen"></div>
+						</div>
+					</section>
+
+					<section data-background="images/dice.png" data-background-repeat="contain"  data-background-size="300px">
+						<div class="left">
+							<blockquote class="twitter-tweet" data-dnt="true" data-theme="light">
+								<p lang="en" dir="ltr">First draft of my slides for <a href="https://twitter.com/CodemoMadrid?ref_src=twsrc%5Etfw">@CodemoMadrid</a>. I&#39;m planning to run a server and call to it from the actual slides in order to execute a DLL I&#39;ll have compiled live 🤯. Afraid of the demo effect? <br>🗓️ 24/09/2019 <a href="https://t.co/oZ5H8NQd2Z">pic.twitter.com/oZ5H8NQd2Z</a></p>&mdash; jgsogo (@jgsogo) <a href="https://twitter.com/jgsogo/status/1172911485204467713?ref_src=twsrc%5Etfw">September 14, 2019</a>
+							</blockquote> 
+						</div>	
+						<div class="right">
+							<h4>Pseudo-random:</h4>
+							<small>
+								<input id="seed" style="font-size:1em;" type="text" name="fname" placeholder="seed" maxlength="4" size="4">
+								<i class="fas fa-dice" onclick="draft_one_seed('jgsogo', '1172911485204467713');"></i>
+								<span id="random-result-seed"></span>
+							</small>
+							<div id="choosen-seed"></div>
+						</div>
+					</section>
+	
+					<section data-background="images/dice.png" data-background-repeat="contain"  data-background-size="300px">
+						<h4>List of winners</h4>
+						<div>
+							<ul id="all-choosen"></ul>
+						</div>
+					</section>
+
+					<section>
+						<h2>AI: Simulation and modelling</h2>
+						<img data-src="images/dilbert-random.jpg">
+						<div class="credit">Image: DILBERT © 2001 Scott Adams.</div>
+						<p>
+							<span class="fragment">Randomness</span>
+							<span class="fragment">, reproducibility</span>
+							<span class="fragment">, performance</span>
+						</p>
+
+						<aside class="notes" data-markdown>
+							Cuando hablamos de AI-Simulación hablamos de Montecarlo
+						</aside>
+					</section>
+
+					<section data-background="images/neural.png" data-background-repeat="repeat"  data-background-size="1300px">
+						<h2>Models are not easy</h2>
+						<aside class="notes" data-markdown>
+							Sencillo o no, la lógica se puede copiar/pegar de un lenguaje a otro. Será más o
+							menos mantenible, pero se puede reproducir. Es la definición de algoritmo.
+						</aside>
+					</section>
+
+					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+						<h2>Neither random generators</h2>
+						<aside class="notes" data-markdown>
+							La realidad la codifico en una distribución de probabilidad con ciertos parámetros
+							Generar números aleatorios que satisfagan esos parámetros
+							Distribuciones conjuntas de probabilidad: cópulas
+						</aside>
+					</section>
+
+					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+						<h2>Neither random generators</h2>
+						<p>Algorithm implementation</p>
+						<p>Floting point representation</p>
+						<p>...reproducibility across different languages, compilers, runtimes...</p>
+						<aside class="notes" data-markdown>
+							Is the algorithm portable? ¿El lenguaje de destino puede hacer ciertas cosas?
+							> Problemas de coma flotante
+							> Crea tu propio algoritmo, ¿es realmente aleatorio?
+							> Vale para criptografía? Análisis espectral
+
+							Link: https://stackoverflow.com/questions/24550963/stl-random-distributions-and-portability/24554535#24554535
+						</aside>
+					</section>
+
+					<section>
+						<h2>Ejemplos concretos: Montecarlo simulation</h2>
+						<p>Distribuciones conjuntas de probabilidad</p>
+						<p>Reproducibilidad por ley</p>
+						<p>Tragaperras - algoritmos regulados</p>
+					</section>
+
+				</section>
+
+				<!-- THE BIG PROBLEM -->
+				<section>
+					<section class="no-footer">
+						<h1>Challenge</h1>
+						<h2>Unique business logic</h2>
+					</section>
+
+					<section>
+						<h2>Love the monolith</h2>
+						<p>Recycle/reuse the algorithm</p>
+						<p>Reuse the random number generator</p>
+					</section>
+
+					<section>
+						<h2>(Only) solution</h2>
+						<p>Reuse the same binary</p>
+					</section>
+				</section>
+
+
+				<!-- EXPERIMENTO / PROPUESTA -->
+				<section>
+					<section class="no-footer">
+						<h1>EXPERIMENTO / PROPUESTA</h1>
+					</section>
+					<!--
+					<section data-background-iframe="http://ghv.artzub.com/#repo=cpp-inside&user=jgsogo" data-background-interactive>
+						<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 5px; font-size: 20px; text-align: left;">
+							<h2><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h2>
+							<p>Reusing C++ library from Java, Python, Rust, Go, C++, Javascript,...</p>
+						</div>
+					</section>
+					-->
+					<section class="no-footerr" data-background-video="video/cpp_inside.mp4" data-background-video-muted>
+						<h1>Show me the code!</h1>
+						<div style="box-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 5px 25px rgba(0,0,0,0.5)">
+							<h3 class="small-caps"><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h3>
+						</div>
+					</section>
+
+					<section>Algoritmo en un leguaje - nativo- C, C++, Rust, Go</section>
+					<section>Wrappear a ootros lenguajes</section>
+					<section>Intercambio de datos: swig,... protobuf</section>
+	
+				</section>
+
+
+				<!-- WHAT's NEXT -->
+				<section>
+					<section class="no-footer">
+						<h1>WHAT's NEXT</h1>
+					</section>
+					<section>Gestionar paquetes</section>
+					<section>Montar CI / DevOps</section>
+					<section>Documentar / Blog</section>
+				</section>
+
+				<!-- CONCLUSIONES -->
+				<section>
+					<section class="no-footer">
+						<h1>CONCLUSIONES</h1>
+					</section>
+					<section>Solución alternativa a microservicios o server/app</section>
+					<section>Solidez, más simple, más rápido, menos testing, unicidad</section>
+					<section>C++! -> Conan, Madrid C++ User Group</section>
+				</section>
+
+				<section class="no-footer" data-background="images/the-end.gif" data-background-size="contain" data-background-color="#000000">
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+		<script src="js/jquery-3.4.1.min.js"></script>
+		<script src="js/custom.js"></script>
+		<script src="js/text-animation.js"></script>
+		<script src="js/twitter.js"></script>
+		<script src="js/seedrandom.js"></script>
+
+		<!-- Social buttons -->
+		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+		<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				history: true,
+				slideNumber: true,
+				previewLinks: true,
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true },
+				]
+			});
+
+			Reveal.addEventListener( 'ready', function( event ) {
+				setTimeout(function () {
+					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
+				}, 100);				
+			});
+
+			Reveal.addEventListener( 'slidechanged', function( event ) {
+				setTimeout(function () {
+					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
+				}, 100);
+				
+				// Start text-animation
+				if (event.currentSlide.classList.contains("text-animation")) {
+					setTimeout(render, timeout);
+				}
+			});
+
+		</script>
+	</body>
+</html>
