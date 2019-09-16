@@ -12,10 +12,10 @@ img.img-inline {
 }
 
 .is-transparent {
-    border: 0px;
+    border: 0px  !important;
     padding: 0px;
     margin: 0px;
-    background: rgba(0, 0,0,0);
+    background: rgba(0, 0,0,0) !important;
 }
 
 .box-shadow-black {
