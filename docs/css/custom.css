@@ -18,9 +18,14 @@ img.img-inline {
     background: rgba(0, 0,0,0);
 }
 
-.box-shadow {
+.box-shadow-black {
     box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2);
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+.box-shadow-white {
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.178), 0 5px 25px rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.384);
 }
 
 .box {
@@ -46,6 +51,21 @@ img.img-inline {
     width: 40%;
     position: absolute;
     right: 1%;
+}
+
+.bottom-right {
+    opacity: 0.9;
+    font-size: 0.4em;
+    bottom: 1%;
+    /*display: block;*/
+    position: absolute;
+    left: 1%;
+    z-index: 30;
+    width: 90%;
+    text-align: left;
+
+    display: flex;
+    align-items:center;
 }
 
 /** Speaker title slide */
@@ -134,6 +154,10 @@ div.my-foot {
 }
 
 /** Little things */
+.reveal p.spacer {
+    margin: 2em 0 2em 0;
+}
+
 .reveal img.brand-icon {
     background: none;
     margin: 0 0.3em 0 0.3em;
