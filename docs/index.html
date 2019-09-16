@@ -224,7 +224,7 @@
 						</aside>
 					</section>
 
-					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+					<section data-state="darken" data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="300px">
 						<h2>Neither random generators</h2>
 						<aside class="notes" data-markdown>
 							La realidad la codifico en una distribución de probabilidad con ciertos parámetros
@@ -233,11 +233,13 @@
 						</aside>
 					</section>
 
-					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+					<section data-state="darken" data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="300px">
 						<h2>Neither random generators</h2>
 						<p>Algorithm implementation</p>
+						<p>Distribution sampling</p>
 						<p>Floting point representation</p>
-						<p>...reproducibility across different languages, compilers, runtimes...</p>
+						<p>Reproducibility across different languages, compilers, runtimes...</p>
+
 						<aside class="notes" data-markdown>
 							Is the algorithm portable? ¿El lenguaje de destino puede hacer ciertas cosas?
 							> Problemas de coma flotante
@@ -248,7 +250,16 @@
 						</aside>
 					</section>
 
-					<section>
+					<section data-background="images/montecarlo.png" data-background-repeat="contain">
+
+						<aside class="notes" data-markdown>
+							Simulación de montecarlo:
+								* BANCO: precio de accciones del mercado, uso intensivo de nº aleatorios
+								* BANCO: conceder un préstamo, regulación, repetibilidad
+						</aside>
+					</section>
+
+					<section data-background="images/montecarlo.png" data-background-repeat="contain">
 						<h2>Ejemplos concretos: Montecarlo simulation</h2>
 						<p>Distribuciones conjuntas de probabilidad</p>
 						<p>Reproducibilidad por ley</p>
