@@ -2,15 +2,13 @@
 #pragma once
 
 template <typename T>
-struct Serialized
+struct Serialized : public SerializedBase
 {
-    void* data;
-    int64_t size;
 
     Serialized(const T& t)
     {
         size = t.ByteSizeLong();
-        data = malloc(size);
+        data = (char*)malloc(size);
         t.SerializeToArray(data, size);
     }
 
@@ -19,9 +17,9 @@ struct Serialized
         free(data);
     }
 
-    operator const void*() const
+    operator const SerializedBase*() const
     {
-        return static_cast<const void*>(this);
+        return static_cast<const SerializedBase*>(this);
     }
 
     static T parse(const void* handler)
