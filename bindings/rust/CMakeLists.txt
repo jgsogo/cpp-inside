@@ -10,3 +10,5 @@ add_custom_target(bindings_rust
         COMMAND cargo build --manifest-path ${CMAKE_CURRENT_BINARY_DIR}/Cargo.toml
         COMMENT "Compile Rust bindings")
 set_target_properties(bindings_rust PROPERTIES LOCATION ${CMAKE_CURRENT_BINARY_DIR}/target/$<CONFIG>/libcrnd.rlib)
+
+add_dependencies(bindings_rust crnd)

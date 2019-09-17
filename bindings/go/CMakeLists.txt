@@ -20,3 +20,5 @@ add_custom_command(TARGET bindings_go
         POST_BUILD
         COMMAND go build ${rel}
         COMMENT "Compile Go bindings")
+
+add_dependencies(bindings_go crnd)
