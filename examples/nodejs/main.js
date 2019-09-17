@@ -32,20 +32,14 @@ function help() {
 
         // Callback from the native lib back into js
         var callback = ffi.Callback('void', ['void *', SerializedPtr, SerializedPtr],
-            function(state, data, status_in) {
+            function(state, data_in, status_in) {
                 console.log("> nodejs::callback");
-                var status = data.deref();
-
-                console.log("status.size: ", status.size);
-                console.log("status.data: ", status.data);
-
-                var data = status.data.deref();
-                console.log("---!");
+                var data = data_in.deref();
+                var data = ref.reinterpret(data.data, data.size);
                 var it = help_pb.Help.deserializeBinary(data);
-                console.log("Donw!");
-                console.log(it.description);
-
-
+                console.log("name: ", it.getName());
+                console.log("description: ", it.getDescription());
+                console.log("version: ", it.getVersion());
                 console.log("< nodejs::callback");
             });
 
