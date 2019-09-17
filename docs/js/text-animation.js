@@ -34,9 +34,7 @@ function animate_element(element) {
   const delay = element.attr("delay") || delay_default;
   const timeout = element.attr("timeout") || timeout_default;
   const alternates = element.find("span").map(function() { return $(this).text() + "   ";}).get();
-  console.log(prefix);
-  console.log(alternates);
-
+  
   const p = element.find('.text-animation')[0];
 
   const text_animation_data = {
@@ -46,10 +44,12 @@ function animate_element(element) {
     skillP: 0,
     direction: "forward",
     delay,
-    step
+    step,
+    stop: false
   };
 
   render(p, prefix, alternates, text_animation_data, delay, timeout);
+  return text_animation_data;
 }
 
 function getRandomColor() {
@@ -70,6 +70,8 @@ function getRandomColoredString(n) {
 }
 
 function render(element, prefix, alternates, text_animation_data, delay, timeout) {
+  if (text_animation_data.stop) return;
+
   const skill = alternates[text_animation_data.skillI];
 
   if (text_animation_data.step) {
@@ -113,6 +115,8 @@ function render(element, prefix, alternates, text_animation_data, delay, timeout
         ? Math.min(tail, tail + text_animation_data.prefixP)
         : Math.min(tail, skill.length - text_animation_data.skillP)
     )
-  );
-  setTimeout(function(){render(element, prefix, alternates, text_animation_data, delay, timeout)}, timeout);
+  );  
+  setTimeout(function() {
+      render(element, prefix, alternates, text_animation_data, delay, timeout)
+    }, timeout);
 }

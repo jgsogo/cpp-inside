@@ -759,17 +759,21 @@
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
 				}, 100);
-				
-				// Start text-animation
-				$(".text-animation-wrapper").each(function(){
-					animate_element($(this));
-				});
 			});
 
+			var animated_elements = []
 			Reveal.addEventListener( 'slidechanged', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
 				}, 100);
+
+				// Start text-animation
+				animated_elements.forEach(function(elem) {elem.stop = true;});
+				animated_elements.length = 0;
+				$(event.currentSlide).find(".text-animation-wrapper").each(function(){
+					var data = animate_element($(this));
+					animated_elements.push(data);
+				});
 			});
 
 		</script>
