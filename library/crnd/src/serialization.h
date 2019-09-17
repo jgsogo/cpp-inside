@@ -19,9 +19,9 @@ struct Serialized
         free(data);
     }
 
-    operator const Serialized*() const
+    operator const void*() const
     {
-        return static_cast<const Serialized*>(this);
+        return static_cast<const void*>(this);
     }
 
     static T parse(const void* handler)
