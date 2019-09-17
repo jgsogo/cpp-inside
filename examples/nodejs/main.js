@@ -1,5 +1,5 @@
 
-const crnd = require('/Users/jgsogo/dev/projects/cpp-inside/bindings/js/crnd.js');
+const crnd = require('../../bindings/js/crnd.js');
 
 
 function getArgument(argument){
