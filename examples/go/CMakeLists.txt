@@ -6,11 +6,11 @@ file(RELATIVE_PATH CRND_GO_LIBRARY_PATH_REL ${CMAKE_CURRENT_BINARY_DIR} ${CRND_G
 
 configure_file(main.go.template ${CMAKE_CURRENT_BINARY_DIR}/main.go @ONLY)
 
-add_custom_target(exmaple_go
+add_custom_target(example_go
         COMMAND go build main.go
         COMMENT "Compile Go executable")
 
-add_custom_command(TARGET exmaple_go
+add_custom_command(TARGET example_go
         POST_BUILD
         COMMAND ${CMAKE_COMMAND}
         "-DCRND_LIBRARY=\"$<TARGET_FILE:crnd>\""
@@ -18,4 +18,4 @@ add_custom_command(TARGET exmaple_go
         "-DOUTPUT_FILE=${CMAKE_CURRENT_BINARY_DIR}/run.sh"
         -P ${CMAKE_CURRENT_SOURCE_DIR}/create_run.cmake)
 
-add_dependencies(exmaple_go bindings_go)
+add_dependencies(example_go bindings_go)

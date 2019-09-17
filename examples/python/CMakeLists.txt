@@ -6,3 +6,5 @@ add_custom_target(example_python
         "-DEXAMPLE_PYTHON_FILE=\"${CMAKE_CURRENT_SOURCE_DIR}/main.py\""
         "-DOUTPUT_FILE=${CMAKE_CURRENT_BINARY_DIR}/run.sh"
         -P ${CMAKE_CURRENT_SOURCE_DIR}/create_run.cmake)
+
+# add_dependencies(example_python bindings_python)
