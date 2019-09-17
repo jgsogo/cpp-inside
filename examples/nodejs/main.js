@@ -13,7 +13,29 @@ console.log("This is NodeJS!!");
 console.log("CRND library: " + path_to_lib);
 crnd.help(path_to_lib);
 
-let samples = crnd.lognormal(path_to_lib, 1234, 10, 3, 0.2);
-console.log(samples.getSamplesList());
+let samples = crnd.lognormal(path_to_lib, 12345, 100000, 3, 0.2);
 
-console.log("DONE!!!");
+
+function draw_histogram(rolls, title) {
+    let nstars = 300;
+    let nclasses = 20;
+
+    var p = [].fill.call({ length: nclasses+1 }, 0);
+    var max = Math.max.apply(null, rolls);
+    var min = Math.min.apply(null, rolls);
+    var step = (max-min)/nclasses;
+    rolls.forEach(function (elem, index) {
+        idx = Math.round((elem-min)/step);
+        p[idx] += 1;
+    });
+
+    console.log(title);
+    for (var i = 0; i < nclasses; i++) {
+        var axis_x = (min+i*step+step/2).toFixed(6).padStart(9, "0");
+        var npstars = Math.round(p[i]*nstars/rolls.length);
+
+        console.log(axis_x + ": " + "*".repeat(npstars));
+    }
+}
+
+draw_histogram(samples.getSamplesList(), "lognormal(3, 0.2)");
