@@ -607,57 +607,57 @@
 					<section data-transition="fade-out">
 						<h4>Wrapper for Python</h4>
 						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="1, 8">
-						def _call(f, response_class, sample_request):
+						def _call(func, response_class, sample_request):
 						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
-						    def callback(_, data_in, status_in):
-						        callback.status = status_in.contents.parse_as(status_pb2.Status)
-						        if callback.status.ok:
-						            callback.data = data_in.contents.parse_as(response_class)
+						    def cb(_, data_in, status_in):
+						        cb.status = status_in.contents.parse_as(Status)
+						        if cb.status.ok:
+						            cb.data = data_in.contents.parse_as(response_class)
 
-						    f(None, sample_request, callback)  # No need to pass context
+						    func(None, sample_request, cb)  # No need to pass context
 
-						    if callback.status.ok:
-						        return callback.data, callback.status
+						    if cb.status.ok:
+						        return cb.data, cb.status
 						    else:
-						        return None, callback.status
+						        return None, cb.status
 						</code></pre>
 					</section>
 
 					<section data-transition="fade-in fade-out">
 						<h4>Wrapper for Python</h4>
 						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="2-6">
-						def _call(f, response_class, sample_request):
+						def _call(func, response_class, sample_request):
 						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
-						    def callback(_, data_in, status_in):
-						        callback.status = status_in.contents.parse_as(status_pb2.Status)
-						        if callback.status.ok:
-						            callback.data = data_in.contents.parse_as(response_class)
+						    def cb(_, data_in, status_in):
+						        cb.status = status_in.contents.parse_as(Status)
+						        if cb.status.ok:
+						            cb.data = data_in.contents.parse_as(response_class)
 
-						    f(None, sample_request, callback)  # No need to pass context
+						    func(None, sample_request, cb)  # No need to pass context
 
-						    if callback.status.ok:
-						        return callback.data, callback.status
+						    if cb.status.ok:
+						        return cb.data, cb.status
 						    else:
-						        return None, callback.status
+						        return None, cb.status
 						</code></pre>
 					</section>
 
 					<section data-transition="fade-out">
 						<h4>Wrapper for Python</h4>
 						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="10-13">
-						def _call(f, response_class, sample_request):
+						def _call(func, response_class, sample_request):
 						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
-						    def callback(_, data_in, status_in):
-						        callback.status = status_in.contents.parse_as(status_pb2.Status)
-						        if callback.status.ok:
-						            callback.data = data_in.contents.parse_as(response_class)
+						    def cb(_, data_in, status_in):
+						        cb.status = status_in.contents.parse_as(Status)
+						        if cb.status.ok:
+						            cb.data = data_in.contents.parse_as(response_class)
 
-						    f(None, sample_request, callback)  # No need to pass context
+						    func(None, sample_request, cb)  # No need to pass context
 
-						    if callback.status.ok:
-						        return callback.data, callback.status
+						    if cb.status.ok:
+						        return cb.data, cb.status
 						    else:
-						        return None, callback.status
+						        return None, cb.status
 						</code></pre>
 					</section>
 
