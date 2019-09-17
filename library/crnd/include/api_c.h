@@ -7,7 +7,7 @@
 extern "C" {
 #endif
 struct SerializedBase {
-    char *data;
+    void *data;
     int size;
 };
 

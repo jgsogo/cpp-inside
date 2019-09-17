@@ -8,7 +8,7 @@ struct Serialized : public SerializedBase
     Serialized(const T& t)
     {
         size = t.ByteSizeLong();
-        data = (char*)malloc(size);
+        data = malloc(size);
         t.SerializeToArray(data, size);
     }
 
