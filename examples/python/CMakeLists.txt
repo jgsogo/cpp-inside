@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8.0)
 
-add_custom_target(example_python_sh
+add_custom_target(example_python
         COMMAND ${CMAKE_COMMAND}
         "-DCRND_FILE=\"$<TARGET_FILE:crnd>\""
         "-DEXAMPLE_PYTHON_FILE=\"${CMAKE_CURRENT_SOURCE_DIR}/main.py\""
