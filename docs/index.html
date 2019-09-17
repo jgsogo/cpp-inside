@@ -101,7 +101,15 @@
 							<img data-src="img/twitter-logo.svg" class="brand-icon"/>@jgsogo
 						</small>
 					</p>
-					<div class="text-animation-wrapper">
+					<div class="text-animation-wrapper work-with" prefix="I work with ">
+						<div style="display: none">
+							<span>C++</span>
+							<span>Python</span>
+							<span>Jenkins</span>
+							<span>C#</span>
+							<span>Java</span>
+							<span>💚</span>
+						</div>
 						<p class="text-animation"></p>
 					</div>
 				</section>
@@ -468,9 +476,193 @@
 					</section>
 
 					<section>
-						<h2>Wrapper</h2>
-
+						<div class="text-animation-wrapper" prefix="" delay="10", timeout="50">
+							<h2>Wrapper for</h2>
+							<h2 class="text-animation"></h2>
+							<div style="display: none">
+								<span>C++</span>
+								<span>Python</span>
+								<span>Java</span>
+								<span>Rust</span>
+								<span>Go</span>
+								<span>NodeJS</span>
+								<span>JavaScript*</span>
+							</div>
+							<p></p>
+							<ol>
+								<li class="fragment">Load the native library</li>
+								<li class="fragment">Map interface functions (sample)</li>
+								<li class="fragment">Build and serialize the proto message</li>
+								<li class="fragment">Call the function</li>
+								<li class="fragment">Deserialize the response</li>
+							</ol>
+						</div>
 					</section>
+
+					<section data-transition="fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="4-6">
+						import ctypes
+						from messages import status_pb2, sample_request_pb2, sample_pb2, model_pb2
+
+						class CRND:
+						    def __init__(self, path_to_library):
+						        self.dll = ctypes.cdll.LoadLibrary(path_to_library)
+
+						    def lognormal(self, seed, samples, mu, sigma):
+						        model = model_pb2.Model()
+						        model.id = model_pb2.Model.LOGNORMAL
+						        model.params["mu"] = mu
+						        model.params["sigma"] = sigma
+						        return self._sample(seed, samples, model)
+
+						    def _sample(self, seed, samples, model):
+						        request = sample_request_pb2.SampleRequest()
+						        request.seed = seed
+						        request.n_samples = samples
+						        request.model.CopyFrom(model)
+						
+						        serialized = ProtoSerialized.build_from(request)
+						        sample, status = _call(self.dll.sample,
+						                               sample_pb2.Sample,
+						                               serialized.as_ref())
+						
+						        if not status.ok:
+						            raise Exception(status.error_message)
+						
+						        return sample.samples
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-in fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="4, 8-13">
+						import ctypes
+						from messages import status_pb2, sample_request_pb2, sample_pb2, model_pb2
+
+						class CRND:
+						    def __init__(self, path_to_library):
+						        self.dll = ctypes.cdll.LoadLibrary(path_to_library)
+
+						    def lognormal(self, seed, samples, mu, sigma):
+						        model = model_pb2.Model()
+						        model.id = model_pb2.Model.LOGNORMAL
+						        model.params["mu"] = mu
+						        model.params["sigma"] = sigma
+						        return self._sample(seed, samples, model)
+
+						    def _sample(self, seed, samples, model):
+						        request = sample_request_pb2.SampleRequest()
+						        request.seed = seed
+						        request.n_samples = samples
+						        request.model.CopyFrom(model)
+						
+						        serialized = ProtoSerialized.build_from(request)
+						        sample, status = _call(self.dll.sample,
+						                               sample_pb2.Sample,
+						                               serialized.as_ref())
+						
+						        if not status.ok:
+						            raise Exception(status.error_message)
+						
+						        return sample.samples
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-in">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="4, 15-21, 25-29">
+						import ctypes
+						from messages import status_pb2, sample_request_pb2, sample_pb2, model_pb2
+
+						class CRND:
+						    def __init__(self, path_to_library):
+						        self.dll = ctypes.cdll.LoadLibrary(path_to_library)
+
+						    def lognormal(self, seed, samples, mu, sigma):
+						        model = model_pb2.Model()
+						        model.id = model_pb2.Model.LOGNORMAL
+						        model.params["mu"] = mu
+						        model.params["sigma"] = sigma
+						        return self._sample(seed, samples, model)
+
+						    def _sample(self, seed, samples, model):
+						        request = sample_request_pb2.SampleRequest()
+						        request.seed = seed
+						        request.n_samples = samples
+						        request.model.CopyFrom(model)
+						
+						        serialized = ProtoSerialized.build_from(request)
+						<mark>        sample, status = _call(self.dll.sample,         </mark>
+						<mark>                               sample_pb2.Sample,       </mark>
+						<mark>                               serialized.as_ref())     </mark>
+						
+						        if not status.ok:
+						            raise Exception(status.error_message)
+						
+						        return sample.samples
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="1, 8">
+						def _call(f, response_class, sample_request):
+						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
+						    def callback(_, data_in, status_in):
+						        callback.status = status_in.contents.parse_as(status_pb2.Status)
+						        if callback.status.ok:
+						            callback.data = data_in.contents.parse_as(response_class)
+
+						    f(None, sample_request, callback)  # No need to pass context
+
+						    if callback.status.ok:
+						        return callback.data, callback.status
+						    else:
+						        return None, callback.status
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-in fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="2-6">
+						def _call(f, response_class, sample_request):
+						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
+						    def callback(_, data_in, status_in):
+						        callback.status = status_in.contents.parse_as(status_pb2.Status)
+						        if callback.status.ok:
+						            callback.data = data_in.contents.parse_as(response_class)
+
+						    f(None, sample_request, callback)  # No need to pass context
+
+						    if callback.status.ok:
+						        return callback.data, callback.status
+						    else:
+						        return None, callback.status
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="10-13">
+						def _call(f, response_class, sample_request):
+						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
+						    def callback(_, data_in, status_in):
+						        callback.status = status_in.contents.parse_as(status_pb2.Status)
+						        if callback.status.ok:
+						            callback.data = data_in.contents.parse_as(response_class)
+
+						    f(None, sample_request, callback)  # No need to pass context
+
+						    if callback.status.ok:
+						        return callback.data, callback.status
+						    else:
+						        return None, callback.status
+						</code></pre>
+					</section>
+
+
+
 				</section>
 
 
@@ -532,18 +724,18 @@
 			Reveal.addEventListener( 'ready', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
-				}, 100);				
+				}, 100);
+				
+				// Start text-animation
+				$(".text-animation-wrapper").each(function(){
+					animate_element($(this));
+				});
 			});
 
 			Reveal.addEventListener( 'slidechanged', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
 				}, 100);
-				
-				// Start text-animation
-				if (event.currentSlide.classList.contains("text-animation")) {
-					setTimeout(render, timeout);
-				}
 			});
 
 		</script>
