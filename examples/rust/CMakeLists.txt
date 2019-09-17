@@ -9,12 +9,12 @@ message(">>>>> CRND_LIBRARY: ${CRND_LIBRARY}")
 
 configure_file(Cargo.template.toml ${CMAKE_CURRENT_BINARY_DIR}/Cargo.toml @ONLY)
 
-add_custom_target(exmaple_rust
+add_custom_target(example_rust
         COMMAND cargo build --manifest-path ${CMAKE_CURRENT_BINARY_DIR}/Cargo.toml
         COMMENT "Compile Rust example")
 
 
-add_custom_command(TARGET exmaple_rust
+add_custom_command(TARGET example_rust
         POST_BUILD
         COMMAND ${CMAKE_COMMAND}
         "-DCRND_LIBRARY=\"$<TARGET_FILE:crnd>\""
@@ -22,3 +22,4 @@ add_custom_command(TARGET exmaple_rust
         "-DOUTPUT_FILE=${CMAKE_CURRENT_BINARY_DIR}/run.sh"
         -P ${CMAKE_CURRENT_SOURCE_DIR}/create_run.cmake)
 
+add_dependencies(example_rust bindings_rust)
