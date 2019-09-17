@@ -16,6 +16,7 @@
 		<link rel="stylesheet" href="lib/css/monokai.css">
 
 		<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="css/histogram.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -296,6 +297,17 @@
 					<section class="no-footer">
 						<h1>CHALLENGE ACCEPTED!</h1>
 					</section>
+
+					<section>
+						<div class="histogram" id="histogram1">
+						</div>
+						<p>
+							Sample from lognormal(
+								<input id="histogram1-mu" style="font-size:1em;" type="text" name="fname" value="3" maxlength="3" size="1">,
+								<input id="histogram1-sigma" style="font-size:1em;" type="text" name="fname" value="0.2" maxlength="3" size="2">	
+								)
+						</p>
+					</section>
 					<!--
 					<section data-background-iframe="http://ghv.artzub.com/#repo=cpp-inside&user=jgsogo" data-background-interactive>
 						<div style="position: absolute; width: 40%; right: 0; box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2); background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 5px; font-size: 20px; text-align: left;">
@@ -315,7 +327,7 @@
 						<h2>Building blocks</h2>
 						<p>Native library</p>
 						<p>Wrapper for every language</p>
-						<p>Data interchange</p>
+						<p>Data interchange layer</p>
 					</section>
 
 					<section>
@@ -323,6 +335,30 @@
 						<img class="is-transparent" data-src="images/wrapper-native.png">
 					</section>
 
+					<section>
+						<h2>Application</h2>
+						<img class="is-transparent" data-src="images/wrapper-native2.png">
+						<aside class="notes" data-markdown>
+							Not invented here
+							Hourglass pattern
+							Adi Shavit: Salami method
+						</aside>
+					</section>
+
+					<section>
+						<h2>Data interchange layer</h2>
+						<div class="left">
+							<img class="is-transparent" data-src="img/protobuf-logo.png">
+							<h4>Protocol buffers</h4>
+						</div>
+						<div class="right">
+							<p class="spacer"></p>
+							<p>Language neutral</p>
+							<p>Platform neutral</p>
+							<p>Structured data</p>
+							<p>Fast and reliable</p>
+						</div>
+					</section>
 				</section>
 
 
@@ -357,6 +393,9 @@
 		<script src="js/text-animation.js"></script>
 		<script src="js/twitter.js"></script>
 		<script src="js/seedrandom.js"></script>
+		<script src="js/d3.v3.min.js"></script>
+		<script src="js/d3-random.v2.min.js"></script>
+		<script src="js/histogram.js"></script>
 
 		<!-- Social buttons -->
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
