@@ -13,6 +13,9 @@ extern "C" {
 
         crnd::Help help_message;
         auto status = help(help_message);
+        auto status_serialized = Serialized<crnd::Help>(help_message);
+        SPDLOG_TRACE("C::help::before callback - size: {}", status_serialized.size);
+        SPDLOG_TRACE("C::help::before callback - data: {}", status_serialized.data);
 
         SPDLOG_TRACE("C::help::before callback");
         help_callback(state, Serialized<crnd::Help>(help_message), Serialized<crnd::Status>(*status));
