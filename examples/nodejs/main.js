@@ -2,6 +2,7 @@ const ffi = require("ffi");
 var ref = require('ref');
 var Struct = require('ref-struct');
 var status_pb = require('/Users/jgsogo/dev/projects/cpp-inside/bindings/js/messages/status_pb.js');
+var help_pb = require('/Users/jgsogo/dev/projects/cpp-inside/bindings/js/messages/help_pb.js');
 
 
 /*
@@ -11,7 +12,7 @@ var Serialized = Struct({
 });
 */
 var Serialized = Struct();
-Serialized.defineProperty('data', 'string'); //ref.refType(ref.types.void));
+Serialized.defineProperty('data', 'void*'); //ref.refType(ref.types.void));
 Serialized.defineProperty('size', ref.types.int);
 var SerializedPtr = ref.refType(Serialized);
 
@@ -26,21 +27,24 @@ var path_to_lib = getArgument('--crnd');
 function help() {
     try {
         const crnd = ffi.Library(path_to_lib, {
-            help: [ref.types.void, [ref.refType(ref.types.void), ref.refType(ref.types.void)]]
+            help: ['void', ['void *', 'pointer']]
         });
 
         // Callback from the native lib back into js
-        var callback = ffi.Callback(ref.types.void, [ref.refType(ref.types.void), SerializedPtr, SerializedPtr],
+        var callback = ffi.Callback('void', ['void *', SerializedPtr, SerializedPtr],
             function(state, data, status_in) {
                 console.log("> nodejs::callback");
-                var status = status_in.deref();
+                var status = data.deref();
 
-                console.log("status: ", status);
                 console.log("status.size: ", status.size);
                 console.log("status.data: ", status.data);
 
-                console.log("status.size: ", ref.readPointer(status));
-                console.log("status.size: ", ref.readInt64BE(status));
+                var data = status.data.deref();
+                console.log("---!");
+                var it = help_pb.Help.deserializeBinary(data);
+                console.log("Donw!");
+                console.log(it.description);
+
 
                 console.log("< nodejs::callback");
             });
