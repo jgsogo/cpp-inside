@@ -1,5 +1,5 @@
 
-get_target_property(SOURCE_BINDINGS_DIR binding_java SOURCE_DIR)
+get_target_property(SOURCE_BINDINGS_DIR bindings_java SOURCE_DIR)
 
 add_custom_target(example_java ALL "${CMAKE_COMMAND}"
         "-DSOURCE_DIR=${CMAKE_CURRENT_SOURCE_DIR}"
@@ -14,3 +14,5 @@ add_custom_command(TARGET example_java
         "-DOUTPUT_FILE=${CMAKE_CURRENT_BINARY_DIR}/run.sh"
         -P ${CMAKE_CURRENT_SOURCE_DIR}/create_run.cmake
         )
+
+add_dependencies(example_java bindings_java)
