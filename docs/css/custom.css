@@ -186,16 +186,20 @@ div.my-foot {
     vertical-align: middle;
 }
 
-.reveal div.text-animation-wrapper {
+
+.reveal div.work-with {
     float: left;
     margin-left: 42%;
     text-align: center;
-}
-  
-.reveal p.text-animation {
-    display: inline-block;
     font-size: 0.5em;
 }
+
+
+.reveal .text-animation {
+    display: inline-block;
+    /*font-size: 0.5em;*/
+}
+
 
 .red {
     color: #ED3A32 !important;

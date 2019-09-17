@@ -1,21 +1,9 @@
 /** Taken and adapted from https://github.com/paambaati/rendering-at-scale */
 
-const element = "p.text-animation";
-const prefix = "I work with ";
-const skills = [
-  "C++",
-  "Python",
-  "Jenkins",
-  "C#",
-  "Java",
-  "💚"
-].map(s => s + "  ");
-const delay = 2;
+const delay_default = 2;
 const step = 1;
 const tail = 5;
-const timeout = 50;
-
-const p = document.querySelector(element);
+const timeout_default = 50;
 
 const colors = [
   "rgb(110,64,170)",
@@ -39,6 +27,31 @@ const colors = [
   "rgb(76,110,219)",
   "rgb(96,84,200)"
 ];
+
+function animate_element(element) {
+  // This is the 'text-animation-wrapper' element
+  const prefix = element.attr("prefix");
+  const delay = element.attr("delay") || delay_default;
+  const timeout = element.attr("timeout") || timeout_default;
+  const alternates = element.find("span").map(function() { return $(this).text() + "   ";}).get();
+  console.log(prefix);
+  console.log(alternates);
+
+  const p = element.find('.text-animation')[0];
+
+  const text_animation_data = {
+    text: "",
+    prefixP: -tail,
+    skillI: 0,
+    skillP: 0,
+    direction: "forward",
+    delay,
+    step
+  };
+
+  render(p, prefix, alternates, text_animation_data, delay, timeout);
+}
+
 function getRandomColor() {
   return colors[Math.floor(Math.random() * colors.length)];
 }
@@ -56,18 +69,8 @@ function getRandomColoredString(n) {
   return fragment;
 }
 
-const text_animation_data = {
-  text: "",
-  prefixP: -tail,
-  skillI: 0,
-  skillP: 0,
-  direction: "forward",
-  delay,
-  step
-};
-
-function render() {
-  const skill = skills[text_animation_data.skillI];
+function render(element, prefix, alternates, text_animation_data, delay, timeout) {
+  const skill = alternates[text_animation_data.skillI];
 
   if (text_animation_data.step) {
     text_animation_data.step--;
@@ -96,20 +99,20 @@ function render() {
           text_animation_data.text = text_animation_data.text.slice(0, -1);
           text_animation_data.skillP--;
         } else {
-          text_animation_data.skillI = (text_animation_data.skillI + 1) % skills.length;
+          text_animation_data.skillI = (text_animation_data.skillI + 1) % alternates.length;
           text_animation_data.direction = "forward";
         }
       }
     }
   }
 
-  p.textContent = text_animation_data.text;
-  p.appendChild(
+  element.textContent = text_animation_data.text
+  element.appendChild(
     getRandomColoredString(
       text_animation_data.prefixP < prefix.length
         ? Math.min(tail, tail + text_animation_data.prefixP)
         : Math.min(tail, skill.length - text_animation_data.skillP)
     )
   );
-  setTimeout(render, timeout);
+  setTimeout(function(){render(element, prefix, alternates, text_animation_data, delay, timeout)}, timeout);
 }
