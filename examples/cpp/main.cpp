@@ -77,11 +77,11 @@ int main(int argc, char* argv[]) {
         std::cout << std::endl;
 
         std::cout << "NORMAL\n";
-        draw_histogram(CRND.normal(seed, samples, 3, 0.2), "normal(3, 2)");
+        draw_histogram(CRND.normal(seed, samples, 3, 0.2), "normal(3, 0.2)");
         std::cout << std::endl;
 
         std::cout << "LOGNORMAL\n";
-        draw_histogram(CRND.lognormal(seed, samples, 3, 0.2), "lognormal(3, 2)");
+        draw_histogram(CRND.lognormal(seed, samples, 3, 0.2), "lognormal(3, 0.2)");
         std::cout << std::endl;
 
     }
