@@ -5,15 +5,14 @@ var status_pb = require('/Users/jgsogo/dev/projects/cpp-inside/bindings/js/messa
 var help_pb = require('/Users/jgsogo/dev/projects/cpp-inside/bindings/js/messages/help_pb.js');
 
 
-/*
+
 var Serialized = Struct({
-    data: ref.refType(ref.types.void),
+    data: 'void *',
     size: ref.types.int64,
 });
-*/
-var Serialized = Struct();
-Serialized.defineProperty('data', 'void*'); //ref.refType(ref.types.void));
-Serialized.defineProperty('size', ref.types.int64);
+//var Serialized = Struct();
+//Serialized.defineProperty('data', 'void*'); //ref.refType(ref.types.void));
+//Serialized.defineProperty('size', ref.types.int64);
 var SerializedPtr = ref.refType(Serialized);
 
 
