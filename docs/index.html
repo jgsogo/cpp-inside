@@ -15,6 +15,7 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
 
+		<!-- My CSS -->
 		<link rel="stylesheet" href="css/custom.css">
 		<link rel="stylesheet" href="css/histogram.css">
 
@@ -358,6 +359,117 @@
 							<p>Structured data</p>
 							<p>Fast and reliable</p>
 						</div>
+					</section>
+
+					<section>
+						<h4>Data layer | Request samples</h4>
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="8,11">
+						message Model {
+						    enum Name {
+						        BERNOULLI = 0;
+						        GEOMETRICAL = 5;
+						        POISSON = 6;
+						        EXPONENTIAL = 9;
+						        BINOMIAL_NEGATIVE = 10;
+						        LOGNORMAL = 11;
+						    }
+						    Name id = 1;
+						    map< string, float> params = 2;
+						}
+						</code></pre>
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="2,3">
+						message SampleRequest {
+						    Model model = 1;
+						    float seed = 2;
+						    uint32 n_samples = 3;
+						}	
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Data layer | Samples returned</h4>
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="2, 4">
+						message Sample {
+						    Model model = 1;
+						    float seed = 2;
+						    repeated float samples = 3;
+						}	
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>C interface</h2>
+						<pre><code class="hljs" data-trim data-line-numbers="2,10-12,14">
+						#ifdef __cplusplus
+						extern "C" {
+						#endif
+						    typedef void (*callback_t)(void* state, 
+						                               const void* data,
+						                               const void* status);
+						
+						    CRND_EXPORT void help(void* state, 
+						                          callback_t help_callback);
+						    CRND_EXPORT void sample(void* state,
+						                            const void* sample_request,
+						                            callback_t sample_callback);
+						#ifdef __cplusplus
+						}
+						#endif
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>C interface | Sample function</h4>
+						<pre><code class="hljs" data-trim data-line-numbers="5-7">
+						typedef void (*callback_t)(void* state, 
+						                           const void* data,
+						                           const void* status);
+
+						void sample(void* state,
+						            const void* sample_request,
+						            callback_t sample_callback);
+						</code></pre>
+						<table>
+							<tbody>
+								<tr><td><span class="bold">state</span></td><td>caller context</td></tr>
+								<tr><td><span class="bold">sample_request</span></td><td>request message</td></tr>
+								<tr><td><span class="bold">sample_callback</span></td><td>function callback</td></tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section>
+						<h4>C interface | Sample function</h4>
+						<pre><code class="hljs cpp" data-trim data-line-numbers="1-2,5-6,8,11-13">
+						void sample(void* state, const void* sample_request,
+						            callback_t sample_callback) {
+						    SPDLOG_DEBUG("> C::sample");
+					
+						    SampleRequest request = 
+						        Serialized< SampleRequest>::parse(sample_request);
+						    Sample sample_message;
+						    auto status = sample(request, sample_message);
+					
+						    SPDLOG_TRACE("C::sample::before callback");
+						    sample_callback(state,
+						                    Serialized< crnd::Sample>(sample_message),
+						                    Serialized< crnd::Status>(*status));
+						    SPDLOG_TRACE("C::sample::after callback");
+							
+						    SPDLOG_DEBUG("< C::sample");
+						}
+						</code></pre>
+						<p>sample_request >> (sample) >> sample_message </p>
+					</section>
+	
+					<section>
+						<h4>C interface | Callback</h4>
+						<img class="is-transparent" data-src="images/wrapper-callback.png">
+					</section>
+
+					<section>
+						<h2>Wrapper</h2>
+
 					</section>
 				</section>
 
