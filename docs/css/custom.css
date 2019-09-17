@@ -12,15 +12,20 @@ img.img-inline {
 }
 
 .is-transparent {
-    border: 0px;
+    border: 0px  !important;
     padding: 0px;
     margin: 0px;
-    background: rgba(0, 0,0,0);
+    background: rgba(0, 0,0,0) !important;
 }
 
-.box-shadow {
+.box-shadow-black {
     box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2);
     background-color: rgba(0, 0, 0, 0.9);
+}
+
+.box-shadow-white {
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.178), 0 5px 25px rgba(255, 255, 255, 0.2);
+    background-color: rgba(255, 255, 255, 0.384);
 }
 
 .box {
@@ -47,6 +52,39 @@ img.img-inline {
     position: absolute;
     right: 1%;
 }
+
+.bottom-right {
+    opacity: 0.9;
+    font-size: 0.4em;
+    bottom: 1%;
+    /*display: block;*/
+    position: absolute;
+    left: 1%;
+    z-index: 30;
+    width: 90%;
+    text-align: left;
+
+    display: flex;
+    align-items:center;
+}
+
+/** Backgrounds */
+html.blur .backgrounds {
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(50px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+}
+
+html.darken .backgrounds {
+    -webkit-filter: brightness(0.5);
+    -moz-filter: brightness(0.5);
+    -o-filter: brightness(0.5);
+    -ms-filter: brightness(0.5);
+    filter: brightness(0.5);
+}
+
 
 /** Speaker title slide */
 div.speaker-conference img {
@@ -134,26 +172,34 @@ div.my-foot {
 }
 
 /** Little things */
+.reveal p.spacer {
+    margin: 2em 0 2em 0;
+}
+
 .reveal img.brand-icon {
     background: none;
     margin: 0 0.3em 0 0.3em;
-    width: 45px;
+    /*width: 45px;*/
     height: 45px;
     border: 0 none;
     box-shadow: none;
     vertical-align: middle;
 }
 
-.reveal div.text-animation-wrapper {
+
+.reveal div.work-with {
     float: left;
     margin-left: 42%;
     text-align: center;
-}
-  
-.reveal p.text-animation {
-    display: inline-block;
     font-size: 0.5em;
 }
+
+
+.reveal .text-animation {
+    display: inline-block;
+    /*font-size: 0.5em;*/
+}
+
 
 .red {
     color: #ED3A32 !important;

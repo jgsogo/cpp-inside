@@ -15,7 +15,9 @@
 		<!-- Theme used for syntax highlighting of code -->
 		<link rel="stylesheet" href="lib/css/monokai.css">
 
+		<!-- My CSS -->
 		<link rel="stylesheet" href="css/custom.css">
+		<link rel="stylesheet" href="css/histogram.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
@@ -99,7 +101,15 @@
 							<img data-src="img/twitter-logo.svg" class="brand-icon"/>@jgsogo
 						</small>
 					</p>
-					<div class="text-animation-wrapper">
+					<div class="text-animation-wrapper work-with" prefix="I work with ">
+						<div style="display: none">
+							<span>C++</span>
+							<span>Python</span>
+							<span>Jenkins</span>
+							<span>C#</span>
+							<span>Java</span>
+							<span>💚</span>
+						</div>
 						<p class="text-animation"></p>
 					</div>
 				</section>
@@ -129,9 +139,16 @@
 						<p>Microservices</p>
 					</section>
 	
-					<section>
-						<h2>Simple get complex</h2>
-						<p>Simple applications that turns into full architectures</p>
+					<section data-background="images/frustation.png">
+						<p class="spaceer">&nbsp;</p>
+						<p class="spaceer">&nbsp;</p>
+						<p class="spaceer">&nbsp;</p>
+						<p class="spaceer">&nbsp;</p>
+						<p class="spaceer">&nbsp;</p>
+						<div class="box-shadow-white">
+							<h2 class="black bold">Simple get complex</h2>
+							<p class="black bold">Simple applications that turns into full architectures</p>
+						</div>
 
 						<aside class="notes" data-markdown>
 							Aplicaciones simples que se convierten en arquitecturas complejas
@@ -143,7 +160,7 @@
 					<section data-background="images/monolith.jpg">
 						<!-- Image source: https://goodhoodstore.com/mens/news/style-legacy-2001-a-space-odyssey-->
 						<div class="credit black">Photo: https://goodhoodstore.com</div>
-						<h2 class="box-shadow" >Miss the monolith</h2>
+						<h2 class="box-shadow-black">Miss the monolith</h2>
 					</section>
 				</section>
 
@@ -217,7 +234,7 @@
 						</aside>
 					</section>
 
-					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+					<section data-state="darken" data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="300px">
 						<h2>Neither random generators</h2>
 						<aside class="notes" data-markdown>
 							La realidad la codifico en una distribución de probabilidad con ciertos parámetros
@@ -226,11 +243,13 @@
 						</aside>
 					</section>
 
-					<section data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="200px">
+					<section data-state="darken" data-background="images/random-noise.png" data-background-repeat="repeat" data-background-size="300px">
 						<h2>Neither random generators</h2>
 						<p>Algorithm implementation</p>
+						<p>Distribution sampling</p>
 						<p>Floting point representation</p>
-						<p>...reproducibility across different languages, compilers, runtimes...</p>
+						<p>Reproducibility across different languages, compilers, runtimes...</p>
+
 						<aside class="notes" data-markdown>
 							Is the algorithm portable? ¿El lenguaje de destino puede hacer ciertas cosas?
 							> Problemas de coma flotante
@@ -241,11 +260,22 @@
 						</aside>
 					</section>
 
+					<section data-background="images/montecarlo.png" data-background-repeat="contain">
+
+						<aside class="notes" data-markdown>
+							Simulación de montecarlo:
+								* BANCO: precio de accciones del mercado, uso intensivo de nº aleatorios
+								* BANCO: conceder un préstamo, regulación, repetibilidad
+						</aside>
+					</section>
+
 					<section>
-						<h2>Ejemplos concretos: Montecarlo simulation</h2>
-						<p>Distribuciones conjuntas de probabilidad</p>
-						<p>Reproducibilidad por ley</p>
-						<p>Tragaperras - algoritmos regulados</p>
+						<img data-src="images/mario-bros.gif"/>
+						<!--<h2>Slot machine</h2>-->
+
+						<aside class="notes" data-markdown>
+							Tragaperras: algoritmos validados y regulados por ley
+						</aside>
 					</section>
 
 				</section>
@@ -263,7 +293,8 @@
 						<p>Reuse the random number generator</p>
 					</section>
 
-					<section>
+					<section data-background="images/aronofsky.jpg">
+						<span class="credit">Photo: The Fountain (Aronofsky, 2006)</span>
 						<h2>(Only) solution</h2>
 						<p>Reuse the same binary</p>
 					</section>
@@ -273,7 +304,18 @@
 				<!-- EXPERIMENTO / PROPUESTA -->
 				<section>
 					<section class="no-footer">
-						<h1>EXPERIMENTO / PROPUESTA</h1>
+						<h1>CHALLENGE ACCEPTED!</h1>
+					</section>
+
+					<section>
+						<div class="histogram" id="histogram1">
+						</div>
+						<p>
+							Sample from lognormal(
+								<input id="histogram1-mu" style="font-size:1em;" type="text" name="fname" value="3" maxlength="3" size="1">,
+								<input id="histogram1-sigma" style="font-size:1em;" type="text" name="fname" value="0.2" maxlength="3" size="2">	
+								)
+						</p>
 					</section>
 					<!--
 					<section data-background-iframe="http://ghv.artzub.com/#repo=cpp-inside&user=jgsogo" data-background-interactive>
@@ -284,39 +326,400 @@
 					</section>
 					-->
 					<section class="no-footerr" data-background-video="video/cpp_inside.mp4" data-background-video-muted>
-						<h1>Show me the code!</h1>
+						<h2>Show me the code!</h2>
 						<div style="box-shadow: 0 1px 4px rgba(0,0,0,0.8), 0 5px 25px rgba(0,0,0,0.5)">
 							<h3 class="small-caps"><img data-src="img/github-logo.svg" class="brand-icon"/> jgsogo/cpp-inside</h3>
 						</div>
 					</section>
 
-					<section>Algoritmo en un leguaje - nativo- C, C++, Rust, Go</section>
-					<section>Wrappear a ootros lenguajes</section>
-					<section>Intercambio de datos: swig,... protobuf</section>
-	
-				</section>
-
-
-				<!-- WHAT's NEXT -->
-				<section>
-					<section class="no-footer">
-						<h1>WHAT's NEXT</h1>
+					<section>
+						<h2>Building blocks</h2>
+						<p>Native library</p>
+						<p>Wrapper for every language</p>
+						<p>Data interchange layer</p>
 					</section>
-					<section>Gestionar paquetes</section>
-					<section>Montar CI / DevOps</section>
-					<section>Documentar / Blog</section>
+
+					<section>
+						<h2>Application</h2>
+						<img class="is-transparent" data-src="images/wrapper-native.png">
+					</section>
+
+					<section>
+						<h2>Application</h2>
+						<img class="is-transparent" data-src="images/wrapper-native2.png">
+						<aside class="notes" data-markdown>
+							Not invented here
+							Hourglass pattern
+							Adi Shavit: Salami method
+						</aside>
+					</section>
+
+					<section>
+						<h2>Data interchange layer</h2>
+						<div class="left">
+							<img class="is-transparent" data-src="img/protobuf-logo.png">
+							<h4>Protocol buffers</h4>
+						</div>
+						<div class="right">
+							<p class="spacer"></p>
+							<p>Language neutral</p>
+							<p>Platform neutral</p>
+							<p>Structured data</p>
+							<p>Fast and reliable</p>
+						</div>
+					</section>
+
+					<section>
+						<h4>Data layer | Request samples</h4>
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="8,11">
+						message Model {
+						    enum Name {
+						        BERNOULLI = 0;
+						        GEOMETRICAL = 5;
+						        POISSON = 6;
+						        EXPONENTIAL = 9;
+						        BINOMIAL_NEGATIVE = 10;
+						        LOGNORMAL = 11;
+						    }
+						    Name id = 1;
+						    map< string, float> params = 2;
+						}
+						</code></pre>
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="2,3">
+						message SampleRequest {
+						    Model model = 1;
+						    float seed = 2;
+						    uint32 n_samples = 3;
+						}	
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>Data layer | Samples returned</h4>
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="2, 4">
+						message Sample {
+						    Model model = 1;
+						    float seed = 2;
+						    repeated float samples = 3;
+						}	
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>C interface</h2>
+						<pre><code class="hljs" data-trim data-line-numbers="2,10-12,14">
+						#ifdef __cplusplus
+						extern "C" {
+						#endif
+						    typedef void (*callback_t)(void* state, 
+						                               const void* data,
+						                               const void* status);
+						
+						    CRND_EXPORT void help(void* state, 
+						                          callback_t help_callback);
+						    CRND_EXPORT void sample(void* state,
+						                            const void* sample_request,
+						                            callback_t sample_callback);
+						#ifdef __cplusplus
+						}
+						#endif
+						</code></pre>
+					</section>
+
+					<section>
+						<h4>C interface | Sample function</h4>
+						<pre><code class="hljs" data-trim data-line-numbers="5-7">
+						typedef void (*callback_t)(void* state, 
+						                           const void* data,
+						                           const void* status);
+
+						void sample(void* state,
+						            const void* sample_request,
+						            callback_t sample_callback);
+						</code></pre>
+						<table>
+							<tbody>
+								<tr><td><span class="bold">state</span></td><td>caller context</td></tr>
+								<tr><td><span class="bold">sample_request</span></td><td>request message</td></tr>
+								<tr><td><span class="bold">sample_callback</span></td><td>function callback</td></tr>
+							</tbody>
+						</table>
+					</section>
+
+					<section>
+						<h4>C interface | Sample function</h4>
+						<pre><code class="hljs cpp" data-trim data-line-numbers="1-2,5-6,8,11-13">
+						void sample(void* state, const void* sample_request,
+						            callback_t sample_callback) {
+						    SPDLOG_DEBUG("> C::sample");
+					
+						    SampleRequest request = 
+						        Serialized< SampleRequest>::parse(sample_request);
+						    Sample sample_message;
+						    auto status = sample(request, sample_message);
+					
+						    SPDLOG_TRACE("C::sample::before callback");
+						    sample_callback(state,
+						                    Serialized< crnd::Sample>(sample_message),
+						                    Serialized< crnd::Status>(*status));
+						    SPDLOG_TRACE("C::sample::after callback");
+							
+						    SPDLOG_DEBUG("< C::sample");
+						}
+						</code></pre>
+						<p>sample_request >> (sample) >> sample_message </p>
+					</section>
+	
+					<section>
+						<h4>C interface | Callback</h4>
+						<img class="is-transparent" data-src="images/wrapper-callback.png">
+					</section>
+
+					<section>
+						<div class="text-animation-wrapper" prefix="" delay="10", timeout="50">
+							<h2>Wrapper for</h2>
+							<h2 class="text-animation"></h2>
+							<div style="display: none">
+								<span>C++</span>
+								<span>Python</span>
+								<span>Java</span>
+								<span>Rust</span>
+								<span>Go</span>
+								<span>NodeJS</span>
+								<span>JavaScript*</span>
+							</div>
+							<p></p>
+							<ol>
+								<li class="fragment">Load the native library</li>
+								<li class="fragment">Map interface functions (sample)</li>
+								<li class="fragment">Build and serialize the proto message</li>
+								<li class="fragment">Call the function</li>
+								<li class="fragment">Deserialize the response</li>
+							</ol>
+						</div>
+					</section>
+
+					<section data-transition="fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="4-6">
+						import ctypes
+						from messages import status_pb2, sample_request_pb2, sample_pb2, model_pb2
+
+						class CRND:
+						    def __init__(self, path_to_library):
+						        self.dll = ctypes.cdll.LoadLibrary(path_to_library)
+
+						    def lognormal(self, seed, samples, mu, sigma):
+						        model = model_pb2.Model()
+						        model.id = model_pb2.Model.LOGNORMAL
+						        model.params["mu"] = mu
+						        model.params["sigma"] = sigma
+						        return self._sample(seed, samples, model)
+
+						    def _sample(self, seed, samples, model):
+						        request = sample_request_pb2.SampleRequest()
+						        request.seed = seed
+						        request.n_samples = samples
+						        request.model.CopyFrom(model)
+						
+						        serialized = ProtoSerialized.build_from(request)
+						        sample, status = _call(self.dll.sample,
+						                               sample_pb2.Sample,
+						                               serialized.as_ref())
+						
+						        if not status.ok:
+						            raise Exception(status.error_message)
+						
+						        return sample.samples
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-in fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="4, 8-13">
+						import ctypes
+						from messages import status_pb2, sample_request_pb2, sample_pb2, model_pb2
+
+						class CRND:
+						    def __init__(self, path_to_library):
+						        self.dll = ctypes.cdll.LoadLibrary(path_to_library)
+
+						    def lognormal(self, seed, samples, mu, sigma):
+						        model = model_pb2.Model()
+						        model.id = model_pb2.Model.LOGNORMAL
+						        model.params["mu"] = mu
+						        model.params["sigma"] = sigma
+						        return self._sample(seed, samples, model)
+
+						    def _sample(self, seed, samples, model):
+						        request = sample_request_pb2.SampleRequest()
+						        request.seed = seed
+						        request.n_samples = samples
+						        request.model.CopyFrom(model)
+						
+						        serialized = ProtoSerialized.build_from(request)
+						        sample, status = _call(self.dll.sample,
+						                               sample_pb2.Sample,
+						                               serialized.as_ref())
+						
+						        if not status.ok:
+						            raise Exception(status.error_message)
+						
+						        return sample.samples
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-in">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="4, 15-21, 25-29">
+						import ctypes
+						from messages import status_pb2, sample_request_pb2, sample_pb2, model_pb2
+
+						class CRND:
+						    def __init__(self, path_to_library):
+						        self.dll = ctypes.cdll.LoadLibrary(path_to_library)
+
+						    def lognormal(self, seed, samples, mu, sigma):
+						        model = model_pb2.Model()
+						        model.id = model_pb2.Model.LOGNORMAL
+						        model.params["mu"] = mu
+						        model.params["sigma"] = sigma
+						        return self._sample(seed, samples, model)
+
+						    def _sample(self, seed, samples, model):
+						        request = sample_request_pb2.SampleRequest()
+						        request.seed = seed
+						        request.n_samples = samples
+						        request.model.CopyFrom(model)
+						
+						        serialized = ProtoSerialized.build_from(request)
+						<mark>        sample, status = _call(self.dll.sample,         </mark>
+						<mark>                               sample_pb2.Sample,       </mark>
+						<mark>                               serialized.as_ref())     </mark>
+						
+						        if not status.ok:
+						            raise Exception(status.error_message)
+						
+						        return sample.samples
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="1, 8">
+						def _call(f, response_class, sample_request):
+						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
+						    def callback(_, data_in, status_in):
+						        callback.status = status_in.contents.parse_as(status_pb2.Status)
+						        if callback.status.ok:
+						            callback.data = data_in.contents.parse_as(response_class)
+
+						    f(None, sample_request, callback)  # No need to pass context
+
+						    if callback.status.ok:
+						        return callback.data, callback.status
+						    else:
+						        return None, callback.status
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-in fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="2-6">
+						def _call(f, response_class, sample_request):
+						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
+						    def callback(_, data_in, status_in):
+						        callback.status = status_in.contents.parse_as(status_pb2.Status)
+						        if callback.status.ok:
+						            callback.data = data_in.contents.parse_as(response_class)
+
+						    f(None, sample_request, callback)  # No need to pass context
+
+						    if callback.status.ok:
+						        return callback.data, callback.status
+						    else:
+						        return None, callback.status
+						</code></pre>
+					</section>
+
+					<section data-transition="fade-out">
+						<h4>Wrapper for Python</h4>
+						<pre><code class="hljs python" data-trim data-noescape data-line-numbers="10-13">
+						def _call(f, response_class, sample_request):
+						    @ctypes.CFUNCTYPE(None, ctypes.c_void_p, ctypes.POINTER(ProtoSerialized), ctypes.POINTER(ProtoSerialized))
+						    def callback(_, data_in, status_in):
+						        callback.status = status_in.contents.parse_as(status_pb2.Status)
+						        if callback.status.ok:
+						            callback.data = data_in.contents.parse_as(response_class)
+
+						    f(None, sample_request, callback)  # No need to pass context
+
+						    if callback.status.ok:
+						        return callback.data, callback.status
+						    else:
+						        return None, callback.status
+						</code></pre>
+					</section>
+
+					<section>
+						<h2>Want more examples?</h2>
+						<p><img data-src="img/github-logo.svg" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp;jgsogo/cpp-inside</p>
+						<img class="is-transparent" data-src="images/ghost-in-the-shell.gif">
+						<p>
+							<small>
+								<img data-src="img/cpp-logo.png" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<img data-src="img/java-logo.png" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<img data-src="img/python-logo.png" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<img data-src="img/rust-logo.png" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<img data-src="img/go-logo.png" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp; 
+								<img data-src="img/javascript-logo.png" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp; 
+							</small>
+						</p>
+					</section>
+
 				</section>
 
 				<!-- CONCLUSIONES -->
 				<section>
 					<section class="no-footer">
-						<h1>CONCLUSIONES</h1>
+						<h1>CONCLUSIONS</h1>
 					</section>
-					<section>Solución alternativa a microservicios o server/app</section>
-					<section>Solidez, más simple, más rápido, menos testing, unicidad</section>
-					<section>C++! -> Conan, Madrid C++ User Group</section>
+
+					<section data-background="images/down-of-man.jpg">
+						<span class="credit">Photo: Dawn of Man (Marko Manev, 2013)</span>
+						<h2>Love the monolith</h2>
+						<ul>
+							<li>Solid, simpler, faster</li>
+							<li>Easy to test</li>
+							<li>Consistent deploy</li>
+							<li>No extra complexity</li>
+						</ul>
+					</section>
+
+					<section data-state="darken" data-background="images/cppcon.jpeg">
+						<span class="credit">Photo: CppCon 2019 (Hana Dusíková, 16/09/2019)</span>
+						<h2>Why C++ inside?</h2>
+						<ul>
+							<li>Compile to native library (call from any language)</li>
+							<li>Easy and powerful language</li>
+							<li>Ecosystem is improving quickly</li>
+							<li>Worldwide community (and Madrid)</li>
+						</ul>
+					</section>
+
+				</section>
+				
+				<!-- WHAT's NEXT -->
+				<section>
+					<section class="no-footer">
+						<h1>TODO List</h1>
+						<p>Document the examples</p>
+						<p>Add more languages (PR welcome)</p>
+						<p>Add CI/CD system</p>
+					</section>
 				</section>
 
+				<!-- THE END -->
 				<section class="no-footer" data-background="images/the-end.gif" data-background-size="contain" data-background-color="#000000">
 				</section>
 			</div>
@@ -328,6 +731,9 @@
 		<script src="js/text-animation.js"></script>
 		<script src="js/twitter.js"></script>
 		<script src="js/seedrandom.js"></script>
+		<script src="js/d3.v3.min.js"></script>
+		<script src="js/d3-random.v2.min.js"></script>
+		<script src="js/histogram.js"></script>
 
 		<!-- Social buttons -->
 		<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
@@ -352,18 +758,18 @@
 			Reveal.addEventListener( 'ready', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
-				}, 100);				
+				}, 100);
+				
+				// Start text-animation
+				$(".text-animation-wrapper").each(function(){
+					animate_element($(this));
+				});
 			});
 
 			Reveal.addEventListener( 'slidechanged', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
 				}, 100);
-				
-				// Start text-animation
-				if (event.currentSlide.classList.contains("text-animation")) {
-					setTimeout(render, timeout);
-				}
 			});
 
 		</script>
