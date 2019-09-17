@@ -2,8 +2,10 @@
 #pragma once
 
 template <typename T>
-struct Serialized : public SerializedBase
+struct Serialized
 {
+    void* data;
+    int64_t size;
 
     Serialized(const T& t)
     {
@@ -17,9 +19,9 @@ struct Serialized : public SerializedBase
         free(data);
     }
 
-    operator const SerializedBase*() const
+    operator const Serialized*() const
     {
-        return static_cast<const SerializedBase*>(this);
+        return static_cast<const Serialized*>(this);
     }
 
     static T parse(const void* handler)

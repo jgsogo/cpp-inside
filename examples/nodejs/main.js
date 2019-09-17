@@ -13,7 +13,7 @@ var Serialized = Struct({
 */
 var Serialized = Struct();
 Serialized.defineProperty('data', 'void*'); //ref.refType(ref.types.void));
-Serialized.defineProperty('size', ref.types.int);
+Serialized.defineProperty('size', ref.types.int64);
 var SerializedPtr = ref.refType(Serialized);
 
 
