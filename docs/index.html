@@ -668,6 +668,11 @@
 						</div>
 					</section>
 
+					<section data-background-iframe="http://localhost:8000/stream" data-background-color="#ffffff">
+						<img data-src="img/java-logo.png" class="brand-icon" onclick="run_language('java');">
+						<img data-src="img/python-logo.png" class="brand-icon" onclick="run_language('python');">
+					</section>
+
 					<section>
 						<h2>Want more examples?</h2>
 						<p><img data-src="img/github-logo.svg" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp;jgsogo/cpp-inside</p>
@@ -823,6 +828,12 @@
 					var json = $.parseJSON(data);
 					refresh(histogram_nodejs, function(){return json});
 				});
+			}
+
+			function run_language(language) {
+				var stream_iframe = $(".slide-background.present").find("iframe");
+				let url = "http://localhost:8000/stream?language=" + language;
+				stream_iframe.attr("src", url);
 			}
 		</script>
 	</body>
