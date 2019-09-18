@@ -1,19 +1,13 @@
 var color = "steelblue";
+var nclasses = 20;
+var formatCount = d3.format(",.0f");
+var margin = {top: 20, right: 30, bottom: 30, left: 30};
+var width = 960 - margin.left - margin.right;
+var height = 500 - margin.top - margin.bottom;
 
 
-function animate_histogram(id, get_samples) {
-    var nclasses = 20;
-    var formatCount = d3.format(",.0f");
-
-    var margin = {top: 20, right: 30, bottom: 30, left: 30};
-    var width = 960 - margin.left - margin.right;
-    var height = 500 - margin.top - margin.bottom;
-
+function initialize_histogram(id, get_samples) {
     var values = get_samples();
-
-    const histogram_data = {
-        stop: false
-    }
 
     var max = d3.max(values);
     var min = d3.min(values);
@@ -70,52 +64,62 @@ function animate_histogram(id, get_samples) {
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
-    /*
-    * Adding refresh method to reload new data
-    */
-    function refresh(values) {
-        console.log("histogram::refresh");
-
-        // var values = d3.range(1000).map(d3.random.normal(20, 5));
-        var data = d3.layout.histogram()
-            .bins(x.ticks(nclasses))
-            (values);
-
-        // Reset y domain using new data
-        var yMax = d3.max(data, function(d){return d.length});
-        var yMin = d3.min(data, function(d){return d.length});
-        y.domain([0, yMax]);
-        var colorScale = d3.scale.linear()
-                    .domain([yMin, yMax])
-                    .range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
-
-        var bar = svg.selectAll(".bar").data(data);
-
-        // Remove object with data
-        bar.exit().remove();
-
-        bar.transition()
-            .duration(1000)
-            .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
-
-        bar.select("rect")
-            .transition()
-            .duration(1000)
-            .attr("height", function(d) { return height - y(d.y); })
-            .attr("fill", function(d) { return colorScale(d.y) });
-
-        bar.select("text")
-            .transition()
-            .duration(1000)
-            .text(function(d) { return formatCount(d.y); });
-
+    const histogram_data = {
+        x: x,
+        y: y,
+        svg: svg,
+        //ticks: ticks,
+        stop: false
     }
 
+    return histogram_data;
+}
+
+function refresh(histogram_data, get_samples) {
+    console.log("histogram::refresh");
+    var values = get_samples();
+
+    // var values = d3.range(1000).map(d3.random.normal(20, 5));
+    var data = d3.layout.histogram()
+        .bins(histogram_data.x.ticks(nclasses))
+        (values);
+
+    // Reset y domain using new data
+    var yMax = d3.max(data, function(d){return d.length});
+    var yMin = d3.min(data, function(d){return d.length});
+    histogram_data.y.domain([0, yMax]);
+    var colorScale = d3.scale.linear()
+                .domain([yMin, yMax])
+                .range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
+
+    var bar = histogram_data.svg.selectAll(".bar").data(data);
+
+    // Remove object with data
+    bar.exit().remove();
+
+    bar.transition()
+        .duration(1000)
+        .attr("transform", function(d) { return "translate(" + histogram_data.x(d.x) + "," + histogram_data.y(d.y) + ")"; });
+
+    bar.select("rect")
+        .transition()
+        .duration(1000)
+        .attr("height", function(d) { return height - histogram_data.y(d.y); })
+        .attr("fill", function(d) { return colorScale(d.y) });
+
+    bar.select("text")
+        .transition()
+        .duration(1000)
+        .text(function(d) { return formatCount(d.y); });
+
+}
+
+function animate_histogram(id, get_samples) {
+    let histogram_data = initialize_histogram(id, get_samples);
     // Calling refresh repeatedly.
     setInterval(function() {
         if (histogram_data.stop) return;
-        var values = get_samples();
-        refresh(values);
+        refresh(histogram_data, get_samples);
     }, 2000);
 
     return histogram_data;

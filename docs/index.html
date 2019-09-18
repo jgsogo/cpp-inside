@@ -663,6 +663,12 @@
 					</section>
 
 					<section>
+						<h4>Working example: NodeJS</h4>
+						<div class="histogram" id="histogram-nodejs">
+						</div>
+					</section>
+
+					<section>
 						<h2>Want more examples?</h2>
 						<p><img data-src="img/github-logo.svg" class="brand-icon"/>&nbsp;&nbsp;&nbsp;&nbsp;jgsogo/cpp-inside</p>
 						<img class="is-transparent" data-src="images/ghost-in-the-shell.gif">
@@ -789,14 +795,14 @@
 							let mu = parseFloat($("#histogram-form-mu").val());
 							let sigma = parseFloat($("#histogram-form-sigma").val());
 							let n_samples = parseFloat($("#histogram-form-n_samples").val());
-							console.log(mu);
-							console.log(sigma);
-							console.log(n_samples);
 							// Use javascript d3 to generate the samples
 							var random = d3.randomLogNormal(mu, sigma);
     						var values = d3.range(n_samples).map(random);
     						return values
 						});
+					}
+					else if (id === "histogram-nodejs") {
+						
 					}
 
 					histograms.push(data);
