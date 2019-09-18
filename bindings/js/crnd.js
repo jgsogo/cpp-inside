@@ -22,22 +22,20 @@ module.exports = {
                 help: ['void', ['void *', 'pointer']]
             });
 
-            // Callback from the native lib back into js
+            let help = null;
             const callback = ffi.Callback('void', ['void *', SerializedPtr, SerializedPtr],
                 function (state, data_in, status_in) {
                     console.log("> nodejs::callback");
                     let data = data_in.deref();
                     data = ref.reinterpret(data.data, data.size);
-                    let it = help_pb.Help.deserializeBinary(data);
-                    console.log("name: ", it.getName());
-                    console.log("description: ", it.getDescription());
-                    console.log("version: ", it.getVersion());
+                    help = help_pb.Help.deserializeBinary(data);
                     console.log("< nodejs::callback");
                 });
 
             console.log("> nodejs::help");
             crnd.help(null, callback);
             console.log("< nodejs::help");
+            return help;
         } catch (e) {
             console.error("error", e.message);
         }
