@@ -156,18 +156,35 @@ module.exports = grunt => {
 							else if (parsed.pathname === '/stream') {
 								let language = parsed.query.language;
 								let command = null;
+								const path_to_lib = "/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib/libcrnd.dylib";
 								if (language === "python") {
-									command = "python /Users/jgsogo/dev/projects/cpp-inside/examples/python/main.py --crnd=/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib/libcrnd.dylib";
+									command = "python /Users/jgsogo/dev/projects/cpp-inside/examples/python/main.py --crnd=" + path_to_lib;
 								}
 								else if (language === "java") {
 									command = 'java -Djna.library.path="/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib" -cp /Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/examples/java/target/CRND-EXAMPLE-1.0-SNAPSHOT-jar-with-dependencies.jar crnd.App';
 								}
+								else if (language === "cpp") {
+									command = '/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/bin/example_cpp --crnd=' + path_to_lib;
+								}
+								else if (language === "go") {
+									command = 'pushd /Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib; /Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/examples/go/main --crnd=' + path_to_lib + '; popd';
+								}
+								else if (language === "rust") {
+									command = '/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/examples/rust/target/debug/example_rust ' + path_to_lib;
+								}
+								else if (language === "nodejs") {
+									command = 'node /Users/jgsogo/dev/projects/cpp-inside/examples/nodejs/main.js --crnd ' + path_to_lib;
+								}
 								else {
-									command = "echo 'No language providen'";
+									command = "'Click on any language logo'";
 								}
 								execute(command, function(error, stdout, stderr){
+									res.write("<html><head><style>body {font-size: 25px; white-space: normal; }</style></head><body>");
+									res.write("<pre><code>");
 									res.write(command);
+									res.write("</code></pre><br/><pre><code>");
 									res.write(stdout);
+									res.write("</code></pre></body></html>");
 									res.end();
 								});
 							}

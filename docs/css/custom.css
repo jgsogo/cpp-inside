@@ -18,6 +18,10 @@ img.img-inline {
     background: rgba(0, 0,0,0) !important;
 }
 
+.is-plain {
+    box-shadow: 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(0,0,0,0) !important;
+}
+
 .box-shadow-black {
     box-shadow: 0 1px 4px rgba(0,0,0,0.5), 0 5px 25px rgba(0,0,0,0.2);
     background-color: rgba(0, 0, 0, 0.9);
