@@ -664,6 +664,7 @@
 
 					<section>
 						<h4>Working example: NodeJS</h4>
+						<i class="fab fa-node" onclick="nodejs_histogram('histogram-nodejs');"></i>
 						<div class="histogram" id="histogram-nodejs">
 						</div>
 					</section>
@@ -768,8 +769,10 @@
 				}, 100);
 			});
 
+			var histogram_nodejs = null;
+
 			var animated_elements = []
-			var histograms = []
+			var animated_histograms = []
 			Reveal.addEventListener( 'slidechanged', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
@@ -784,8 +787,8 @@
 				});
 
 				// Run histograms
-				histograms.forEach(function(elem) {elem.stop = true;});
-				histograms.length = 0;
+				animated_histograms.forEach(function(elem) {elem.stop = true;});
+				animated_histograms.length = 0;
 				$(event.currentSlide).find(".histogram").each(function() {
 					let id = $(this).attr("id");
 					$(this).empty();
@@ -800,15 +803,28 @@
     						var values = d3.range(n_samples).map(random);
     						return values
 						});
+						animated_histograms.push(data);
 					}
 					else if (id === "histogram-nodejs") {
-						
+						histogram_nodejs = initialize_histogram(id, function(){return [10, 20, 30, 40];}, false);
 					}
-
-					histograms.push(data);
 				});
 			});
 
+			function nodejs_histogram(id) {
+				console.log("NodeJS histogram");
+				let seed = 12345;
+				let n_samples = 100000;
+				let mu = 3;
+				let sigma = 0.2;
+				$.get({
+					url: "crnd/lognormal",
+					data: {'seed': seed, 'n_samples': n_samples, 'mu': mu, 'sigma': sigma}
+				}).done(function(data) {
+					var json = $.parseJSON(data);
+					refresh(histogram_nodejs, function(){return json});
+				});
+			}
 		</script>
 	</body>
 </html>
