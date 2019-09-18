@@ -1,6 +1,7 @@
 const sass = require('node-sass');
 var Twitter = require('twitter');
 const crnd = require('../bindings/js/crnd.js');
+var execute = require('child_process').exec;
 
 
 module.exports = grunt => {
@@ -151,6 +152,24 @@ module.exports = grunt => {
 								let samples = crnd.lognormal(path_to_lib, parsed.query.seed, parsed.query.n_samples, parsed.query.mu, parsed.query.sigma);
 								res.write(JSON.stringify(samples.getSamplesList(), null, 4));
 								res.end();
+							}
+							else if (parsed.pathname === '/stream') {
+								let language = parsed.query.language;
+								let command = null;
+								if (language === "python") {
+									command = "python /Users/jgsogo/dev/projects/cpp-inside/examples/python/main.py --crnd=/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib/libcrnd.dylib";
+								}
+								else if (language === "java") {
+									command = 'java -Djna.library.path="/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib" -cp /Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/examples/java/target/CRND-EXAMPLE-1.0-SNAPSHOT-jar-with-dependencies.jar crnd.App';
+								}
+								else {
+									command = "echo 'No language providen'";
+								}
+								execute(command, function(error, stdout, stderr){
+									res.write(command);
+									res.write(stdout);
+									res.end();
+								});
 							}
 							else {
 								next();
