@@ -1,5 +1,6 @@
 const sass = require('node-sass');
 var Twitter = require('twitter');
+const crnd = require('../bindings/js/crnd.js');
 
 
 module.exports = grunt => {
@@ -124,21 +125,32 @@ module.exports = grunt => {
 						middlewares.unshift(function(req, res, next) {
 							var parsed = require('url').parse(req.url, true);
 
-							if (parsed.pathname == '/twitter/retweeters') {
-								var params = {'id': parsed.query.id}
+							if (parsed.pathname === '/twitter/retweeters') {
+								let params = {'id': parsed.query.id};
 								client.get('statuses/retweeters/ids', params, function(error, data, response) {
 									if(error) throw error;
 									res.write(JSON.stringify(data, null, 4));
 									res.end();
 								});
 							}
-							else if (parsed.pathname == '/twitter/user') {
-								var params = {'user_id': parsed.query.id}
+							else if (parsed.pathname === '/twitter/user') {
+								let params = {'user_id': parsed.query.id};
 								client.get('users/show', params, function(error, data, response) {
 									if(error) throw error;
 									res.write(JSON.stringify(data, null, 4));
 									res.end();
 								});
+							}
+							else if (parsed.pathname === '/crnd/lognormal') {
+								const path_to_lib = '/Users/jgsogo/dev/projects/cpp-inside/cmake-build-debug/lib/libcrnd.dylib';
+								console.log(path_to_lib);
+								console.log(parsed.query.seed);
+								console.log(parsed.query.n_samples);
+								console.log(parsed.query.mu);
+								console.log(parsed.query.sigma);
+								let samples = crnd.lognormal(path_to_lib, parsed.query.seed, parsed.query.n_samples, parsed.query.mu, parsed.query.sigma);
+								res.write(JSON.stringify(samples.getSamplesList(), null, 4));
+								res.end();
 							}
 							else {
 								next();
