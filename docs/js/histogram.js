@@ -1,117 +1,124 @@
 var color = "steelblue";
-var nclasses = 30;
 
-// Generate a 1000 data points using normal distribution with mean=20, deviation=5
-var random = d3.randomLogNormal(3, 0.2);
-var values = d3.range(1000).map(random);
 
-// A formatter for counts.
-var formatCount = d3.format(",.0f");
+function animate_histogram(id, get_samples) {
+    var nclasses = 20;
+    var formatCount = d3.format(",.0f");
 
-var margin = {top: 20, right: 30, bottom: 30, left: 30},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    var margin = {top: 20, right: 30, bottom: 30, left: 30};
+    var width = 960 - margin.left - margin.right;
+    var height = 500 - margin.top - margin.bottom;
 
-var max = d3.max(values);
-var min = d3.min(values);
-var x = d3.scale.linear()
-      .domain([min, max])
-      .range([0, width]);
+    var values = get_samples();
 
-// Generate a histogram using twenty uniformly-spaced bins.
-var data = d3.layout.histogram()
-    .bins(x.ticks(nclasses))
-    (values);
+    const histogram_data = {
+        stop: false
+    }
 
-var yMax = d3.max(data, function(d){return d.length});
-var yMin = d3.min(data, function(d){return d.length});
-var colorScale = d3.scale.linear()
-            .domain([yMin, yMax])
-            .range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
+    var max = d3.max(values);
+    var min = d3.min(values);
+    var x = d3.scale.linear()
+        .domain([min, max])
+        .range([0, width]);
 
-var y = d3.scale.linear()
-    .domain([0, yMax])
-    .range([height, 0]);
+    // Generate a histogram using twenty uniformly-spaced bins.
+    var data = d3.layout.histogram()
+        .bins(x.ticks(nclasses))
+        (values);
 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
+    var yMax = d3.max(data, function(d){return d.length});
+    var yMin = d3.min(data, function(d){return d.length});
+    var colorScale = d3.scale.linear()
+                .domain([yMin, yMax])
+                .range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
 
-var svg = d3.select("#histogram1").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    var y = d3.scale.linear()
+        .domain([0, yMax])
+        .range([height, 0]);
 
-var bar = svg.selectAll(".bar")
-    .data(data)
-    .enter().append("g")
-    .attr("class", "bar")
-    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .orient("bottom");
 
-bar.append("rect")
-    .attr("x", 1)
-    .attr("width", (x(data[0].dx) - x(0)) - 1)
-    .attr("height", function(d) { return height - y(d.y); })
-    .attr("fill", function(d) { return colorScale(d.y) });
+    var svg = d3.select("#"+id).append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-bar.append("text")
-    .attr("dy", ".75em")
-    .attr("y", -12)
-    .attr("x", (x(data[0].dx) - x(0)) / 2)
-    .attr("text-anchor", "middle")
-    .text(function(d) { return formatCount(d.y); });
+    var bar = svg.selectAll(".bar")
+        .data(data)
+        .enter().append("g")
+        .attr("class", "bar")
+        .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
 
-svg.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
+    bar.append("rect")
+        .attr("x", 1)
+        .attr("width", (x(data[0].dx) - x(0)) - 1)
+        .attr("height", function(d) { return height - y(d.y); })
+        .attr("fill", function(d) { return colorScale(d.y) });
 
-/*
-* Adding refresh method to reload new data
-*/
-function refresh(values){
-  // var values = d3.range(1000).map(d3.random.normal(20, 5));
-  var data = d3.layout.histogram()
-    .bins(x.ticks(nclasses))
-    (values);
+    bar.append("text")
+        .attr("dy", ".75em")
+        .attr("y", -12)
+        .attr("x", (x(data[0].dx) - x(0)) / 2)
+        .attr("text-anchor", "middle")
+        .text(function(d) { return formatCount(d.y); });
 
-  // Reset y domain using new data
-  var yMax = d3.max(data, function(d){return d.length});
-  var yMin = d3.min(data, function(d){return d.length});
-  y.domain([0, yMax]);
-  var colorScale = d3.scale.linear()
-              .domain([yMin, yMax])
-              .range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
 
-  var bar = svg.selectAll(".bar").data(data);
+    /*
+    * Adding refresh method to reload new data
+    */
+    function refresh(values) {
+        console.log("histogram::refresh");
 
-  // Remove object with data
-  bar.exit().remove();
+        // var values = d3.range(1000).map(d3.random.normal(20, 5));
+        var data = d3.layout.histogram()
+            .bins(x.ticks(nclasses))
+            (values);
 
-  bar.transition()
-    .duration(1000)
-    .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+        // Reset y domain using new data
+        var yMax = d3.max(data, function(d){return d.length});
+        var yMin = d3.min(data, function(d){return d.length});
+        y.domain([0, yMax]);
+        var colorScale = d3.scale.linear()
+                    .domain([yMin, yMax])
+                    .range([d3.rgb(color).brighter(), d3.rgb(color).darker()]);
 
-  bar.select("rect")
-      .transition()
-      .duration(1000)
-      .attr("height", function(d) { return height - y(d.y); })
-      .attr("fill", function(d) { return colorScale(d.y) });
+        var bar = svg.selectAll(".bar").data(data);
 
-  bar.select("text")
-      .transition()
-      .duration(1000)
-      .text(function(d) { return formatCount(d.y); });
+        // Remove object with data
+        bar.exit().remove();
 
+        bar.transition()
+            .duration(1000)
+            .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+        bar.select("rect")
+            .transition()
+            .duration(1000)
+            .attr("height", function(d) { return height - y(d.y); })
+            .attr("fill", function(d) { return colorScale(d.y) });
+
+        bar.select("text")
+            .transition()
+            .duration(1000)
+            .text(function(d) { return formatCount(d.y); });
+
+    }
+
+    // Calling refresh repeatedly.
+    setInterval(function() {
+        if (histogram_data.stop) return;
+        var values = get_samples();
+        refresh(values);
+    }, 2000);
+
+    return histogram_data;
 }
 
-// Calling refresh repeatedly.
-setInterval(function() {
-    var mu = parseFloat($("#histogram1-mu").val());
-    var sigma = parseFloat($("#histogram1-sigma").val());
 
-    var random = d3.randomLogNormal(mu, sigma);
-    var values = d3.range(1000).map(random);
-    refresh(values);
-}, 2000);

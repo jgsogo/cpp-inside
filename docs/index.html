@@ -308,13 +308,14 @@
 					</section>
 
 					<section>
-						<div class="histogram" id="histogram1">
+						<div class="histogram" id="histogram-form">
 						</div>
 						<p>
-							1000 samples from lognormal(
-								<input id="histogram1-mu" style="font-size:1em;" type="text" name="fname" value="3" maxlength="3" size="1">,
-								<input id="histogram1-sigma" style="font-size:1em;" type="text" name="fname" value="0.2" maxlength="3" size="2">	
-								)
+							<input id="histogram-form-n_samples" style="font-size:1em;" type="text" name="fname" value="999" maxlength="3" size="3">
+							samples ~lognormal(
+							<input id="histogram-form-mu" style="font-size:1em;" type="text" name="fname" value="3" maxlength="3" size="1">,
+							<input id="histogram-form-sigma" style="font-size:1em;" type="text" name="fname" value="0.2" maxlength="3" size="2">	
+							)
 						</p>
 					</section>
 					<!--
@@ -762,6 +763,7 @@
 			});
 
 			var animated_elements = []
+			var histograms = []
 			Reveal.addEventListener( 'slidechanged', function( event ) {
 				setTimeout(function () {
 					footer_visibility(event.currentSlide, Reveal.isSpeakerNotes());
@@ -773,6 +775,31 @@
 				$(event.currentSlide).find(".text-animation-wrapper").each(function(){
 					var data = animate_element($(this));
 					animated_elements.push(data);
+				});
+
+				// Run histograms
+				histograms.forEach(function(elem) {elem.stop = true;});
+				histograms.length = 0;
+				$(event.currentSlide).find(".histogram").each(function() {
+					let id = $(this).attr("id");
+					$(this).empty();
+					if (id === "histogram-form") {
+						var data = animate_histogram(id, function(){
+							// Get lognormal params
+							let mu = parseFloat($("#histogram-form-mu").val());
+							let sigma = parseFloat($("#histogram-form-sigma").val());
+							let n_samples = parseFloat($("#histogram-form-n_samples").val());
+							console.log(mu);
+							console.log(sigma);
+							console.log(n_samples);
+							// Use javascript d3 to generate the samples
+							var random = d3.randomLogNormal(mu, sigma);
+    						var values = d3.range(n_samples).map(random);
+    						return values
+						});
+					}
+
+					histograms.push(data);
 				});
 			});
 
