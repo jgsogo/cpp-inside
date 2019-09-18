@@ -6,7 +6,7 @@ var width = 960 - margin.left - margin.right;
 var height = 500 - margin.top - margin.bottom;
 
 
-function initialize_histogram(id, get_samples) {
+function initialize_histogram(id, get_samples, show=true) {
     var values = get_samples();
 
     var max = d3.max(values);
@@ -64,6 +64,8 @@ function initialize_histogram(id, get_samples) {
         .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
 
+    svg.selectAll(".bar").style("opacity", show ? 1 : 0);
+
     const histogram_data = {
         x: x,
         y: y,
@@ -75,8 +77,7 @@ function initialize_histogram(id, get_samples) {
     return histogram_data;
 }
 
-function refresh(histogram_data, get_samples) {
-    console.log("histogram::refresh");
+function refresh(histogram_data, get_samples, show=true) {
     var values = get_samples();
 
     // var values = d3.range(1000).map(d3.random.normal(20, 5));
@@ -112,6 +113,7 @@ function refresh(histogram_data, get_samples) {
         .duration(1000)
         .text(function(d) { return formatCount(d.y); });
 
+    histogram_data.svg.selectAll(".bar").style("opacity", show ? 1 : 0);
 }
 
 function animate_histogram(id, get_samples) {
