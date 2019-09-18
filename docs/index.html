@@ -311,10 +311,13 @@
 						<div class="histogram" id="histogram-form">
 						</div>
 						<p>
-							<input id="histogram-form-n_samples" style="font-size:1em;" type="text" name="fname" value="999" maxlength="3" size="3">
+							<input id="histogram-form-n_samples" style="font-size:1em;" 
+							       type="number" min="1" max="999999" step="1000" name="fname" value="999" maxlength="3" size="3">
 							samples ~lognormal(
-							<input id="histogram-form-mu" style="font-size:1em;" type="text" name="fname" value="3" maxlength="3" size="1">,
-							<input id="histogram-form-sigma" style="font-size:1em;" type="text" name="fname" value="0.2" maxlength="3" size="2">	
+							<input id="histogram-form-mu" style="font-size:1em;" 
+								   type="number" min="2.5" max="3.5" step="0.1" name="fname" value="3" maxlength="3" size="1">,
+							<input id="histogram-form-sigma" style="font-size:1em;" 
+								   type="number" min="0" max="0.5" step="0.1" name="fname" value="0.2" maxlength="3" size="2">	
 							)
 						</p>
 					</section>
@@ -666,6 +669,18 @@
 						<i class="fab fa-node fa-2x" onclick="nodejs_histogram('histogram-nodejs');"></i>
 						<div class="histogram" id="histogram-nodejs">
 						</div>
+						<small>
+							<input id="histogram-nodejs-n_samples" oninput="nodejs_histogram('histogram-nodejs');" 
+							       type="number" min="1" max="999999" step="1000" style="font-size:1em;" name="fname" value="100000" maxlength="6" size="7">
+							samples ~lognormal(
+							<input id="histogram-nodejs-mu" oninput="nodejs_histogram('histogram-nodejs');"
+								   type="number" min="2.5" max="3.5" step="0.1" style="font-size:1em;" name="fname" value="3" maxlength="3" size="1">,
+							<input id="histogram-nodejs-sigma" oninput="nodejs_histogram('histogram-nodejs');"
+								   type="number" min="0" max="0.5" step="0.1" style="font-size:1em;" name="fname" value="0.2" maxlength="3" size="2">	
+							) | Seed: 
+							<input id="histogram-nodejs-seed" oninput="nodejs_histogram('histogram-nodejs');"
+							       type="number" min="1" max="99999" step="1" style="font-size:1em;" name="fname" value="12345" maxlength="5" size="5">	
+						</small>
 					</section>
 
 					<section data-background-iframe="http://localhost:8000/stream" data-background-color="#ffffff">
@@ -824,10 +839,14 @@
 
 			function nodejs_histogram(id) {
 				console.log("NodeJS histogram");
-				let seed = 12345;
-				let n_samples = 100000;
-				let mu = 3;
-				let sigma = 0.2;
+				let seed = parseFloat($("#histogram-nodejs-seed").val() || 12345);;
+				let mu = parseFloat($("#histogram-nodejs-mu").val());
+				let sigma = parseFloat($("#histogram-nodejs-sigma").val());
+				let n_samples = parseFloat($("#histogram-nodejs-n_samples").val());
+
+				//let n_samples = 100000;
+				//let mu = 3;
+				//let sigma = 0.2;
 				$.get({
 					url: "crnd/lognormal",
 					data: {'seed': seed, 'n_samples': n_samples, 'mu': mu, 'sigma': sigma}
