@@ -1,4 +1,5 @@
 var color = "steelblue";
+var nclasses = 30;
 
 // Generate a 1000 data points using normal distribution with mean=20, deviation=5
 var random = d3.randomLogNormal(3, 0.2);
@@ -19,7 +20,7 @@ var x = d3.scale.linear()
 
 // Generate a histogram using twenty uniformly-spaced bins.
 var data = d3.layout.histogram()
-    .bins(x.ticks(20))
+    .bins(x.ticks(nclasses))
     (values);
 
 var yMax = d3.max(data, function(d){return d.length});
@@ -72,7 +73,7 @@ svg.append("g")
 function refresh(values){
   // var values = d3.range(1000).map(d3.random.normal(20, 5));
   var data = d3.layout.histogram()
-    .bins(x.ticks(20))
+    .bins(x.ticks(nclasses))
     (values);
 
   // Reset y domain using new data
