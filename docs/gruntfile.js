@@ -127,7 +127,7 @@ module.exports = grunt => {
 							var parsed = require('url').parse(req.url, true);
 
 							if (parsed.pathname === '/twitter/retweeters') {
-								let params = {'id': parsed.query.id};
+								let params = {'id': parsed.query.id, 'stringify_ids': true};
 								client.get('statuses/retweeters/ids', params, function(error, data, response) {
 									if(error) throw error;
 									res.write(JSON.stringify(data, null, 4));
@@ -137,6 +137,7 @@ module.exports = grunt => {
 							else if (parsed.pathname === '/twitter/user') {
 								let params = {'user_id': parsed.query.id};
 								client.get('users/show', params, function(error, data, response) {
+									console.log(params);
 									if(error) throw error;
 									res.write(JSON.stringify(data, null, 4));
 									res.end();

@@ -50,10 +50,11 @@ function add_choosen(username) {
 function draft_one(username, tweet_id) {
     $("#choosen").empty();
     get_retweeters(tweet_id, function(user_ids){
-        console.log("User IDs:" + user_ids);
+        console.log("User IDs: " + user_ids);
         var random_result = Math.random();
         $("#random-result").empty().append(random_result);
         var user_id = user_ids[Math.floor(random_result * user_ids.length)];
+        console.log(" - choosen one: " + user_id);
         get_user(user_id, function(data) {
             $("#choosen").append($('<img src="' + data.profile_image_url_https + '" class="avatar"/>'));
             $("#choosen").append($('<p>' + data.name + '</p>'));
