@@ -127,7 +127,7 @@ div.conference {
 /** Header and footer */
 .credit {
     font-size: 0.6em;
-    bottom: -1%;
+    bottom: 0%;
     display: block;
     position: fixed;
     right: 0%;
