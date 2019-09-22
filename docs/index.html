@@ -77,10 +77,9 @@
 					</div>
 
 					<aside class="notes" data-markdown>
-						### Bienvenida
-						### Build == Compilar
-
-						Qué significa eso de Build
+						 * Bienvenida. Gracias por venir a la hora de la siesta y por elegir esta charla
+						   entre todas las otras de grandísima calidad que hay ahora mismo.
+						 * Gracias a Codemotion y a los sponsors que hacen posible este evento
 					</aside>
 				</section>
 
@@ -113,6 +112,18 @@
 							</div>
 							<p class="text-animation"></p>
 						</div>
+
+						<aside class="notes" data-markdown>
+							 * Javier -- ingeniero de software.
+							 * Trabajo en JFrog, empresa internacional, ciclo de vida de los binarios.
+							 * Conan: brevísima historia
+							   - El resto de lenguajes tiene un gestor de paquetes, excepto C++
+							   - Luis y Diego comenzaron la aventura
+							   - JFrog lo compra.
+							   - Yo me uno hace un año
+							   - Queremos ser el standar en el mundo de C++
+							   - TODO ESTO DESDE MADRID (desde GREGORION MARAÑÓN) <- HIRING!!!
+						</aside>
 					</section>
 
 					<section data-background="images/simios.jpg" data-background-repeat="cover">
@@ -125,15 +136,18 @@
 						</h3>
 
 						<aside class="notes" data-markdown>
-							Historia de mi vida:
-								* industriales: C++, matlab módulo nativo, robots
-								* citef: C++
-								* IA: librerías, felicidad, C++ debajo
-								* Python: C++ debajo (py64 instalando libs numéricas)
-								* Proyecto personales: MPD, Arduino, 
+							 * Historia de mi vida:
+							   * Industriales: C++, matlab módulo nativo, robots/automática
+							   * CITEF: C++, simulación de sistemas mecánicos
+							   * Probé otras cosas: PHP, Javascript, Python/Django, Lua, Java
+							   * IA: librerías, Tensorflow, C++ inside.
+							   * Python: C++ debajo (py64 instalando libs numéricas)
+							   * Proyecto personales: MPD, Arduino, 
 							Tensorflow, bitcoin, electron, openCV, cmder, XgBoost, Godot,
 							numpy, Unreal, WinAmp, Redis, MongoDB, Windows, Office, Visual Studio,
 							Coches, lavadoras, hornos,... sistemas embebidos
+
+							Charlton Heston !
 						</aside>
 					</section>
 				</section>
@@ -142,6 +156,13 @@
 				<section data-transition="convex">
 					<section class="no-footer">
 						<h1>BUSINESS LOGIC</h1>
+
+						<aside class="notes" data-markdown>
+							¿Por qué, cuando se trata de la librería que hace realmente el trabajo, y no
+							de una API, por qué me encontraba siempre C++ ahí?
+
+							La respuesta está en esto que te enseñan en **primero de Cobol**
+						</aside>
 					</section>
 
 					<section>
@@ -175,9 +196,9 @@
 						</div>
 
 						<aside class="notes" data-markdown>
-							Aplicaciones simples que se convierten en arquitecturas complejas
-							mezclando frameworks, tiempos de despliegue, problema de versiones
-							y actualizaciones,...
+							 * Aplicaciones simples que se convierten en arquitecturas complejas
+							 * Equipos utilizando different tecnologías
+							 * Tiempos de despliegue, versions incompatibles, actualizaciones,...
 						</aside>
 					</section>
 
@@ -185,6 +206,19 @@
 						<!-- Image source: https://goodhoodstore.com/mens/news/style-legacy-2001-a-space-odyssey-->
 						<div class="credit black">Photo: https://goodhoodstore.com</div>
 						<h2 class="box-shadow-black">Miss the monolith</h2>
+
+						<aside class="notes" data-markdown>
+							El monolito era bueno, nos permitía avanzar a pasos agintados.
+							Toda era sencillo, fácilmente iterable. No había que estar
+							pendiente de las versiones desplegadas de otras aplicaciones.
+
+							Ahora tenemos una aplicación en 100 contenedores de docker, desplegada
+							en un clúster de Kubernetes que gestionamos con Rancher. Tenemos problemas
+							de concurrencia y paralelismo.
+
+							Nos preguntamos, ¿realmente lo que hace esta aplicación require este
+							despliegue de recursos?
+						</aside>
 					</section>
 				</section>
 
@@ -280,6 +314,11 @@
 							> Crea tu propio algoritmo, ¿es realmente aleatorio?
 							> Vale para criptografía? Análisis espectral
 
+							Reproducir una misma secuencia de números aleatorios (utilizando la misma semilla), en 
+							ocasiones se convierte en una labor titánica. La recomendación suele ser que te implementes 
+							tu propio algoritmo. Esto introduce los problemas de aleatoriedad, reproducibilidad y rendimiento.
+							¿Puedo yo hacer un algoritmo suficientement bueno?
+
 							Link: https://stackoverflow.com/questions/24550963/stl-random-distributions-and-portability/24554535#24554535
 						</aside>
 					</section>
@@ -287,9 +326,9 @@
 					<section data-background="images/montecarlo.png" data-background-repeat="contain">
 
 						<aside class="notes" data-markdown>
-							Simulación de montecarlo:
-								* BANCO: precio de accciones del mercado, uso intensivo de nº aleatorios
-								* BANCO: conceder un préstamo, regulación, repetibilidad
+							 * Simulación de montecarlo:
+							   * BANCO: precio de accciones del mercado, uso intensivo de nº aleatorios
+							   * BANCO: conceder un préstamo, regulación, repetibilidad
 						</aside>
 					</section>
 
@@ -308,19 +347,29 @@
 				<section data-transition="convex">
 					<section class="no-footer">
 						<h1>Challenge</h1>
-						<h2>Unique business logic</h2>
-					</section>
+						<h4 class="small-caps">Same business logic...</h4>
+						<h4 class="small-caps">...without adding complexity</h4>
+						<h4 class="small-caps">...in different environments</h4>
 
-					<section>
-						<h2>Love the monolith</h2>
-						<p>Recycle/reuse the algorithm</p>
-						<p>Reuse the random number generator</p>
+						<aside class="notes" data-markdown>
+							Si no quiero meter mi lógica de negocio en un microservicio (no quiero añadir complejidad),
+							y quiero reproducir exactamente los mismos resultados (no puedo copiar/pegar el código de
+							un lenguage a otro)...
+						</aside>
 					</section>
 
 					<section data-background="images/aronofsky.jpg">
 						<span class="credit">Photo: The Fountain (Aronofsky, 2006)</span>
-						<h2>(Only) solution</h2>
+						<h2>Love the monolith</h2>
 						<p>Reuse the same binary</p>
+
+						<aside class="notes" data-markdown>
+							 * Quiero un monolito,
+							 * pero lo quiero en diferentes lenguages de programación
+							 * pero quiero el mismo binario (misma lógica de negocio)
+
+							¿Es esto posible?
+						</aside>
 					</section>
 				</section>
 
@@ -395,12 +444,19 @@
 							<p>Structured data</p>
 							<p>Fast and reliable</p>
 						</div>
+						<aside class="notes" data-markdown>
+							La misma tecnología me serviría tanto en la implementación nativa
+							como en los wrapper desde diferentes lenguajes.
+							
+							Es una aproximación mucho mejor que utilizar algo específico para
+							cada lenguage: pybind11, swig,...
+						</aside>
 					</section>
 
 					<section>
 						<h4>Data layer | Request samples</h4>
-						<pre><code class="hljs" data-trim data-noescape data-line-numbers="8,11">
-						message Model {
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="1-2, 8,10-11">
+						message Model {  // Random model generator
 						    enum Name {
 						        BERNOULLI = 0;
 						        GEOMETRICAL = 5;
@@ -413,8 +469,8 @@
 						    map< string, float> params = 2;
 						}
 						</code></pre>
-						<pre><code class="hljs" data-trim data-noescape data-line-numbers="2,3">
-						message SampleRequest {
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="1-4">
+						message SampleRequest {  // Message to request samples
 						    Model model = 1;
 						    float seed = 2;
 						    uint32 n_samples = 3;
@@ -424,8 +480,8 @@
 
 					<section>
 						<h4>Data layer | Samples returned</h4>
-						<pre><code class="hljs" data-trim data-noescape data-line-numbers="2, 4">
-						message Sample {
+						<pre><code class="hljs" data-trim data-noescape data-line-numbers="1-5">
+						message Sample {  // Message to return generated samples
 						    Model model = 1;
 						    float seed = 2;
 						    repeated float samples = 3;
@@ -434,18 +490,18 @@
 					</section>
 
 					<section>
-						<h2>C interface</h2>
+						<h4>Native library | C-interface</h4>
 						<pre><code class="hljs" data-trim data-line-numbers="2,10-12,14">
 						#ifdef __cplusplus
 						extern "C" {
 						#endif
-						    typedef void (*callback_t)(void* state, 
+						    typedef void (*callback_t)(void* context, 
 						                               const void* data,
 						                               const void* status);
 						
-						    CRND_EXPORT void help(void* state, 
+						    CRND_EXPORT void help(void* context, 
 						                          callback_t help_callback);
-						    CRND_EXPORT void sample(void* state,
+						    CRND_EXPORT void sample(void* context,
 						                            const void* sample_request,
 						                            callback_t sample_callback);
 						#ifdef __cplusplus
@@ -455,19 +511,19 @@
 					</section>
 
 					<section>
-						<h4>C interface | Sample function</h4>
+						<h4>Native library | C-interface | Sample function</h4>
 						<pre><code class="hljs" data-trim data-line-numbers="5-7">
-						typedef void (*callback_t)(void* state, 
+						typedef void (*callback_t)(void* context, 
 						                           const void* data,
 						                           const void* status);
 
-						void sample(void* state,
+						void sample(void* context,
 						            const void* sample_request,
 						            callback_t sample_callback);
 						</code></pre>
 						<table>
 							<tbody>
-								<tr><td><span class="bold">state</span></td><td>caller context</td></tr>
+								<tr><td><span class="bold">context</span></td><td>caller context</td></tr>
 								<tr><td><span class="bold">sample_request</span></td><td>request message</td></tr>
 								<tr><td><span class="bold">sample_callback</span></td><td>function callback</td></tr>
 							</tbody>
@@ -475,9 +531,9 @@
 					</section>
 
 					<section>
-						<h4>C interface | Sample function</h4>
-						<pre><code class="hljs cpp" data-trim data-line-numbers="1-2,5-6,8,11-13">
-						void sample(void* state, const void* sample_request,
+						<h4>Native library | C-interface | Sample function</h4>
+						<pre><code class="hljs cpp" data-trim data-line-numbers="1-2,5-8,11-13">
+						void sample(void* context, const void* sample_request,
 						            callback_t sample_callback) {
 						    SPDLOG_DEBUG("> C::sample");
 					
@@ -487,7 +543,7 @@
 						    auto status = sample(request, sample_message);
 					
 						    SPDLOG_TRACE("C::sample::before callback");
-						    sample_callback(state,
+						    sample_callback(context,
 						                    Serialized< crnd::Sample>(sample_message),
 						                    Serialized< crnd::Status>(*status));
 						    SPDLOG_TRACE("C::sample::after callback");
@@ -499,8 +555,13 @@
 					</section>
 	
 					<section>
-						<h4>C interface | Callback</h4>
+						<h4>Native library | C-interface | Callback</h4>
 						<img class="is-transparent" data-src="images/wrapper-callback.png">
+
+						<aside class="notes" data-markdown>
+							Why a callback?
+							 * Temas de memoria: el que genera la memoria es quien la destruye
+						</aside>
 					</section>
 
 					<section>
@@ -519,7 +580,7 @@
 							<p></p>
 							<ol>
 								<li class="fragment">Load the native library</li>
-								<li class="fragment">Map interface functions (sample)</li>
+								<li class="fragment">Map C-interface functions</li>
 								<li class="fragment">Build and serialize the proto message</li>
 								<li class="fragment">Call the function</li>
 								<li class="fragment">Deserialize the response</li>
@@ -763,6 +824,15 @@
 							<li>Ecosystem is improving quickly</li>
 							<li>Worldwide community (and Madrid)</li>
 						</ul>
+
+						<aside class="notes" data-markdown>
+							Si he trabajado más de una década en C++, si trabajo desarrollando un
+							gestor de paquetes para C++, si además organizo el grupo de usuarios de C++,
+							¿qué otro lenguaje iba a elegir?
+
+							Pero esas son mis razones, los desarrolladores de TensorFlow, Numpy, OpenCV,
+							Unity, Ros,... ellos probablemente tengan otras.
+						</aside>
 					</section>
 
 				</section>
@@ -771,7 +841,7 @@
 				<section data-transition="convex">
 					<section class="no-footer">
 						<h1>TODO List</h1>
-						<p>Document the examples</p>
+						<p>Document the examples (blog)</p>
 						<p>Add more languages (PR welcome)</p>
 						<p>Add CI/CD system</p>
 					</section>

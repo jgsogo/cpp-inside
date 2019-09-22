@@ -34,7 +34,7 @@ function animate_element(element) {
   const delay = element.attr("delay") || delay_default;
   const timeout = element.attr("timeout") || timeout_default;
   const alternates = element.find("span").map(function() { return $(this).text() + "   ";}).get();
-  
+  console.log(alternates);
   const p = element.find('.text-animation')[0];
 
   const text_animation_data = {
