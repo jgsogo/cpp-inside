@@ -13,10 +13,10 @@ console.log("This is NodeJS!!");
 console.log("CRND library: " + path_to_lib);
 
 // Call for help
-let help = crnd.help(path_to_lib);
-console.log("name: ", help.getName());
-console.log("description: ", help.getDescription());
-console.log("version: ", help.getVersion());
+//let help = crnd.help(path_to_lib);
+//console.log("name: ", help.getName());
+//console.log("description: ", help.getDescription());
+//console.log("version: ", help.getVersion());
 
 // Call for samples
 let samples = crnd.lognormal(path_to_lib, 12345, 100000, 3, 0.2);

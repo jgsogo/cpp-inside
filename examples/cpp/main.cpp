@@ -66,19 +66,19 @@ int main(int argc, char* argv[]) {
         int samples = 100000;
         crnd::cpp::crnd CRND(path_to_crnd);
 
-        CRND.help(std::cout);
+        //CRND.help(std::cout);
 
         //std::cout << "BERNOULLI\n";
         //draw_histogram(CRND.bernoulli(seed, samples, 0.5), "bernoulli(0.5)");
         //std::cout << std::endl;
 
-        std::cout << "UNIFORM\n";
-        draw_histogram(CRND.uniform(seed, samples), "uniform");
-        std::cout << std::endl;
+        //std::cout << "UNIFORM\n";
+        //draw_histogram(CRND.uniform(seed, samples), "uniform");
+        //std::cout << std::endl;
 
-        std::cout << "NORMAL\n";
-        draw_histogram(CRND.normal(seed, samples, 3, 0.2), "normal(3, 0.2)");
-        std::cout << std::endl;
+        //std::cout << "NORMAL\n";
+        //draw_histogram(CRND.normal(seed, samples, 3, 0.2), "normal(3, 0.2)");
+        //std::cout << std::endl;
 
         std::cout << "LOGNORMAL\n";
         draw_histogram(CRND.lognormal(seed, samples, 3, 0.2), "lognormal(3, 0.2)");

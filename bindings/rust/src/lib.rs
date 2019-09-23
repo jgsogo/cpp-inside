@@ -88,7 +88,7 @@ impl crnd {
 
         // Use a callback with closure to populate help_message
         help_with_callback(self, |data, _status| {
-            println!("[rust] > callback");
+            println!("[rust] > callback: get the samples");
             let serialized: &mut Serialized = unsafe { &mut *(data as *mut Serialized) };
             let array: &[u8] = unsafe { std::slice::from_raw_parts(serialized.data, serialized.size as usize) };
             help_message = parse_from_bytes::<Help>(array).unwrap();

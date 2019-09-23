@@ -12,9 +12,9 @@ fn main() {
     };
     //instance.lib = Library::new(library_path).unwrap();
 
-    println!("This is RUST!");
-    let help_msg = instance.help();
-    println!("help: {:#?}", help_msg);
+    //println!("This is RUST!");
+    //let help_msg = instance.help();
+    //println!("help: {:#?}", help_msg);
 
     let lognormal = instance.lognormal(12345.0, 100000, 3.0, 0.2);
     draw_histogram(lognormal.samples, "lognormal(3, 0.2)".to_string());

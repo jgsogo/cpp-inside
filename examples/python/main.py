@@ -36,7 +36,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     crnd = CRND(args.crnd)
-    crnd.help(sys.stdout)
+    # crnd.help(sys.stdout)
 
     r = crnd.lognormal(12345, 100000, 3, 0.2)
     draw_histogram(r, "lognormal(3, 0.2)")

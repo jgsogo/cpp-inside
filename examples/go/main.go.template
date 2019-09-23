@@ -17,7 +17,7 @@ func main() {
     wrapper := crnd.WrapperCRND {
        DllPath: "path/to/dll",
     }
-    wrapper.Help()
+    //wrapper.Help()
 
     var samples []float32;
     samples = wrapper.Lognormal(12345, 100000, 3, 0.2)
